@@ -5,8 +5,8 @@
   position: sticky;
   bottom: 30px;
   right: 0;
+  transform: translateX(-20px);
   z-index: 10;
-  margin-right: 20px;
   .fixed-action-inner {
     display: grid;
     grid-auto-rows: 48px;
@@ -27,4 +27,47 @@
       }
     }
   }
+}
+
+
+.switch {
+  width: 51px;
+  height: 31px;
+  background-color: #f87070;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-out;
+  position: relative;
+  border-radius: 100px;
+
+  &.on {
+    background-color: var(--blue06);
+    .toggle {
+      transform: translateX(20px);
+      p {
+        color: var(--blue06);
+      }
+    }
+  }
+
+  .toggle {
+    width: 27px;
+    height: 27px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    position: absolute;
+    left: 2px;
+    transition: transform 0.2s ease-out;
+    p {      
+      @include string(16px, 24px, normal, 700, left, #f87070);
+      transition: color 0.2s ease-out;
+    }
+  }
+  
 }

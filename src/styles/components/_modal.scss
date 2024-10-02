@@ -1,4 +1,8 @@
 
+.MuiPaper-root {
+  box-shadow: none !important;
+}
+
 .MuiDialog-root {
   &.full-dialog-wrapper {
     .MuiDialog-container, .MuiBackdrop-root, .MuiDialog-paper {
@@ -15,78 +19,251 @@
       // --ms-overflow-style: none;
       position: relative;
       overflow: hidden;
-      background: linear-gradient(180deg, #1f1a2b 0%, #2d2a4c 50%, #403d69 100%);
-      background-attachment: fixed;
-
-      .custom-app-bar {
-        @include flex(flex-end, center, row);
-        background-color: transparent;
-        box-shadow: none;
-        padding: 20px 20px;
-        img {
-          @include same(20px);
-          cursor: pointer;
-        }
-      }
-
-      .full-dialog-inner {
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        height: calc(100% - 48px);
-        padding-bottom: 48px;
-        .content-head {
+    }
+    &.Write {
+      .MuiDialog-paper {
+        background-color: var(--gray200);
+  
+        .custom-app-bar {
           @include flex(flex-end, center, row);
-          height: 31px;
+          background-color: transparent;
+          box-shadow: none;
+          padding: 20px;
+          img {
+            @include same(24px);
+            cursor: pointer;
+          }
         }
-        .content-body {
-          margin-top: 16px;
-          margin-bottom: 27px;
-          .write-textarea-wrapper {
-            display: grid;
-            grid-template-rows: 1fr auto;
-            gap: 15px;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.70);
-            box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
-            backdrop-filter: blur(2px);
-            border-radius: 8px;
-            overflow-y: auto; // 스크롤을 활성화하는 부분
-            .write-textarea {
-              @include scrollCustomSmall(#000);
-              padding: 34px;
-              min-height: 100%;
-              height: 100%;
-              max-height: 60dvh;
-              // background-color: red;
-              background-color: transparent;
-              overflow: auto;
-              &::before {
-                display: none;
-              }
-              @include string(16px, 24px, normal, 500, right, var(--black));
+  
+        .full-dialog-inner {
+          display: grid;
+          grid-template-rows: auto 1fr auto;
+          height: calc(100% - 48px);
+          padding-bottom: 48px;
+          .content-head {
+            @include flex(flex-end, center, row);
+            height: 31px;
+            margin-top: 27px;
+          }
+          position: relative;
+          .asset-container {
+            position: absolute;
+            left: 35px;
+            top: -17.5px;
+            z-index: 1;
+            .asset-img {
+              // @include size(72px, 90px);
+              aspect-ratio: 160/163;
+              height: 55px;
             }
-            .string-length {
-              @include flex(flex-end, center, row);
-              padding: 0 16px 11px;
-              p {
-                @include string(16px, 24px, normal, 500, right, var(--black));
+            .speech-bubble {
+              @include string(12px, 16px, normal, 600, left, var(--white));
+              margin-bottom: 13px;
+              margin-left: 18px;
+              background-color: var(--purple07);
+              position: relative;
+              padding: 6px 14px;
+              border-radius: 20px;
+              max-width: 300px;
+              z-index: 2;
+              &::after {
+                @include size(16.76px, 13.12px);
+                content: "";
+                position: absolute;
+                bottom: -10px; /* 꼬리의 아래쪽 위치 조정 */
+                left: 27px;    /* 꼬리의 왼쪽 위치 조정 */
+                background: url($G-path-content + 'speech-bubble-tail.svg') $G-img-contain;
               }
             }
           }
-        }
-        .content-foot {
-          @include flex(flex-end, content, row);
-          .submit {
-            @include size(auto, 44px);
-            border-radius: 8px;
-            padding: 10px;
-            background: var(--purple06);
-            @include string(16px, 24px, normal, 700, center, var(--white));
+          .content-body {
+            margin-top: 16px;
+            margin-bottom: 27px;
+            .write-textarea-wrapper {
+              display: grid;
+              grid-template-rows: 1fr auto;
+              gap: 15px;
+              height: 100%;
+              background-color: rgba(255, 255, 255, 0.70);
+              box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+              backdrop-filter: blur(2px);
+              border-radius: 8px;
+              overflow-y: auto;
+              .write-textarea {
+                @include scrollCustomSmall(var(--purple06));
+                @include string(16px, 24px, normal, 500, left, var(--black));
+                padding: 34px 34px 0;
+                resize: none;
+                background-color: transparent;
+                &::placeholder {
+                  @include string(16px, 24px, normal, 500, left, var(--gray700));                
+                }
+              }
+              .string-length {
+                @include flex(flex-end, center, row);
+                padding: 0 16px 11px;
+                p {
+                  @include string(16px, 24px, normal, 500, right, var(--black));
+                }
+              }
+            }
+          }
+          .content-foot {
+            @include flex(flex-end, content, row);
+            .submit {
+              @include size(auto, 44px);
+              @include string(16px, 24px, normal, 700, center, var(--white));
+              border-radius: 8px;
+              padding: 10px;
+              background-color: var(--purple06);
+  
+              &:disabled {
+                background-color: var(--gray300);
+                color: var(--gray600);
+                cursor: default;
+              }
+            }
           }
         }
       }
     }
   }
+  &.base-dialog-wrapper {
+    &.Read {
+      .MuiDialog-paper {
+        // @include scrollCustomSmall(var(--purple06));
+        // scrollbar-width: none;
+        // --ms-overflow-style: none;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 420px;
+        margin: 20px;
+        max-height: 560px;
+        height: calc(100% - 40px);
+
+        .base-dialog-header {
+          position: sticky;
+          top: 0;
+          left: 0;
+          z-index: 100;
+          .close-btn {
+            @include same(16px);
+            position: absolute;
+            top: 32px;
+            right: 20px;
+            z-index: 99;
+            padding: 4px;
+            cursor: pointer;
+            img {
+              @include same(16px);
+              cursor: pointer;
+            }
+          }
+        }
+        .base-dialog-inner {
+          padding: 36px 24px;
+
+          .card {
+            @include flex(flex-start, flex-start);
+            padding: 0 20px 24px;
+            .card-title {
+              display: grid;
+              grid-template-columns: 40px auto;
+              gap: 8px;
+              align-items: center;
+              &__profile {
+                @include same(40px);
+                background-color: var(--gray500);
+                border-radius: 50%;
+              }
+              &__desc {
+                @include flex(flex-start, center, row);
+                gap: 3px;
+               .id {
+                  @include string(16px, 24px, normal, 700, left, var(--purple08));
+                }
+               .info {
+                  @include string(16px, 24px, normal, 700, left, var(--gray900));
+                } 
+              }
+            }
+            .card-content {
+              margin-top: 12px;
+              display: grid;
+              grid-auto-rows: auto;
+              gap: 16px;
+              &__desc {
+                @include string(14px, 22px, normal, 500, left, var(--gray800));
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+              }
+              &__tags {
+                @include flex(flex-start, center, row);
+                flex-wrap: wrap;
+                gap: 8px;
+                li {
+                  @include flex;
+                  height: 24px;
+                  padding: 0 8px;
+                  border-radius: 100px;
+                  background-color: var(--purple01);
+                  p {                  
+                    @include string(14px, 22px, normal, 500, left, var(--purple07));
+                  }
+                }
+              }
+            }
+            .card-result-btn {
+              @include flex;
+              margin-top: 32px;
+              @include size(100%, 44px);
+              background-color: var(--purple06);
+              border-radius: 8px;
+              p {
+                @include string(16px, 24px, normal, 700, center, var(--white));
+              }
+            }
+          }
+          .message {
+            display: grid;
+            grid-auto-rows: auto;
+            &__inner {
+              padding: 32px 20px;
+              &.type-F {
+                background-color: #FFF1F2;
+              }
+              &.type-T {
+                background-color: var(--blue01);
+              }
+              .content-layout {
+                @include flex(flex-start, flex-start);
+                .title {
+                  @include string(16px, 24px, normal, 700, left, var(--gray800));
+                }
+                .desc {
+                  @include string(14px, 22px, normal, 500, left, var(--gray800));
+                }
+              }
+              .img-layout {
+                margin-top: 10px;
+                @include flex(space-between, flex-end, row);
+                .post {
+                  @include size(93px, 12px);
+                }
+                .stamp {
+                  @include size(53.55px, 40px);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
 }
 // .MuiDialog-root {
 //   // wallet

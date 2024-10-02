@@ -11,6 +11,15 @@
   mask-repeat: no-repeat;
 }
 
+
+@mixin breakpoint($size) {
+  @if $size == tablet {
+    @media only screen and (min-width: 391px) {
+      @content;
+    }
+  }
+}
+
 @mixin disableDrag() {
   -webkit-user-select:none;
   -moz-user-select:none;
@@ -101,8 +110,8 @@
 
 @mixin scrollCustomSmall($color: #fff) {
   &::-webkit-scrollbar {
-    width: 2px;
-    height: 2px;
+    width: 5px;
+    height: 5px;
   }
   &::-webkit-scrollbar-track {
     background-color: transparent;

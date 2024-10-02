@@ -10,6 +10,7 @@ import Register from './pages/Register';
 
 import Home from './pages/Home';
 import Letterbox from './pages/Letterbox';
+import Write from './pages/Write';
 import Result from './pages/Result';
 
 import NotFound from './pages/error/NotFound';
@@ -34,6 +35,7 @@ function App() {
       <Route index element={<PrivateRoute path="/"><Home /></PrivateRoute>} />
       <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login />} />
       <Route path="/register" element={<PrivateRoute><Register /></PrivateRoute>} />
+      <Route path="/write" element={<Write />} /> // 결과값없으면 홈으로 이동
       <Route path="/result" element={<Result />} /> // 결과값없으면 홈으로 이동
       <Route path="/letterbox" element={<Letterbox />} />
       <Route path="*" element={<NotFound />} />

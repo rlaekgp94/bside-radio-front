@@ -1,5 +1,5 @@
 .root-container {
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc((var(--vh, 1vh) * 100));
   max-width: 480px;
   width: 100%;
   margin: 0px auto;
@@ -24,14 +24,10 @@
     position: relative;
   }
 }
-
 .layout-p {
   padding-left: var(--G-default-p);
   padding-right: var(--G-default-p);
 }
-
-
-
 
 .wrapper-start {
   max-width: 480px;

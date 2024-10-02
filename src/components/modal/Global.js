@@ -2,15 +2,21 @@ import { useSelector } from 'react-redux';
 import { selectModal } from 'store/modules/components';
 
 import WriteModal from 'components/modal/Write';
+import ReadModal from 'components/modal/Read';
 
 const MODAL_TYPES = {
   Write: "Write",
+  Read: "Read",
 };
 
 const MODAL_COMPONENTS = [
   {
     type: MODAL_TYPES.Write,
     component: <WriteModal />
+  },
+  {
+    type: MODAL_TYPES.Read,
+    component: <ReadModal />
   },
 ];
 

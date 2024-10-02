@@ -3,7 +3,7 @@ import { apiRequest } from 'utils/axios';
 const version = "/v1"
 
 /**
- * 유저의 사연이 담긴 편지를 접수받는 API
+ * 편지 쓰기 후 답장 리턴 API
  *
  * @param {string} email 유저 이메일
  * @param {string} message 유저가 작성한 메시지 내용
@@ -23,17 +23,35 @@ export const letterResponseAPI  = async (email, message, preference) => {
   }
 }
 
-
 /**
- * 유저 정보 조회 API
+ * 내 편지함 리스트 API
  *
- * @param {string} email 유저 이메일
+ * @param {string} userId 유저 고유 아이디
  */
-export const getUserInfoAPI = async (email) => {
+export const getUserLetterListAPI = async (userId) => {
   try {
     const result = await apiRequest({
       method: 'get',
-      url: `/user?email=${email}`,
+      url: `${version}/letters/${userId}`,
+    });
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+
+/**
+ * 답장 개별 조회 API
+ *
+ * @param {string} letterId 편지 고유 아이디
+ */ 
+export const getLetterIdRepliesAPI = async (letterId) => {
+  try {
+    const result = await apiRequest({
+      method: 'get',
+      url: `${version}/replies/${letterId}`,
     });
     return result;
   } catch (e) {

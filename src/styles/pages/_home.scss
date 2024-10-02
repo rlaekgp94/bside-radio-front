@@ -16,21 +16,29 @@
 }
 
 .go-back-title-bar {
-  display: grid;
-  grid-template-columns: 20px auto;
-  gap: 8px;
-  align-items: center;
-  .icon {
-    @include same(20px);
-    cursor: pointer;
-  }
-  .title {
-    @include string(20px, 28px, -0.08px, 700, left, var(--gray900));
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: var(--white);
+  z-index: 10;
+  &__inner {
+    padding: 32px 0;
+    display: grid;
+    grid-template-columns: 20px auto;
+    gap: 8px;
+    align-items: center;
+    .icon {
+      @include same(20px);
+      cursor: pointer;
+    }
+    .title {
+      @include string(20px, 28px, -0.08px, 700, left, var(--gray900));
+    }
   }
 }
 
 .home {  
-  .bg-layout {
+  .layout-bg {
     background-color: var(--gray100);
     padding: 20px 0 40px;
   }
@@ -80,59 +88,167 @@
 }
 
 .letterbox {
-  padding-top: 36px;
-  padding-bottom: 80px;
-
-  height: calc(100% - 116px);
-  // background-color: blue;
+  position: relative;
+  background-color: var(--white);
 
   &__inner {
-    @include flex(flex-start);
-    padding: 52px 44px;
-    height: calc(100% - 104px);
-    .letter-box {
-      width: 100%;
-      height: 100%;
-      position: relative;
-      .swiper-pagination-bullets.swiper-pagination-custom {
-        @include flex(center, center, row);
-        position: absolute;
-        height: 8px;
+    @include breakpoint(tablet) {
+      padding-left: 44px;
+      padding-right: 44px;
+    }
+    padding-bottom: 80px;
+    .letter-list {
+      display: grid;
+      grid-auto-rows: auto;
+      gap: 25px;
+
+      .loading-skeleton {
+        display: grid;
+        grid-template-columns: 128px auto;
         gap: 8px;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%) translateY(68px);
-        .swiper-pagination-bullet {
-          @include same(8px);
-          cursor: pointer;
-          border-radius: 50%;
-          background-color: var(--gray300);
-          opacity: 1 !important;
-          display: block;
-          &.swiper-pagination-bullet-active {
-            background-color: var(--purple06);
-          }
-        }
+        align-items: center;
       }
-      .swiper {
-        height: 100%;
-        .swiper-wrapper {
-          .swiper-slide {
-            @include flex;
-            max-height: 148px;
-            .letter-item {
-              @include flex;
-              @include disableDrag;
-              cursor: pointer;
-              .img {
-                @include same(128px);
-                aspect-ratio: 1/1;
-              }
+
+      .letter-item {
+        cursor: pointer;
+        &__inner {
+          display: grid;
+          grid-template-columns: 128px auto;
+          gap: 8px;
+          align-items: flex-end;
+          .letter-img {
+            width: 100%;
+            height: 100%;
+            aspect-ratio: 1/1;
+            object-fit: contain;
+          }
+          .letter-info {
+            @include flex(flex-start, flex-start);
+            .stamp-img {
+              @include size(37.48px, 28px);
+            }
+            &__content {
+              margin: 8px 0 12px;
               .date {
-                margin-top: 4px;
+                @include string(12px, 16px, normal, 600, left, var(--black));
+              }
+              .desc {
                 @include string(12px, 16px, normal, 600, left, var(--gray600));
               }
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+.write {
+  background-color: var(--gray200);
+  height: 100%;
+  position: relative;
+
+  &__inner {
+    display: grid;
+    grid-template-rows: 64px auto;
+    height: calc(100% - 48px);
+    padding-bottom: 48px;
+  
+    .custom-app-bar {
+      @include flex(flex-end, center, row);
+      background-color: transparent;
+      box-shadow: none;
+      padding-right: 20px;
+      height: 64px;
+      img {
+        @include same(24px);
+        cursor: pointer;
+      }
+    }
+    .write-container {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      .content-head {
+        @include flex(flex-end, center, row);
+        height: 31px;
+        margin-top: 27px;
+      }
+      position: relative;
+      .asset-container {
+        position: absolute;
+        left: 35px;
+        top: -17.5px;
+        z-index: 1;
+        .asset-img {
+          // @include size(72px, 90px);
+          aspect-ratio: 160/163;
+          height: 55px;
+        }
+        .speech-bubble {
+          @include string(12px, 16px, normal, 600, left, var(--white));
+          margin-bottom: 13px;
+          margin-left: 18px;
+          background-color: var(--purple07);
+          position: relative;
+          padding: 6px 14px;
+          border-radius: 20px;
+          max-width: 300px;
+          z-index: 2;
+          &::after {
+            @include size(16.76px, 13.12px);
+            content: "";
+            position: absolute;
+            bottom: -10px; /* 꼬리의 아래쪽 위치 조정 */
+            left: 27px;    /* 꼬리의 왼쪽 위치 조정 */
+            background: url($G-path-content + 'speech-bubble-tail.svg') $G-img-contain;
+          }
+        }
+      }
+      .content-body {
+        margin-top: 16px;
+        margin-bottom: 27px;
+        .write-textarea-wrapper {
+          display: grid;
+          grid-template-rows: 1fr auto;
+          gap: 15px;
+          height: 100%;
+          background-color: rgba(255, 255, 255, 0.70);
+          box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+          backdrop-filter: blur(2px);
+          border-radius: 8px;
+          overflow-y: auto;
+          .write-textarea {
+            @include scrollCustomSmall(var(--purple06));
+            @include string(16px, 24px, normal, 500, left, var(--black));
+            padding: 34px 34px 0;
+            resize: none;
+            background-color: transparent;
+            &::placeholder {
+              @include string(16px, 24px, normal, 500, left, var(--gray700));                
+            }
+          }
+          .string-length {
+            @include flex(flex-end, center, row);
+            padding: 0 16px 11px;
+            p {
+              @include string(16px, 24px, normal, 500, right, var(--black));
+            }
+          }
+        }
+      }
+      .content-foot {
+        @include flex(flex-end, content, row);
+        .submit {
+          @include size(auto, 44px);
+          @include string(16px, 24px, normal, 700, center, var(--white));
+          border-radius: 8px;
+          padding: 10px;
+          background-color: var(--purple06);
+  
+          &:disabled {
+            background-color: var(--gray300);
+            color: var(--gray600);
+            cursor: default;
           }
         }
       }
@@ -164,7 +280,7 @@
             grid-template-columns: 40px auto;
             gap: 8px;
             align-items: center;
-            &__img {
+            &__profile {
               @include same(40px);
               background-color: var(--gray500);
               border-radius: 50%;
