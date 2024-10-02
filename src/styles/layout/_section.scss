@@ -1,0 +1,84 @@
+.root-container {
+  height: calc(var(--vh, 1vh) * 100);
+  max-width: 480px;
+  width: 100%;
+  margin: 0px auto;
+  overflow: auto;
+
+  // -ms-overflow-style: none;
+  // &:-webkit-scrollbar {
+  //   display: none;
+  // }
+  // &::-webkit-scrollbar {
+  // display: none;
+  // }
+  // .main-content {
+  //   width: 100%;
+  // }
+  .main-content {
+    height: calc((var(--vh, 1vh) * 100));
+    background-color: var(--white);
+    overflow: hidden auto;
+    scrollbar-width: none;
+    --ms-overflow-style: none;
+    position: relative;
+  }
+}
+
+.layout-p {
+  padding-left: var(--G-default-p);
+  padding-right: var(--G-default-p);
+}
+
+
+
+
+.wrapper-start {
+  max-width: 480px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  opacity: 0.8;
+  overflow: hidden;
+
+  $shadows-small: random-box-shadow(300);
+  $shadows-medium: random-box-shadow(150, rgba(101, 223, 253, 0.863));
+  $star-count: 200; // 별 개수 설정
+
+  @keyframes animationStart {
+    from { transform: translateY(0); }
+    to { transform: translateY(-2000px); }
+  }
+  
+  @mixin star($size, $shadows, $animationDuration) {
+    @include same($size);
+    border-radius: 50%;
+    background: transparent;
+    box-shadow: $shadows;
+    animation: animationStart $animationDuration linear infinite;
+    opacity: 0.8;
+  
+    &::after {
+      @include same($size);
+      content: ' ';
+      position: absolute;
+      top: 2000px;
+      border-radius: 50%;
+      background: transparent;
+      box-shadow: $shadows;
+    }
+  }
+        
+  @for $i from 1 through $star-count {
+    #stars0#{$i} {
+      @if $i % 2 == 0 {
+        @include star(2px, $shadows-medium, 100s);
+      } @else {
+        @include star(1px, $shadows-small, 50s);
+      }
+    }
+  }
+}

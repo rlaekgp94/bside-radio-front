@@ -1,0 +1,49 @@
+// img or size
+$G-path: "../../assets/";
+$G-path-content: $G-path + "Content/";
+$G-path-icon: $G-path + "Icon/";
+$G-path-logo: $G-path + "Logo/";
+$G-img-cover: no-repeat center / cover;
+$G-img-contain: no-repeat center / contain;
+// $G-max-width: 1128px;
+// $G-modal-max-width: 48.72rem;
+
+$box-round: 10px;
+$box-round-small: 5px;
+
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+$browser-context: 18;
+@function rem($pixels, $context: $browser-context) {
+  // @return #{$pixels/$context}rem;
+  @return #{calc($pixels / $context)}rem;
+}
+
+@keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@function random-box-shadow ($n, $color: #fff) {
+  $value: '#{random(2000)}px #{random(20000)}px #{$color}';
+  @for $i from 3 through $n {
+    $value: '#{$value} , #{random(2000)}px #{random(2000)}px #{$color}';
+  }
+  @return unquote($value);
+}

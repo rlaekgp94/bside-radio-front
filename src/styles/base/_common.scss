@@ -1,0 +1,248 @@
+* {
+  font-family: 'Pretendard';
+  -webkit-tap-highlight-color: transparent;
+
+  img {
+    -webkit-user-drag: none;
+  }
+}
+
+:root {
+  --G-top-p: 50px;
+  --G-default-p: 20px;
+  --G-max-width: 480px;
+
+  /* Gray Colors */
+  --white: #FFFFFF;
+  --black: #000000;
+  --gray100: #F5F5FA;
+  --gray200: #E6E6EB;
+  --gray300: #D7D7DC;
+  --gray400: #C8C8CD;
+  --gray500: #AFAFB4;
+  --gray600: #96969B;
+  --gray700: #69696E;
+  --gray800: #323237;
+  --gray900: #000000;
+
+  /* Pink Colors */
+  --pink01: #FFF1F2;
+  --pink02: #FFE4E6;
+  --pink03: #FFD7D9;
+  --pink04: #FFCDD2;
+  --pink05: #FFB3B9;
+  --pink06: #FF9199;
+  --pink07: #FF737D;
+  --pink08: #FF515E;
+  --pink09: #FF3347;
+  --pink10: #E31C33;  
+  
+  /* Purple Colors */
+  --purple01: #F6F2F3;
+  --purple02: #F2E0ED;
+  --purple03: #F0C9F3;
+  --purple04: #D7ADF9;
+  --purple05: #BC81F9;
+  --purple06: #9452D6;
+  --purple07: #7331B7;
+  --purple08: #531D95;
+  --purple09: #360E67;
+  --purple10: #210245;
+
+  /* Blue Colors */
+  --blue01: #E5F0FF;
+  --blue02: #CCE0FF;
+  --blue03: #99C2FF;
+  --blue04: #66A3FF;
+  --blue05: #3385FF;
+  --blue06: #0066FF;
+  --blue07: #0047FF;
+  --blue08: #0039CC;
+  --blue09: #002D99;
+  --blue10: #001F66;
+}
+
+body {
+  overflow: hidden;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  background-color: #000;
+  color: var(--gray-800);
+}
+
+span,
+p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+button {
+  transform: skew(-0.1deg);
+}
+// textarea,
+// input,
+// select
+
+a,
+textarea,
+input,
+select,
+button {
+  font-size: 18px;
+}
+
+textarea,
+input,
+select {
+  outline: none;
+  border: none;
+  background: none;
+}
+
+button {
+  outline: none;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+html,
+body,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+abbr,
+address,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+samp,
+small,
+strong,
+sub,
+sup,
+var,
+b,
+i,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1;
+}
+
+nav ul {
+  list-style: none;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: "";
+  content: none;
+}
+
+a {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  text-decoration: none;
+  color: var(--text-primary) !important;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+abbr[title],
+dfn[title] {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+input,
+select {
+  vertical-align: middle;
+}
+
+ol,
+ul {
+  list-style: none;
+}

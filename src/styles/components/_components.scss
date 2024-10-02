@@ -1,0 +1,30 @@
+
+// TODO: 하단 영역 남음
+.fixed-action-wrapper { 
+  @include flex(flex-end, flex-start, row);
+  position: sticky;
+  bottom: 30px;
+  right: 0;
+  z-index: 10;
+  margin-right: 20px;
+  .fixed-action-inner {
+    display: grid;
+    grid-auto-rows: 48px;
+    gap: 12px;
+    width: 48px;
+    .icon-btn {
+      @include flex;
+      border-radius: 50%;
+      border: 1px solid var(--gray200, #E6E6EB);
+      background: #FFF;
+      box-shadow: 44px 48px 18px 0px rgba(0, 0, 0, 0.00), 28px 31px 17px 0px rgba(0, 0, 0, 0.01), 16px 17px 14px 0px rgba(0, 0, 0, 0.05), 7px 8px 10px 0px rgba(0, 0, 0, 0.09), 2px 2px 6px 0px rgba(0, 0, 0, 0.10);
+
+      &.read img {
+        @include size(22px, 16.5px);
+      }
+      &.write img {
+        @include size(17.62px, 20.74px);
+      }
+    }
+  }
+}

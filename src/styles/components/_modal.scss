@@ -1,0 +1,1473 @@
+
+.MuiDialog-root {
+  &.full-dialog-wrapper {
+    .MuiDialog-container, .MuiBackdrop-root, .MuiDialog-paper {
+      transition: none !important;
+    }
+    .MuiDialog-paper {
+      margin: 0;
+      max-width: 480px;
+      width: 100%;
+      max-height: 100%;
+      height: 100%;
+      border-radius: 0;
+      // scrollbar-width: none;
+      // --ms-overflow-style: none;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #1f1a2b 0%, #2d2a4c 50%, #403d69 100%);
+      background-attachment: fixed;
+
+      .custom-app-bar {
+        @include flex(flex-end, center, row);
+        background-color: transparent;
+        box-shadow: none;
+        padding: 20px 20px;
+        img {
+          @include same(20px);
+          cursor: pointer;
+        }
+      }
+
+      .full-dialog-inner {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        height: calc(100% - 48px);
+        padding-bottom: 48px;
+        .content-head {
+          @include flex(flex-end, center, row);
+          height: 31px;
+        }
+        .content-body {
+          margin-top: 16px;
+          margin-bottom: 27px;
+          .write-textarea-wrapper {
+            display: grid;
+            grid-template-rows: 1fr auto;
+            gap: 15px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.70);
+            box-shadow: 4px 4px 10px 0px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(2px);
+            border-radius: 8px;
+            overflow-y: auto; // 스크롤을 활성화하는 부분
+            .write-textarea {
+              @include scrollCustomSmall(#000);
+              padding: 34px;
+              min-height: 100%;
+              height: 100%;
+              max-height: 60dvh;
+              // background-color: red;
+              background-color: transparent;
+              overflow: auto;
+              &::before {
+                display: none;
+              }
+              @include string(16px, 24px, normal, 500, right, var(--black));
+            }
+            .string-length {
+              @include flex(flex-end, center, row);
+              padding: 0 16px 11px;
+              p {
+                @include string(16px, 24px, normal, 500, right, var(--black));
+              }
+            }
+          }
+        }
+        .content-foot {
+          @include flex(flex-end, content, row);
+          .submit {
+            @include size(auto, 44px);
+            border-radius: 8px;
+            padding: 10px;
+            background: var(--purple06);
+            @include string(16px, 24px, normal, 700, center, var(--white));
+          }
+        }
+      }
+    }
+  }
+}
+// .MuiDialog-root {
+//   // wallet
+//   &.select-small .MuiDialog-paper {
+//     width: 280px !important;
+//     .base-dialog-inner {
+//       .base-dialog-banner-body {
+//         &.language {
+//           .select-list {
+//             padding: 0 24px;
+//             .list-item {
+//               cursor: pointer;
+//               padding: 15px 16px;
+//               border-radius: 4px;
+//               background: transparent;
+//               &.isActive {
+//                 background: var(--background-hover);
+//                 p {
+//                   color: var(--text-primary);
+//                 }
+//               }
+//               p {
+//                 @include string(14px, 18px, normal, 500, left, var(--text-placeholder));
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   &.install-small .MuiDialog-paper {
+//     width: 315px !important;
+//     .base-dialog-inner {
+//       .base-dialog-banner-body {
+//         &.appInstall {
+//           .appInstall__inner {
+//             padding: 13px 24px 0;
+//             @include flex;
+//             .logo {
+//               @include size(136px, 21px);
+//             }
+//             .install-info {
+//               display: grid;
+//               grid-auto-rows: auto;
+//               margin-top: 37px;
+//               &__desc {
+//                 @include string(14px, 20px, 0.16px, 400, left, var(--text-primary));
+//                 span {
+//                   color: var(--link-primary);
+//                 }
+//               }
+//               .checkbox-custom-root {
+//                 margin: 16px 0;
+//                 .MuiTypography-root {
+//                   font-weight: 300;
+//                   line-height: 18px;
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   &.small .MuiDialog-paper {
+//     width: 420px !important;
+//     .base-dialog-inner {
+//       .base-dialog-body {
+//         .verify-confirm {
+//           .verify-confirm__title {
+//             @include string(14px, 18px, 0.16px, 400, left, var(--text-primary));
+//             span {
+//               color: var(--link-primary);
+//             }
+//           }
+//           .confirm-form-wrapper {
+//             margin-top: 16px;
+//             display: grid;
+//             grid-auto-rows: auto;
+//             gap: 16px;
+//             &__inner {
+//               display: grid;
+//               grid-template-columns: repeat(2, 1fr);
+//               align-items: center;
+//               gap: 16px;
+//             }
+//           }
+//         }
+//       }
+//       .base-dialog-banner-body {
+//         .tempImage-wrapper {
+//           background-color: var(--layer-02);
+//           min-height: 240px;
+//           @include breakpoint(mobile) {
+//             min-height: 178px;
+//           }
+//         }
+//         &.verify {
+//           img {
+//             @include same(100%);
+//             object-fit: contain;
+//           }
+//           .base-dialog-body {
+//             display: grid;
+//             grid-auto-rows: auto;
+//             margin-top: 24px;
+//             .verify__inner {
+//               margin-bottom: 28px;
+//               @include breakpoint(mobile) {
+//                 margin-bottom: 24px;
+//               }
+//               &--title {
+//                 @include string(16px, 20px, normal, 500, left, var(--text-primary));
+//                 margin-bottom: 16px;
+//                 @include breakpoint(mobile) {
+//                   margin-bottom: 24px;
+//                 }
+//               }
+//               &--desc {
+//                 li {
+//                   &:not(:last-of-type) {
+//                     margin-bottom: 20px;
+//                   }
+//                   p {
+//                     @include string(14px, 20px, 0.16px, 300, left, var(--text-secondary));
+//                     span {
+//                       color: var(--link-primary);
+//                       text-decoration: underline;
+//                     }
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+
+//         &.enable {
+//           img {
+//             @include same(100%);
+//             object-fit: contain;
+//           }
+//           .base-dialog-body {
+//             display: grid;
+//             grid-auto-rows: auto;
+//             margin-top: 24px;
+//             .enable__inner {
+//               margin-bottom: 24px;
+//               &--title {
+//                 @include string(20px, 28px, normal, 600, left, var(--text-primary));
+//                 margin-bottom: 20px;
+//                 @include breakpoint(mobile) {
+//                   margin-bottom: 24px;
+//                 }
+//               }
+//               &--desc {
+//                 li {
+//                   &:not(:last-of-type) {
+//                     margin-bottom: 20px;
+//                   }
+//                   p {
+//                     @include string(14px, 20px, 0.16px, 300, left, var(--text-secondary));
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   &.content-dialog-wrapper .MuiDialog-paper {
+//     width: 552px;
+//     // overflow: hidden;
+//     @include breakpoint(tablet) {
+//       width: auto;
+//     }
+//     .base-dialog-inner .base-dialog-body {
+//       margin: 8px 0 0;
+//       &.serverCheck {
+//         .info {
+//           display: grid;
+//           grid-auto-rows: auto;
+//           gap: 20px;
+//           &__title {
+//             @include string(14px, 22px, 0.16px, 500, left, var(--text-secondary));
+//           }
+//           &__inner {
+//             padding-bottom: 12px;
+//             li {
+//               &:first-of-type {
+//                 font-weight: 500;
+//                 margin-bottom: 8px;
+//               }
+//               &:not(:first-of-type) {
+//                 margin-bottom: 4px;
+//               }
+//               @include string(14px, 20px, 0.16px, 500, left, var(--text-on-color));
+//             }
+//           }
+//         }
+//       }
+//       &.promotion {
+//         .info {
+//           display: grid;
+//           grid-auto-rows: auto;
+//           gap: 16px;
+//           &__inner {
+//             padding-bottom: 12px;
+//             li {
+//               &:not(:last-of-type) {
+//                 margin-bottom: 8px;
+//               }
+//               @include string(14px, 20px, 0.16px, 400, left, var(--text-primary));
+//             }
+//           }
+//           &__action {
+//             display: grid;
+//             grid-template-columns: repeat(2, 1fr);
+//             gap: 8px;
+//             align-items: center;
+//           }
+//         }
+//       }
+//       &.notice {
+//         .notice-wrapper {
+//           display: grid;
+//           grid-auto-rows: auto;
+//           gap: 16px;
+//           &__inner {
+//             p {
+//               @include string(14px, 20px, 0.16px, 400, left, var(--text-secondary));
+//             }
+//           }
+//         }
+//       }
+//       &.sendToken {
+//         margin: 6px 0 0;
+//         width: calc(100% - 48px);
+//         display: grid;
+//         grid-auto-rows: auto;
+//         gap: 20px;
+//         @include breakpoint(mobile) {
+//           gap: 16px;
+//         }
+//         .send-user-form {
+//           width: 100%;
+//           .select-wrapper {
+//             display: grid;
+//             grid-auto-rows: auto;
+//             gap: 16px;
+//             width: 100%;
+//             margin-bottom: 16px;
+//             .select-inner {
+//               display: grid;
+//               grid-auto-rows: auto;
+//               .box-title {
+//                 @include string(12px, 16px, 0.32px, 400, left, var(--text-secondary));
+//                 margin-bottom: 8px;
+//               }
+//               .box-text {
+//                 @include string(14px, 20px, 0.32px, 400, left, var(--text-primary));
+//               }
+//               .MuiInputBase-root.base-select {
+//                 height: 40px;
+//                 .MuiSelect-select {
+//                   padding: 6px 29px 6px 16px;
+//                 }
+//                 &:not(.currency-select) {
+//                   .MuiSelect-select {
+//                     width: 100% !important;
+//                     height: calc(100% - 12px);
+//                     @include flex(flex-start, center, row);
+//                     overflow: hidden;
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//       &.campaign {
+//         margin: 6px 0 0;
+//         .campaign-form {
+//           display: grid;
+//           grid-auto-rows: auto;
+//           gap: 20px;
+//           &__inner {
+//             display: grid;
+//             grid-auto-rows: auto;
+//             gap: 16px;
+//           }
+//         }
+//         .alert-info {
+//           display: grid;
+//           grid-auto-rows: auto;
+//           gap: 16px;
+//           &__inner {
+//             .info-desc {
+//               margin-bottom: 16px;
+//               padding-bottom: 24px;
+//               border-bottom: 1px solid #393939;
+//               p {
+//                 @include string(14px, 20px, 0.16px, 400, left, var(--text-secondary));
+//                 &:not(:last-of-type) {
+//                   margin-bottom: 16px;
+//                 }
+//                 &:last-of-type {
+//                   margin-bottom: 24px;
+//                 }
+//               }
+//               span {
+//                 @include string(14px, 20px, 0.16px, 400, left, var(--link-primary));
+//                 text-decoration: underline;
+//                 cursor: pointer;
+//               }
+//             }
+//           }
+//         }
+//         .delete-info {
+//           display: grid;
+//           grid-auto-rows: auto;
+//           gap: 16px;
+//           &__inner {
+//             .info-desc {
+//               @include string(14px, 20px, 0.16px, 400, left, var(--text-secondary));
+//               margin-bottom: 16px;
+//               padding-bottom: 24px;
+//               border-bottom: 1px solid #393939;
+//             }
+//           }
+//         }
+//       }
+//       /* tab wrapper style */
+//       .tabs-wrapper {
+//         @include flex;
+//         padding: 0 54px;
+//         @include breakpoint(tablet) {
+//           padding: 0;
+//         }
+//         &.two-layout {
+//           .tabs-header {
+//             grid-template-columns: repeat(2, 1fr);
+//           }
+//         }
+//         .tabs-header {
+//           display: grid;
+//           grid-template-columns: repeat(3, 1fr);
+//           background-color: var(--background-default);
+//           padding: 4px;
+//           border-radius: 100px;
+//           width: 100%;
+//           @include breakpoint(tablet) {
+//             grid-template-columns: repeat(3, auto);
+//           }
+//           .tab-button {
+//             @include string(14px, 18px, 0.16px, 400, center, var(--text-primary));
+//             padding: 10px 0;
+//             border-radius: 100px;
+//             background-color: transparent;
+//             &[disabled] {
+//               opacity: 0.5;
+//               cursor: not-allowed;
+//             }
+//             &.active {
+//               background-color: var(--layer-02);
+//             }
+//           }
+//         }
+//       }
+//       .content-detail-wrapper {
+//         &.tabs-layout {
+//           margin-top: 24px;
+//           // .loading-bar {
+//           //   @include flex;
+//           //   min-height: 20vh;
+//           //   padding-bottom: 5%;
+//           //   svg {
+//           //     filter: invert(100%);
+//           //   }
+//           // }
+//         }
+//         /* recent list */
+//         .recent-wrapper {
+//           @include flex(flex-start, center, row);
+//           margin-top: 12px;
+//           gap: 8px;
+//           flex-wrap: wrap;
+//           min-height: 24px;
+//           .box-title {
+//             margin: 0;
+//           }
+//           .none {
+//             @include string(12px, 16px, 0.32px, 400, left, var(--text-primary));
+//           }
+//           .recent-inner {
+//             @include flex(flex-start, center, row);
+//             gap: 8px;
+//             flex-wrap: wrap;
+//             .recent-item {
+//               display: grid;
+//               grid-template-columns: 12px auto;
+//               gap: 4px;
+//               align-items: center;
+//               padding: 0 9px 0 8px;
+//               height: 24px;
+//               border-radius: 100px;
+//               box-sizing: border-box;
+//               border: 1px solid var(--border-border-subtle-02, #525252);
+//               cursor: pointer;
+//               .symbol-image {
+//                 @include same(12px);
+//               }
+//               .symbol-name {
+//                 @include string(12px, 16px, 0.32px, 400, left, var(--text-primary));
+//               }
+//             }
+//           }
+//         }
+//         .box-title {
+//           @include string(12px, 16px, 0.32px, 400, left, var(--text-secondary));
+//           margin-bottom: 8px;
+//           &.white {
+//             color: var(--text-primary);
+//           }
+//         }
+//         /* two-factor */
+//         .two-factor-layout-wrapper {
+//           .two-factor-layout-header {
+//             margin-bottom: 16px;
+//             .two-factor-layout-title {
+//               @include string(14px, 20px, 0.16px, 400, left, var(--text-primary));
+//               margin-bottom: 8px;
+//             }
+//             .two-factor-copy {
+//               display: grid;
+//               align-items: center;
+//               padding: 0 16px;
+//               height: 40px;
+//               background-color: var(--layer-02);
+//               @include breakpoint(tablet) {
+//                 height: auto;
+//                 padding: 12px 16px;
+//               }
+//               border-radius: var(--box-radius);
+//             }
+//           }
+//           .two-factor-caution {
+//             margin-bottom: 16px;
+//           }
+//           .two-factor-qr {
+//             @include flex;
+//             margin-bottom: 16px;
+//             background-color: var(--layer-02);
+//             padding: 32px 0;
+//             border-radius: var(--box-radius);
+//             img {
+//               border-radius: var(--box-radius);
+//             }
+//           }
+//           .two-factor-form {
+//             display: grid;
+//             grid-auto-rows: auto;
+//             gap: 24px;
+//           }
+//         }
+//         /* deposit */
+//         .deposit-layout-wrapper {
+//           padding-bottom: 12px;
+//           @include breakpoint(tablet) {
+//             padding: 0;
+//           }
+//           .deposit-layout-header {
+//             margin: 0 0 24px;
+//             .select-wrapper {
+//               display: grid;
+//               grid-template-columns: auto 182px;
+//               gap: 16px;
+//               width: 100%;
+//               @include breakpoint(tablet) {
+//                 grid-template-columns: 1fr;
+//                 grid-auto-rows: auto;
+//               }
+//               .select-inner {
+//                 display: grid;
+//                 grid-auto-rows: auto;
+//                 .selected-network {
+//                   @include flex(space-between, center, row);
+//                   padding: 0 16px;
+//                   height: 40px;
+//                   background-color: var(--layer-02);
+//                   border-radius: var(--box-radius);
+//                   p {
+//                     @include string(14px, 20px, 0.16px, 400, left, var(--text-secondary));
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//           .deposit-layout-body {
+//             margin-bottom: 12px;
+//             width: 100%;
+//             @include breakpoint(tablet) {
+//               margin-bottom: 16px;
+//             }
+//             .QRcode-wrapper {
+//               @include flex;
+//               border-radius: var(--box-radius);
+//               min-height: 100px;
+//               background: var(--layer-02);
+//               padding: 32px 10px 18px 10px;
+//               @include breakpoint(tablet) {
+//                 padding: 24px 16px 16px;
+//               }
+//               .QRcode-inner {
+//                 margin-bottom: 24px;
+//                 .QR-image {
+//                   border-radius: var(--box-radius);
+//                   overflow: hidden;
+//                 }
+//                 @include breakpoint(tablet) {
+//                   @include same(84px);
+//                 }
+//               }
+//             }
+//           }
+//         }
+//         /* withdraw */
+//         .withdraw-layout-wrapper {
+//           .select-wrapper {
+//             .select-coin {
+//               display: grid;
+//               grid-auto-rows: auto;
+//             }
+//             .select-inner {
+//               &.address {
+//                 margin-top: 24px;
+//                 @include breakpoint(tablet) {
+//                   margin-top: 12px;
+//                 }
+//               }
+//               &.network {
+//                 margin-top: 16px;
+//                 @include breakpoint(tablet) {
+//                   margin-top: 12px;
+//                 }
+//                 .selected-network {
+//                   @include flex(flex-start, center, row);
+//                   padding: 0 16px;
+//                   height: 40px;
+//                   background-color: var(--layer-02);
+//                   border-radius: var(--box-radius);
+//                   p {
+//                     @include string(14px, 20px, 0.16px, 400, left, var(--text-secondary));
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//           .caution-wrapper {
+//             margin-top: 16px;
+//           }
+//           .withdraw-layout-result {
+//             margin-top: 24px;
+//             display: grid;
+//             grid-auto-rows: auto;
+//             // gap: 32px;
+//             // @include breakpoint(tablet) {
+//             //   gap: 16px;
+//             // }
+//             .againWithdrawalInfo {
+//               @include string(14px, 18px, normal, 500, left, var(--text-error));
+//               margin-bottom: 24px;
+//             }
+//             .withdraw-layout-result-inner {
+//               display: grid;
+//               grid-template-columns: repeat(2, 1fr);
+//               gap: 32px;
+//               margin-bottom: 18px;
+//               @include breakpoint(tablet) {
+//                 grid-template-columns: 1fr;
+//                 grid-auto-rows: auto;
+//                 gap: 16px;
+//               }
+//               .amount-wrapper {
+//                 @include flex(space-between, flex-start);
+//                 @include breakpoint(tablet) {
+//                   justify-content: flex-start;
+//                 }
+//                 .amount-inner {
+//                   &__number {
+//                     @include string(24px, 32px, normal, 700, left, var(--text-primary));
+//                     height: 40px;
+//                     @include breakpoint(tablet) {
+//                       height: 32px;
+//                       margin-bottom: 4px;
+//                     }
+//                   }
+//                   &__fee {
+//                     @include string(12px, 16px, 0.32px, 300, left, var(--text-primary));
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//         /* buycrypto */
+//         .buycrypto-layout-wrapper {
+//           .buycrypto-layout-body {
+//             padding: 24px 0 24px;
+//             // min-height: rem(250);
+//             @include breakpoint(mobile) {
+//               padding: 0 0 24px;
+//             }
+//             .box-layout {
+//               @include flex(space-between, center, row);
+//               gap: 40px;
+
+//               @include breakpoint(mobile) {
+//                 display: grid;
+//                 grid-auto-rows: auto;
+//                 gap: 21px;
+//               }
+
+//               &:not(:last-of-type) {
+//                 padding-bottom: 24px;
+//                 margin-bottom: 24px;
+//                 border-bottom: 1px solid #393939;
+//               }
+//               &__content {
+//                 display: grid;
+//                 grid-template-columns: 45px auto;
+//                 align-items: center;
+//                 gap: 16px;
+//                 img {
+//                   @include same(45px);
+//                   object-fit: contain;
+//                 }
+//                 p {
+//                   @include string(12px, 18px, 0.32px, 400, left, var(--text-primary));
+//                   &:first-of-type {
+//                     @include string(14px, 20px, 0.16px, 600, left, var(--text-primary));
+//                     margin-bottom: 4px;
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//           /* 예전 디자인 레이아웃 */
+//           // padding-bottom: 7px;
+//           // @include breakpoint(tablet) {
+//           //   padding: 0;
+//           // }
+//           // .buycrypto-layout-body {
+//           //   .select-wrapper {
+//           //     .select-coin {
+//           //       display: grid;
+//           //       grid-auto-rows: auto;
+//           //     }
+//           //     .amount-wrapper {
+//           //       display: grid;
+//           //       grid-template-columns: 1.1fr 1.5fr;
+//           //       gap: 15px;
+//           //       margin-top: 24px;
+//           //       @include breakpoint(tablet) {
+//           //         grid-template-columns: 1fr;
+//           //         grid-template-rows: auto;
+//           //         gap: 16px;
+//           //         margin-top: 16px;
+//           //       }
+//           //       .will-pay-wrapper {
+//           //         .will-pay {
+//           //           @include flex(space-between, center, row);
+//           //           gap: 8px;
+//           //           border-radius: var(--box-radius);
+//           //           background: var(--layer-02);
+//           //           padding: 0 4px 0 16px;
+//           //           margin-bottom: 4px;
+//           //           height: 40px;
+//           //           box-sizing: border-box;
+
+//           //           &.error {
+//           //             border: 1px solid var(--support-error);
+//           //             padding: 0 3px 0 15px;
+//           //             .will-pay-value::before {
+//           //               opacity: 1;
+//           //             }
+//           //           }
+//           //           .will-pay-value {
+//           //             width: 100%;
+//           //             position: relative;
+//           //             &::before {
+//           //               @include same(16px);
+//           //               content: '';
+//           //               display: block;
+//           //               position: absolute;
+//           //               top: 50%;
+//           //               right: 0;
+//           //               transform: translateY(-50%);
+//           //               background: url($G-path-icon + 'input-error.svg') $G-img-contain;
+//           //               opacity: 0;
+//           //             }
+//           //             &__inner {
+//           //               @include string(12px, 16px, 0.32px, 300, left, var(--text-primary));
+//           //             }
+//           //           }
+//           //         }
+//           //         .amount-error {
+//           //           @include string(12px, 16px, 0.32px, 300, left, var(--text-error));
+//           //           opacity: 0;
+//           //           @include breakpoint(tablet) {
+//           //             display: none;
+//           //           }
+//           //           &.show {
+//           //             opacity: 1;
+//           //             @include breakpoint(tablet) {
+//           //               display: block;
+//           //             }
+//           //           }
+//           //         }
+//           //       }
+//           //     }
+//           //     .base-btn {
+//           //       margin: 8px 0 16px;
+//           //       width: 100%;
+//           //       @include breakpoint(tablet) {
+//           //         margin: 16px 0;
+//           //       }
+//           //     }
+//           //   }
+//           // }
+//         }
+
+//         /* vault */
+//         .vault-layout-wrapper {
+//           padding-bottom: 12px;
+//           @include breakpoint(tablet) {
+//             padding: 0;
+//           }
+//           .vault-layout-header {
+//             margin: 0 0 24px;
+//             .select-wrapper {
+//               display: grid;
+//               grid-template-columns: 2fr 1fr;
+//               gap: 16px;
+//               width: 100%;
+//               @include breakpoint(tablet) {
+//                 grid-template-columns: 1fr;
+//                 grid-auto-rows: auto;
+//               }
+//               .select-inner {
+//                 display: grid;
+//                 grid-auto-rows: auto;
+//                 .selected-network {
+//                   @include flex(space-between, center, row);
+//                   padding: 0 16px;
+//                   height: 40px;
+//                   background-color: var(--layer-02);
+//                   border-radius: var(--box-radius);
+//                   p {
+//                     @include string(14px, 20px, 0.16px, 400, left, var(--text-secondary));
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//           .vault-layout-body {
+//             display: grid;
+//             grid-auto-rows: auto;
+//             gap: 20px;
+//             width: 100%;
+//           }
+//         }
+//         /* vip progress */
+//         .progress-layout-wrapper {
+//           // min-height: 586px;
+//           @include breakpoint(mobile) {
+//             // min-height: 541px;
+//           }
+//           .caution {
+//             margin-top: 16px;
+//             span {
+//               &::before {
+//                 @include same(16px);
+//                 content: '';
+//                 display: inline-block;
+//                 background: url($G-path-icon + 'input-error.svg') $G-img-contain;
+//                 transform: translateY(2px);
+//                 margin-right: 5px;
+//               }
+//               @include string(14px, 18px, normal, 500, left, #FA4D56);
+//             }
+//           }
+//           .progress-layout-header {
+//             @include same(100%);
+//             &__img {
+//               @include same(100%);
+//               aspect-ratio: 372/160;
+//               object-fit: contain;
+//             }
+//             .user-grade {
+//               margin-top: 16px;
+//               margin-bottom: 12px;
+//               &__header {
+//                 @include flex(space-between, flex-end, row);
+//                 margin-bottom: 6px;
+//                 .user-state-grade {
+//                   @include flex(flex-start, center, row);
+//                   gap: 4px;
+//                   p {
+//                     @include string(16px, 20px, normal, 500, left, var(--text-primary));
+//                   }
+//                 }
+//                 .user-state-value {
+//                   @include string(14px, 18px, normal, 500, left, var(--text-primary));
+//                 }
+//               }
+//               &__step {
+//                 @include flex(space-between, center, row);
+//                 margin-top: 8px;
+//                 .row-item {
+//                   @include flex(flex-start, center, row);
+//                   gap: 2px;
+//                   p {
+//                     @include string(14px, 18px, normal, 400, left, var(--text-primary));
+//                   }
+//                   img {
+//                     @include same(24px);
+//                   }
+//                 }
+//               }
+//             }
+//             .info-msg {
+//               @include string(14px, 20px, 0.16px, 300, left, var(--text-primary));
+//             }
+//           }
+//           .progress-layout-body {
+//             margin-top: 21px;
+//             padding: 16px 24px;
+//             background-color: var(--background-default);
+//             border-radius: var(--box-radius);
+//             @include breakpoint(mobile) {
+//               margin-top: 4px;
+//               padding: 16px;
+//             }
+//             .propgress-list {
+//               display: grid;
+//               grid-template-columns: 0.85fr 2fr 0.75fr;
+//               @include breakpoint(mobile) {
+//                 grid-template-columns: 71px 84px 56px;
+//                 justify-content: space-between;
+//               }
+//               &.propgress-list-header {
+//                 li {
+//                   color: var(--text-secondary);
+//                   margin-bottom: 12px;
+//                 }
+//               }
+//               &.propgress-list-body {
+//                 &:not(:last-of-type) li {
+//                   margin-bottom: 8px;
+//                 }
+//                 li {
+//                   &.grade-symbol {
+//                     @include flex(flex-start, center, row);
+//                     gap: 5px;
+//                     @each $icon in Iron, Bronze, Silver, Gold, Platinum, Emerald, Diamond {
+//                     &.#{$icon} {
+//                         &::before {
+//                           @include same(16px);
+//                           content: '';
+//                           display: block;
+//                           background: url($G-path-grade + '#{$icon}.png') $G-img-contain;
+//                         }
+//                       }
+//                     }
+//                   }
+//                 }
+//               }
+//               li {
+//                 &:not(:first-of-type) {
+//                   text-align: center;
+//                 }
+//                 @include string(12px, 16px, 0.32px, 300, left, var(--text-primary));
+//               }
+//             }
+//           }
+//         }
+//       }
+//       /* vip claim */
+//       .claim-layout-wrapper {
+//         // min-height: 586px;
+//         // max-height: 586px;
+//         @include breakpoint(mobile) {
+//           // min-height: 541px;
+//           // max-height: 541px;
+//         }
+//         .claim-layout-header {
+//           .user-grade {
+//             margin-top: 24px;
+//             margin-bottom: 28px;
+//             &__header {
+//               @include flex(space-between, flex-end, row);
+//               margin-bottom: 6px;
+//               .user-state-grade {
+//                 @include flex(flex-start, center, row);
+//                 gap: 4px;
+//                 p {
+//                   @include string(16px, 20px, normal, 500, left, var(--text-primary));
+//                 }
+//               }
+//               .user-state-value {
+//                 @include string(14px, 18px, normal, 500, left, var(--text-primary));
+//               }
+//             }
+//             &__step {
+//               @include flex(space-between, center, row);
+//               margin-top: 8px;
+//               .row-item {
+//                 @include flex(flex-start, center, row);
+//                 gap: 2px;
+//                 p {
+//                   @include string(14px, 18px, normal, 400, left, var(--text-primary));
+//                 }
+//                 img {
+//                   @include same(24px);
+//                 }
+//               }
+//             }
+//           }
+//         }
+//         .claim-layout-body {
+//           .caution-wrapper {
+//             padding: 12px 24px 16px 16px;
+//           }
+//           .claim-list {
+//             @include scrollCustomSmall;
+//             padding: 14px 17px 14px 24px;
+//             background-color: var(--background-default);
+//             border-radius: var(--box-radius);
+//             margin-bottom: 20px;
+//             max-height: calc(334px - 28px);
+//             height: 100%;
+//             min-height: calc(334px - 28px);
+//             overflow-y: auto;
+//             @include breakpoint(mobile) {
+//               padding: 16px;
+//               // max-height: calc(262px - 32px);
+//               // min-height: calc(262px - 32px);
+//             }
+//             .claim-list-item {
+//               @include flex(space-between, center, row);
+//               gap: 19px;
+//               min-height: 32px;
+//               @include breakpoint(mobile) {
+//                 gap: 0;
+//               }
+//               &:not(:last-of-type) {
+//                 margin-bottom: 16px;
+//               }
+//               .symbol {
+//                 display: grid;
+//                 grid-template-columns: 20px auto;
+//                 gap: 8px;
+//                 align-items: center;
+//                 @include breakpoint(mobile) {
+//                   @include flex(flex-start, flex-start);
+//                   gap: 0;
+//                 }
+//                 .ticker {
+//                   @include breakpoint(mobile) {
+//                     display: grid;
+//                     grid-template-columns: 20px auto;
+//                     gap: 8px;
+//                     align-items: center;
+//                     margin-bottom: 5px;
+//                   }
+//                   img {
+//                     @include same(20px);
+//                   }
+//                   p {
+//                     display: none;
+//                     @include breakpoint(mobile) {
+//                       display: block;
+//                       @include string(14px, 18px, normal, 300, left, var(--text-primary));
+//                     }
+//                   }
+//                 }
+//                 .amount {
+//                   @include flex(flex-start, center, row);
+//                   gap: 4px;
+//                   @include breakpoint(mobile) {
+//                     .symbolName {
+//                       display: none;
+//                     }
+//                   }
+//                   p {
+//                     @include string(14px, 18px, normal, 300, left, var(--text-primary));
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+//     .base-dialog-footer {
+//       background-color: var(--layer-01);
+//       .base-dialog-footer-inner {
+//         display: grid;
+//         grid-template-columns: 1fr auto;
+//         align-items: center;
+//         justify-content: space-between;
+//         background: url($G-path-content + 'modal-2fa-bg.png') $G-img-cover;
+//         padding: 31px 24px 31px 32px;
+//         gap: 32px;
+//         @include breakpoint(tablet) {
+//           @include flex;
+//           gap: 0;
+//           padding: 16px;
+//         }
+//         .info-desc {
+//           p {
+//             @include string(14px, 18px, 0.16px, 400, left, var(--text-primary));
+//             @include flex(flex-start, center, row);
+//             gap: 2px;
+//             display: inline-block;
+//             @include breakpoint(tablet) {
+//               margin-bottom: 16px;
+//             }
+//             .break-m {
+//               display: none;
+//               @include breakpoint(tablet) {
+//                 display: block;
+//               }
+//             }
+//             &::after {
+//               @include same(16px);
+//               content: '';
+//               display: inline-block;
+//               transform: translate(2px , 3px);
+//               background: url($G-path-icon + 'info.svg') $G-img-contain;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   // Information
+//   &.information-dialog-wrapper .MuiDialog-paper {
+//     width: 744px;
+//     @include breakpoint(tablet) {
+//       width: auto;
+//     }
+//     .base-dialog-inner {
+//       .base-dialog-body {
+//         margin: 8px 0 0;
+//         .information-descript-wrapper {
+//           @include scrollCustomSmall;
+//           overflow-y: auto;
+//           overflow-x: hidden;
+//           max-height: 412px;
+//           height: 100%;
+//           @include breakpoint(tablet) {
+//             max-height: 388px;
+//           }
+//           span {
+//             @include string(14px, 20px, 0.16px, 400, left, var(--text-secondary));
+//           }
+//         }
+//         .information-descript-check {
+//           @include flex(space-between, center, row);
+//           margin: 37px 0 0;
+//           @include breakpoint(tablet) {
+//             @include flex(flex-start, flex-start);
+//             margin: 15px 0 0;
+//             .base-btn {
+//               margin-top: 16px;
+//               width: 100%;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   &.base-dialog-wrapper .MuiDialog-paper {
+//     @include scrollCustomSmall;
+//     max-width: 100%;
+//     border-radius: var(--box-radius);
+//     background-color: transparent;
+//     // overflow: hidden;
+//     // width: 420px;
+//     @include breakpoint(tablet) {
+//       width: 420px;
+//       margin: 24px;
+//     }
+//     .base-dialog-banner-wrapper {
+//     }
+//     .base-dialog-inner {
+//       background-color: var(--layer-01);
+//       padding: 0 0 24px;
+//       &.bottom-p-32 {
+//         padding: 0 0 32px;
+//       }
+//       &.m-bottom-p-24 {
+//         @include breakpoint(mobile) {
+//           padding: 0 0 24px !important;
+//         }
+//       }
+//       .base-dialog-body {
+//         padding: 0 24px;
+//         &.soon {
+//           .soon-inner {
+//             @include flex;
+//             img {
+//               object-fit: contain;
+//               width: 60%;
+//               margin-bottom: 12px;
+//             }
+//             p {
+//               @include string(16px, 20px, normal, 500, left, var(--text-primary));
+//             }
+//           }
+//         }
+//         &.selfExclusion {
+//           display: grid;
+//           grid-auto-rows: auto;
+//           gap: 24px;
+//           .selfExclusion-inner {
+//             &__title {
+//               @include string(14px, 20px, 0.16, 300, left, var(--text-primary));
+//               span {
+//                 color: var(--link-ink-secondary, #FFD976);
+//                 // cursor: pointer;
+//                 // &:hover {
+//                   // text-decoration: underline;
+//                 // }
+//               }
+//               margin-bottom: 20px;
+//             }
+//             &__desc {
+//               li {
+//                 &:last-of-type {
+//                   margin-top: 20px;
+//                 }
+//                 p {
+//                   @include string(14px, 20px, 0.16, 300, left, var(--text-secondary));
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//       .base-dialog-header {
+//         position: sticky;
+//         top: 0;
+//         left: 0;
+//         z-index: 100;
+//         background-color: var(--layer-01);
+//         padding: 24px;
+//         &__title {
+//           @include string(14px, 20px, normal, 600, left, var(--text-primary));
+
+//           &.medium {
+//             font-size: 16px;
+//           }
+//           &.caution {
+//             color: #DA1E28;
+//             font-weight: 800;
+//           }
+//           @include breakpoint(tablet) {
+//             @include string(16px, 20px, normal, 600, left, var(--text-primary));
+//           }
+//         }
+//         .close-btn {
+//           @include same(40px);
+//           background: url($G-path-icon + 'modal-close.svg') $G-img-contain;
+//           position: absolute;
+//           top: 8px;
+//           right: 8px;
+//           z-index: 99;
+//           transition: background 0.2s ease-out;
+//           &:hover {
+//             background: url($G-path-icon + 'modal-close-hover.svg') $G-img-contain;
+//           }
+//           &:active {
+//             background: url($G-path-icon + 'modal-close-active.svg') $G-img-contain;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
+// .base-dialog-wrapper .base-dialog-banner-wrapper.signin {
+//   min-height: rem(530);
+//   @include breakpoint(mobile) {
+//     min-height: auto;
+//     // min-height: 502px;
+//   }
+// }
+// .base-dialog-wrapper .base-dialog-banner-wrapper .base-dialog-inner .base-dialog-body {
+//   // register
+//   .register-form-wrapper {
+//     margin: 8px 0 0;
+//     @include breakpoint(tablet) {
+//       margin-top: 0;
+//     }
+//     .register-form-inner {
+//       display: grid;
+//       grid-auto-columns: auto;
+//       gap: 16px;
+//       .password-wrapper {
+//         .password-inner {
+//           display: grid;
+//           grid-template-columns: repeat(2, 1fr);
+//           gap: 8px;
+//         }
+//         .form-input-msg {
+//           @include string(12px, 16px, 0.32px, 400, left, var(--text-secondary));
+//           display: inline-block;
+//           margin-top: 4px;
+//         }
+//       }
+//       .date-select-wrapper {
+//         .date-select-title {
+//           @include string(14px, 18px, normal, 500, left, var(--text-secondary));
+//           margin-bottom: 4px;
+//         }
+//         .date-select-inner {
+//           display: grid;
+//           grid-template-columns: repeat(3, 1fr);
+//           gap: 8px;
+//         }
+//         .date-select-msg {
+//           @include string(12px, 16px, 0.32px, 400, left, var(--text-error));
+//           margin-top: 4px;
+//           display: block;
+//         }
+//       }
+//     }
+//     .register-form-submit {
+//       margin-top: 16px;
+//       .base-btn {
+//         width: 100%;
+//       }
+//     }
+//   }
+//   // signin
+//   .signin-form-wrapper {
+//     .signin-form-inner {
+//       .form-input-wrapper {
+//         &:first-of-type {
+//           margin-bottom: 16px;
+//         }
+//       }
+//     }
+//     .signin-form-submit {
+//       @include flex(flex-start, flex-end);
+//       margin-top: 8px;
+//       @include breakpoint(tablet) {
+//         margin-top: 16px;
+//       }
+//       .text-btn {
+//         margin-bottom: 8px;
+//       }
+//       .base-btn {
+//         width: 100%;
+//       }
+//     }
+//   }
+//   .resetPassword-form-inner {
+//     display: grid;
+//     grid-auto-rows: auto;
+//     gap: 16px;
+//     .password-wrapper {
+//       display: grid;
+//       grid-auto-rows: auto;
+//       gap: 16px;
+//       .password-inner {
+//         .form-input-msg {
+//           @include string(12px, 16px, 0.32px, 400, left, var(--text-secondary));
+//           display: inline-block;
+//           margin-top: 7px;
+//         }
+//       }
+//     }
+//   }
+//   .confirm-form-wrapper {
+//     display: grid;
+//     grid-auto-rows: auto;
+//     gap: 16px;
+//   }
+//   .signin-sns-wrapper {
+//     margin-top: 24px;
+//     .or-border {
+//       display: grid;
+//       grid-template-columns: 1fr auto 1fr;
+//       align-items: center;
+//       gap: 12px;
+//       @include breakpoint(tablet) {
+//         gap: 16px;
+//       }
+//       &::before, &::after {
+//         display: block;
+//         content: '';
+//         @include size(100%, 1px);
+//         background-color: var(--border-subtle-02);
+//       }
+//       p {
+//         @include string(12px, normal, normal, 300, center, var(--text-primary));
+//       }
+//     }
+//     .signin-sns-inner {
+//       // @include flex(space-between, center, row);
+//       // gap: 10px;
+//       margin-top: 16px;
+//       @include breakpoint(tablet) {
+//         // display: grid;
+//         // grid-template-columns: repeat(3, 1fr);
+//         // gap: 6px;
+//         margin-top: 18px;
+//       }
+//       .sns-sign-in {
+//         p {
+//           @include string(14px, 18px, normal, 500, center, var(--text-primary));
+//           @include breakpoint(mobile) {
+//             // display: none;
+//           }
+//         }
+//         width: 100%;
+//         @include flex(center, center, row);
+//         // display: grid;
+//         // grid-template-columns: 16px auto;
+//         gap: 6px;
+//         // align-items: center;
+//         padding: 0 10px;
+//         height: 40px;
+//         border-radius: var(--box-radius);
+//         text-transform: none;
+//         border: 1px solid var(--border-inverse);
+//         @include breakpoint(tablet) {
+//           // @include flex(center, center, row);
+//           gap: 10px;
+//         }
+//         @include breakpoint(mobile) {
+//           // @include flex;
+//           // gap: 0;
+//           // padding: 0;
+//         }
+//         @each $icon in facebook, google, whatsapp {
+//         &.#{$icon} {
+//             &::before {
+//               @include same(16px);
+//               background: url($G-path-icon + 'sign-in-#{$icon}.svg') $G-img-contain;
+//               content: '';
+//               display: block;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+//   .register-guide-wrapper {
+//     @include flex(center, center, row);
+//     gap: 4px;
+//     margin: 48px 0 16px;
+//     @include breakpoint(tablet) {
+//       margin: 26px 0 0;
+//     }
+//     p {
+//       @include string(12px, 16px, 0.32px, 400, left, var(--text-helper));
+//     }
+//   }
+//   .signin-guide-wrapper {
+//     @include flex(center, center, row);
+//     gap: 4px;
+//     margin: 28px 0 4px;
+//     @include breakpoint(tablet) {
+//       margin: 28px 0 0;
+//     }
+//     p {
+//       @include string(12px, 16px, 0.32px, 400, left, var(--text-helper));
+//     }
+//   }
+// }

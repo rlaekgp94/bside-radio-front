@@ -1,0 +1,117 @@
+@import "./variables.scss";
+
+
+@mixin setIcon($width, $height, $file, $color) {
+  @include size($width, $height);
+  mask-image: url($G-path-icon + '#{$file}.svg');
+  -webkit-mask-image: url($G-path-icon + '#{$file}.svg');
+  background-color: $color;
+  mask-size: contain;
+  -webkit-mask-size: contain;
+  mask-repeat: no-repeat;
+}
+
+@mixin disableDrag() {
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none
+}
+
+@mixin string(
+  $size,
+  $height,
+  $spacing,
+  $weight: normal,
+  $align: left,
+  $color: var(--text-primary)
+) {
+  font-family: 'Pretendard';
+  font-size: $size;
+  line-height: $height;
+  letter-spacing: $spacing;
+  font-weight: $weight;
+  text-align: $align;
+  color: $color;
+}
+
+@mixin size($width, $height: auto) {
+  width: $width;
+  height: $height;
+  @content;
+}
+
+@mixin same($size) {
+  width: $size;
+  height: $size;
+  @content;
+}
+
+@mixin flex($content: center, $align: center, $col: column) {
+  display: flex;
+  justify-content: $content;
+  align-items: $align;
+  flex-direction: $col;
+}
+
+
+@mixin iconSet {
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+@-webkit-keyframes fadeInUp{
+  0%{transform:translate(0px, 20px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+@-moz-keyframes fadeInUp{
+  0%{transform:translate(0px, 20px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+@keyframes fadeInUp{
+  0%{transform:translate(0px, 20px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+@-webkit-keyframes fadeInUp2{
+  0%{transform:translate(0px, 20px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+@-moz-keyframes fadeInUp2{
+  0%{transform:translate(0px, 20px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+@keyframes fadeInUp2{
+  0%{transform:translate(0px, 20px); opacity: 0;}
+  100%{transform:translate(0px, 0); opacity: 1;}
+}
+@-webkit-keyframes fadeIn{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+@-moz-keyframes fadeIn{
+  0%{opacity: 0;}
+  100%{opacity: 1;}
+}
+@keyframes fadeIn{
+  0%{opacity: 1;}
+  100%{opacity: 0;}
+}
+
+
+@mixin scrollCustomSmall($color: #fff) {
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: $color;
+  }
+}

@@ -1,0 +1,315 @@
+// .navigation {
+//   @include flex;
+//   @include size(100%, var(--G-header-hegiht));
+//   border-bottom: 1px solid #393939;
+//   box-sizing: border-box;
+//   background-color: var(--background-default);
+//   @include breakpoint(mobile) {
+//     @include flex(space-between, center);
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+//     z-index: 1000;
+//     height: var(--G-header-hegiht-m);
+//     // padding-top: 10px;
+//     // .x-start {
+//     //   width: auto !important;
+//     // }
+//     // .logo-wrapper .slogan {
+//     //   display: none !important;
+//     // }
+//     // .mobile-header-line {
+//     //   display: block !important;
+//     // }
+//   }
+//   .mobile-header-line {
+//     width: 100%;
+//     height: 30px;
+//     z-index: 10;
+//     background-color: var(--layer-02);
+//     margin-top: 10px;
+//     &__inner {
+//       @include flex;
+//       height: 100%;
+//       .slogan {
+//         @include string(11px, 12px, 0.16px, 500, left, var(--text-primary));
+//         opacity: 0.9;
+//       }
+//     }
+//   }
+//   &__inner {
+//     @include flex(space-between, center, row);
+//     max-width: var(--G-max-width);
+//     width: calc(100% - 6vw);
+//     padding: 0 3vw;
+//     @include breakpoint(ready) {
+//     }
+//     @include breakpoint(mobile) {
+//       width: calc(100% - 32px);
+//       padding: 0 16px;
+//     }
+//     .x-start {
+//       .logo-wrapper {
+//         @include flex(flex-start, flex-start);
+//         cursor: pointer;
+//         .logo {
+//           @include size(rem(134), rem(21));
+//           display: block;
+//           background: url($G-path-logo + 'logo_image.png') $G-img-contain;
+//           &.in-logo {
+//             @include size(46px, 25px);
+//             background: url($G-path-logo + 'logo_m_image.png') $G-img-contain;
+//           }
+//           &.out-logo {
+//             @include size(115px, 20px);
+//           }
+//         }
+//         .slogan {
+//           @include string(11px, 12px, 0.16px, 500, left, var(--text-secondary));
+//           margin-top: 5px;
+//           opacity: 0.9;
+//         }
+//       }
+//     }
+
+//     .logged-layout {
+//       @include flex(flex-end, center, row);
+//       .search-btn {
+//         @include same(20px);
+//         // background: url($G-path-icon + 'search.svg') $G-img-contain;
+//         @include breakpoint(mobile) {
+//           display: none;
+//         }
+//       }
+//       &.logged-in {
+//         gap: rem(28);
+//         @include breakpoint(mobile) {
+//           justify-content: space-between;
+//           gap: 0;
+//           width: 100%;
+//         }
+//         .wallet-wrapeer {
+//           @include flex(flex-start, center, row);
+//           border-radius: var(--box-radius);
+//           background: var(--layer-01);
+//           padding: 4px;
+//           @include breakpoint(tablet) {
+//             padding: 0 5px;
+//             height: 40px;
+//           }
+//           .current-balance-wrapper {
+//             position: relative;
+//             &__inner {
+//               @include flex(flex-start, center, row);
+//               padding: 0 16px;
+//               gap: rem(12);
+//               cursor: pointer;
+//               @include breakpoint(tablet) {
+//                 gap: 8px;
+//               }
+//               @include breakpoint(mobile) {
+//                 padding: 0 8px;
+//               }
+//               .amount {
+//                 @include string(14px, 18px, 0.16px, 500, left, var(--text-primary));
+//                 @include disableDrag;
+//                 min-width: 80px;
+//                 @include breakpoint(tablet) {
+//                   font-weight: 400;
+//                 }
+//               }
+//               .currency {
+//                 @include same(rem(22));
+//                 @include breakpoint(tablet) {
+//                   @include same(20px);
+//                 }
+//               }
+//             }
+//           }
+//         }
+//         .user-support {
+//           @include flex(flex-start, center, row);
+//           gap: 10px;
+//           @include breakpoint(mobile) {
+//             @include same(30px);
+//             position: relative;
+//           }
+//           .icon-r {
+//             @include flex;
+//             @include same(30px);
+//             padding: 0;
+//             min-width: inherit;
+//             &.chat{
+//               @include breakpoint(mobile) {
+//                 display: none;
+//               }
+//             }
+//             &.notifications {
+//               position: relative;
+//               &.hasNoti::before {
+//                 @include same(6px);
+//                 content: '';
+//                 display: block;
+//                 background-color: var(--support-error);
+//                 border-radius: 50%;
+//                 position: absolute;
+//                 top: 0;
+//                 right: 0;
+//                 transform: translate(-5px, 5px);
+//                 z-index: 1;
+//                 border: 1.5px solid var(--background-default);
+//               }
+//             }
+//             @each $icon in profile, notifications, chat {
+//             &.#{$icon} {
+//                 &::after {
+//                   @include same(20px);
+//                   // background: url($G-path-icon + '#{$icon}.svg') $G-img-contain;
+//                   content: '';
+//                   display: block;
+//                 }
+//               }
+//             }
+//           }
+//           &__inner {
+//             @include breakpoint(mobile) {
+//               position: absolute;
+//               top: 0;
+//               right: 36px;
+//             }
+//             @include breakpoint(minMobile) {
+//               right: 20px;
+//             }
+//             @media only screen and (max-width:320px) {
+//               position: static;
+//             }
+//           }
+//           .user-profile-wrapper {
+//             position: relative;
+//             .p-tooltip {
+//               position: absolute;
+//               bottom: -8px;
+//               left: 50%;
+//               transform: translateX(-50%) translateY(100%);
+//               z-index: 1301;
+//               &__inner {
+//                 background: var(--background-inverse);
+//                 border-radius: var(--box-radius);
+//                 width: rem(184);
+//                 padding: rem(8) 0;
+
+//                 @include breakpoint(mobile) {
+//                   max-width: 125px;
+//                 }
+//                 @include breakpoint(minMobile) {
+//                   max-width: 100px;
+//                 }
+//                 &::before {
+//                   content: '';
+//                   display: block;
+//                   @include same(12px);
+//                   background: var(--background-inverse);
+//                   position: absolute;
+//                   top: -4px;
+//                   left: 50%;
+//                   transform: translateX(-50%) rotate(-45deg);
+//                   z-index: 9;
+//                 }
+//                 .profile-item {
+//                   padding: rem(12) rem(24);
+//                   @include breakpoint(mobile) {
+//                     padding: 8px 10px;
+//                   }
+//                   cursor: pointer;
+//                   display: grid;
+//                   grid-template-columns: 20px auto;
+//                   gap: 8px;
+//                   align-items: center;
+//                   @include breakpoint(mobile) {
+//                     grid-template-columns: 16px auto;
+//                     gap: 4px;
+//                   }
+//                   .icon-r {
+//                     @each $icon in promotion, redeemCode, wallet, vault, vip, affiliate, statistics, history, settings, logout {
+//                       &.#{$icon} {
+//                         @include setIcon(20px, 20px, "leftbar-button-#{$icon}", var(--icon-inverse));
+//                         @include breakpoint(mobile) {
+//                           @include same(16px);
+//                         }
+//                       }
+//                     }
+//                   }
+//                   p {
+//                     @include string(14px, 18px, normal, 600, left, var(--text-inverse));
+//                     word-break: break-all;
+//                     @include breakpoint(mobile) {
+//                       @include string(12px, 16px, normal, 600, left, var(--text-inverse));
+//                     }
+//                   }
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//       &.logged-out {
+//         gap: 8px;
+//         .user-sign {
+//           @include flex(flex-end, center, row);
+//           gap: 8px;
+//         }
+//         @include breakpoint(mobile) {
+//           justify-content: space-between;
+//           gap: 7px;
+//           width: 100%;
+//         }
+//       }
+//     }
+//   }
+// }
+
+
+// .mobile-navigation {
+//   height: var(--G-navigation-hegiht-m);
+//   border-top: 1px solid var(--border-subtle-01);
+//   background: var(--background-default);
+//   box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.50);
+//   position: relative;
+//   z-index: 910;
+//   @include breakpoint(mobile) {
+//     position: fixed;
+//     bottom: 0;
+//     left: 0;
+//     width: 100%;
+//   }
+//   &__inner {
+//     height: 100%;
+//     .nav-list {
+//       display: grid;
+//       grid-template-columns: repeat(5, 1fr);
+//       align-items: center;
+//       height: 100%;
+//       .nav-item {
+//         @include flex;
+//         height: 100%;
+//         &__inner {
+//           @include flex;
+//           cursor: pointer;
+//           @each $icon in browse, casino, slot, wallet, chat {
+//             &.#{$icon} {
+//               &::before {
+//                 @include same(20px);
+//                 // background: url($G-path-icon + 'm-navigation-#{$icon}.svg') $G-img-contain;
+//                 content: '';
+//                 display: block;
+//               }
+//             }
+//           }
+//           p {
+//             @include string(12px, 16px, 0.32px, 400, left, var(--text-primary));
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
