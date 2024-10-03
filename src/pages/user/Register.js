@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 
 import Switch from 'components/item/Toggle'
 
 import ImgLetterStamp from 'assets/Content/purple-letter-stamp.svg'
 
 export default function Register() {
+  const navigate = useNavigate();
   const [nickname, setNickname] = useState("");
   const [type, setType] = useState("F");
   const [active, setActive] = useState(false);
