@@ -1,12 +1,24 @@
 
 // TODO: 하단 영역 남음
 .fixed-action-wrapper { 
-  @include flex(flex-end, flex-start, row);
-  position: sticky;
+  @include flex(flex-end, flex-start, row);  
+  position: fixed;
+  // $vw: var(--vw);
+  // right: calc(50% - (#{$vw} / 2));
   bottom: 30px;
-  right: 0;
-  transform: translateX(-20px);
   z-index: 10;
+
+  // 480px 이하일 때 적용할 스타일
+  @media only screen and (max-width: 480px) {
+    right: 20px;
+    transform: translate(0, 0);
+  }
+
+  // 480px 초과일 때 적용할 스타일
+  @media only screen and (min-width: 481px) {
+    right: calc(50% - 240px);
+    transform: translate(-50%, 0);
+  }
   .fixed-action-inner {
     display: grid;
     grid-auto-rows: 48px;
