@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 import { letterResponseAPI } from 'api/v1/letters'
 
-import Toggle from 'components/item/Toggle'
+import TypeToggle from 'components/item/TypeToggle'
 
 function Result() {
   const nav = useNavigate();
@@ -16,7 +16,7 @@ function Result() {
     return (
       <div className="result">
         <div className="result__inner">
-          <div>{resultData?.message_t}</div>
+          <div>test</div>
         </div>
       </div>
     )

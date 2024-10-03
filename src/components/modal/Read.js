@@ -10,8 +10,6 @@ import { DATA } from 'constants'
 import IconClose from 'assets/Icon/icon-close-b.svg'
 import ImgLetterStampF from 'assets/Content/f-letter-stamp.svg'
 import ImgLetterStampT from 'assets/Content/t-letter-stamp.svg'
-import ImgRabbitPostF from 'assets/Content/f-rabbit-post.svg'
-import ImgRabbitPostT from 'assets/Content/t-rabbit-post.svg'
 
 const mock = {
   id: 1,
@@ -27,8 +25,8 @@ const mock = {
 
 const MessageList = ({ reply, preference }) => {
   const messages = [
-    { content: reply.message_f, type: 'F', postImg: ImgRabbitPostF, stmapImg: ImgLetterStampF },
-    { content: reply.message_t, type: 'T', postImg: ImgRabbitPostT, stmapImg: ImgLetterStampT },
+    { content: reply.message_f, type: 'F', stmapImg: ImgLetterStampF },
+    { content: reply.message_t, type: 'T', stmapImg: ImgLetterStampT },
   ];
 
   const sortedMessages = messages.sort((a, b) => {
@@ -44,7 +42,8 @@ const MessageList = ({ reply, preference }) => {
             <p className="desc">{message.content}</p>
           </div>
           <div className="img-layout">
-            <img className="post" src={message.postImg} alt="rabbit post text 토끼 편지 문구 이미지" />
+            {/* <img className="post" src={message.postImg} alt="rabbit post text 토끼 편지 문구 이미지" /> */}
+            <p className={`post color-${message.type}`}>Rabbit Post-{message.type}</p>
             <img className="stamp" src={message.stmapImg} alt="rabbit stamp img 토끼 스탬프 이미지" />
           </div>
         </li>

@@ -7,7 +7,7 @@ import { letterResponseAPI } from 'api/v1/letters'
 
 import Dialog from '@mui/material/Dialog';
 import AppBar from '@mui/material/AppBar';
-import Toggle from 'components/item/Toggle'
+import TypeToggle from 'components/item/TypeToggle'
 
 import IconClose from 'assets/Icon/icon-close-p.svg'
 import RabbitImg from 'assets/Content/letter-write-rabbit-top.png'
@@ -86,7 +86,7 @@ export default function Write() {
           </AppBar>
           <div className="full-dialog-inner layout-p">
             <div className="content-head">
-              <Toggle setActive={setActive} active={active} />
+              <TypeToggle setActive={setActive} active={active} />
             </div>
             <div className="asset-container">
               <div className="speech-bubble">
@@ -97,6 +97,8 @@ export default function Write() {
             <div className="content-body">
               <div className="write-textarea-wrapper">
                 <textarea
+                  autoComplete="off"
+                  id="write-textarea"
                   className="write-textarea"
                   name="write-textarea"
                   placeholder="편지를 써보세요..."

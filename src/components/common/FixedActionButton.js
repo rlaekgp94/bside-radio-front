@@ -1,7 +1,6 @@
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
-import { openModal } from 'store/modules/components';
 
 import IconRead from 'assets/Icon/icon-read.svg';
 import IconWrite from 'assets/Icon/icon-write.svg';
@@ -9,7 +8,6 @@ import IconWrite from 'assets/Icon/icon-write.svg';
 export default function FixedActionButton() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const dispatch = useDispatch();
 
   const excludedPaths = ['/login', '/register', '/result', '/write'];
   

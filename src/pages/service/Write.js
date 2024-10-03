@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 
 import { letterResponseAPI } from 'api/v1/letters'
-import Toggle from 'components/item/Toggle'
+import TypeToggle from 'components/item/TypeToggle'
 
-import IconClose from 'assets/Icon/icon-close-p.svg'
+import IconClose from 'assets/Icon/icon-close-b.svg'
 import RabbitImg from 'assets/Content/letter-write-rabbit-top.png'
 
 function WriteLayout({active, setActive, textareaVal, setTextareVal, letterResponse}) {
@@ -33,7 +33,7 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
       </div>
       <div className="write-container layout-p">
         <div className="content-head">
-          <Toggle setActive={setActive} active={active} />
+          <TypeToggle setActive={setActive} active={active} />
         </div>
         <div className="asset-container">
           <div className="speech-bubble">

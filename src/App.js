@@ -5,13 +5,13 @@ import PrivateRoute from './utils/PrivateRoute';
 
 import Layout from './Layout';
 
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './pages/user/Login';
+import Register from './pages/user/Register';
 
 import Home from './pages/Home';
-import Letterbox from './pages/Letterbox';
-import Write from './pages/Write';
-import Result from './pages/Result';
+import Letterbox from './pages/service/Letterbox';
+import Write from './pages/service/Write';
+import Result from './pages/service/Result';
 
 import NotFound from './pages/error/NotFound';
 
@@ -35,8 +35,8 @@ function App() {
       <Route index element={<PrivateRoute path="/"><Home /></PrivateRoute>} />
       <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login />} />
       <Route path="/register" element={<PrivateRoute><Register /></PrivateRoute>} />
-      <Route path="/write" element={<Write />} /> // 결과값없으면 홈으로 이동
-      <Route path="/result" element={<Result />} /> // 결과값없으면 홈으로 이동
+      <Route path="/write" element={<Write />} />
+      <Route path="/result" element={<Result />} />
       <Route path="/letterbox" element={<Letterbox />} />
       <Route path="*" element={<NotFound />} />
       </Route>

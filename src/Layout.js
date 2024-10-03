@@ -8,17 +8,12 @@ import FixedActionButton from 'components/common/FixedActionButton';
 
 const Layout = () => {
   const vh = window.innerHeight * 0.01;
-  // const vw = window.innerWidth > 480 ? 480 : window.innerWidth;
   document.documentElement.style.setProperty('--vh', `${vh}px`)
-  // document.documentElement.style.setProperty('--vw', `${vw}px`)
   
   window.addEventListener('resize', () => {
     const vh = window.innerHeight * 0.01;
-    // const vw = window.innerWidth > 480 ? 480 : window.innerWidth;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-    // document.documentElement.style.setProperty('--vw', `${vw}px`)
   })
-
 
   return (
     <div className="root-container">
