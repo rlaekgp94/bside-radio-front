@@ -307,6 +307,51 @@
     background: url($G-path-content + 'bg-start-item.png') $G-img-contain;
 
   }
+
+
+  &.layout {
+    .result__inner .body {
+      .script {
+        @include flex(center, flex-start);
+        padding-left: 20px;
+        padding-bottom: 20px;
+        &__inner {
+          p {
+            @include string(20px, 28px, -0.08px, 700, left, var(--white));
+            &:not(:last-of-type) {
+              margin-bottom: 12px;
+            }
+            opacity: 0;          
+          }
+    
+          .desc1 {
+            animation: fadein 1.2s;
+            animation-fill-mode: forwards;
+            animation-delay: 1.2s;
+          }
+          .desc2 {
+            animation: fadein 1.2s;
+            animation-fill-mode: forwards;
+            animation-delay: 3.2s;
+          }
+          .desc3 {
+            animation: fadein 1.2s;
+            animation-fill-mode: forwards;
+            animation-delay: 5.2s; 
+          }
+        }
+      }
+      .assets-container {
+        .box {
+          .rabbit {
+            @include size(208px, 203px);
+          }
+        }
+      }
+    }
+  }
+
+
   &__inner {
     padding: 20px 20px 0;
     display: grid;

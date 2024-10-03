@@ -8,6 +8,9 @@ import TypeToggle from 'components/item/TypeToggle'
 import IconClose from 'assets/Icon/icon-close-b.svg'
 import RabbitImg from 'assets/Content/letter-write-rabbit-top.png'
 
+import LoadingLayout from './Loading'
+
+
 function WriteLayout({active, setActive, textareaVal, setTextareVal, letterResponse}) {
   const navigate = useNavigate();
 
@@ -82,7 +85,7 @@ function Write() {
       }
       setTimeout(() => {
         navigate("/result", { state: { resultData: res, preference } });
-      }, 5000);
+      }, 7000);
     } catch(e) {
       console.log("e: ", e)
       setError(true);
@@ -109,7 +112,7 @@ function Write() {
   return (
     <div className="write">        
       {loading ? 
-        <div>loading</div> :
+        <LoadingLayout /> :
         <WriteLayout {...writeData} />
       }
     </div>
