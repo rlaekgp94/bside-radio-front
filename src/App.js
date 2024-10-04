@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setUserInfo } from 'store/modules/user';
 import useAuth from 'hooks/useAuth';
-import { getCookie } from 'utils/cookie';
+import { getCookie, deleteCookie } from 'utils/cookie';
 
 import Layout from './Layout';
 
@@ -31,6 +31,7 @@ function App() {
         });
       }
     } else {
+      deleteCookie('--user-data');
       setIsLoading(false);
     }
   }, [dispatch]);

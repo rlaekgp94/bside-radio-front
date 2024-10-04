@@ -57,7 +57,7 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
           </div>
         </div>
         <div className="content-foot">
-          <button disabled={!textareaVal} className="submit" onClick={letterResponse}>사연 보내기</button>
+          <button disabled={textareaVal.length < 10} className="submit" onClick={letterResponse}>사연 보내기</button>
         </div>
       </div>
     </div>

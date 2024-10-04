@@ -291,22 +291,26 @@
       display: grid;
       grid-auto-rows: auto;
       button {
+        @include string(16px, 24px, normal, 700, center, var(--black));
         display: grid;
         grid-template-columns: 20px auto;
         gap: 8px;
         align-items: center;
         justify-content: center;
-        @include string(16px, 24px, normal, 700, center, var(--black));
         background-color: #FEE500;
         border-radius: 4px;
-        padding: 16px 8px;
+        // padding: 16px 8px;
+        min-height: 56px;
 
-        &::before {
-          @include same(20px);
-          content: "";
-          display: block;
-          background: url($G-path-icon + 'talk.svg') $G-img-contain;
+        &.not {
+          &::before {
+            @include same(20px);
+            content: "";
+            display: block;
+            background: url($G-path-icon + 'talk.svg') $G-img-contain;
+          }
         }
+
       }
     }
   }

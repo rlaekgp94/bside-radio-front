@@ -21,7 +21,7 @@ const RouterInfo = [
 ];
 
 const Authorization = ({ children, isAuthenticated, isFirstLogin, isLoading, redirect, withAuthorization }) => {
-  if (isLoading) return <div className="loading-container"><CircularProgress size={100} /></div>;
+  if (isLoading) return <div className="loading-container"><CircularProgress size={70} /></div>;
   if (withAuthorization && !isAuthenticated) {
     return <Navigate to={redirect} />;
   }

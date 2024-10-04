@@ -1,15 +1,18 @@
+import { useState  } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import RabbitImg from 'assets/Content/login-rabbti.png'
 import LogoS from 'assets/Logo/logo_s.svg'
+import { CircularProgress } from '@mui/material';
 
 export default function Login() {
-  const isLoggedIn = useSelector(state => { return state?.user?.isLoggedIn; });
+  const [loading, setLoading] = useState(false);
   
   const SocialKakaoLogin = () => {
     // TODO: https://upup-radio.site/oauth2/authorization/kakao
     window.location.href = "http://localhost:8080/oauth2/authorization/kakao"
+    setLoading(true);
   }
   
   return (
@@ -20,7 +23,7 @@ export default function Login() {
           <img className="logo" src={LogoS} alt="login logo 로그인 로고" />
         </div>
         <div className="foot">
-          <button onClick={SocialKakaoLogin}>카카오로 시작하기</button>
+          <button className={!loading ? "not" : ""} onClick={SocialKakaoLogin}>{loading ? <CircularProgress size={20} color="inherit" /> : "카카오로 시작하기"}</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 
 import { useNavigate, useLocation } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import IconRead from 'assets/Icon/icon-read.svg';
 import IconWrite from 'assets/Icon/icon-write.svg';
@@ -8,10 +8,13 @@ import IconWrite from 'assets/Icon/icon-write.svg';
 export default function FixedActionButton() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const storeUser = useSelector(state => { return state?.user; });
+  const { isLoggedIn } = storeUser;
 
-  const excludedPaths = ['/login', '/register', '/result', '/write'];
+  // const excludedPaths = ['/login', '/register', '/result', '/write'];
+  const paths = ['/', '/letterbox'];
   
-  if (excludedPaths.includes(pathname)) {
+  if (!paths.includes(pathname) || !isLoggedIn) {
     return null;
   }
   

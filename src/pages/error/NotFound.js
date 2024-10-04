@@ -1,16 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { movePath } from 'utils/movePath';
 import BaseButton from 'components/ui/button/BaseButton';
 
 export default function NotFound() {
   const nav = useNavigate();
 
-  const language = useSelector(state => {
-    return state?.user.language;
-  });
   const goToHome = () => {
-    movePath(nav, language, '/')
+    nav("/")
   }
   return (
     <div className="error-wrapper">
