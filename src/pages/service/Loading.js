@@ -3,6 +3,7 @@
 import GifRabbitRead from 'assets/Content/read-rabbit.gif';
 
 import ImgMicRead from 'assets/Content/read-mic.png';
+import LogoImg from 'assets/Logo/logo_w.svg';
 
 function Loading() {
   
@@ -10,7 +11,7 @@ function Loading() {
     <div className="result layout">
       <div className="result__inner">
         <div className="head">
-          <div className="logo"><p>LOGO</p></div>
+          <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
         </div>
         <div className="body">
           <div className="script">

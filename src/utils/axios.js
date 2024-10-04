@@ -1,22 +1,21 @@
 import axios from 'axios';
+import { getCookie } from 'utils/cookie';
 // import store from 'store/configureStore';
 
-let BASE_URL = "https://upup-radio.site/api/v1";
+let BASE_URL = "http://localhost:8080/api";
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
 });
 
 export const apiRequest = async (config, cancelToken) => {
-  // const state = store.getState();
-  // const jwtToken = state?.user?.jwtToken;
-  // const idToken = state?.user?.idToken;
+  const accessToken = getCookie('jwt-access');
+  const refreshToken = getCookie('jwt-refresh');
 
-  // config.headers = {
-  //   Authorization: jwtToken,
-  //   Email: idToken?.email,
-  //   ...(config.headers || {}),
-  // };
+  config.headers = {
+    'Authorization': `Bearer ${accessToken}`,
+    'X-Refresh-Token': `Bearer ${refreshToken}`
+  };
 
   if (cancelToken) {
     config.cancelToken = cancelToken;

@@ -9,6 +9,10 @@ import 'swiper/css';
 
 import { DATA } from 'constants'
 import UnLike from 'assets/Icon/btn-unlike.svg';
+import LogoImg from 'assets/Logo/logo_s.svg';
+import UserProfile from 'components/item/UserProfile'
+
+import { getLatestLetterListAPI, getLatestCommunityListAPI } from 'api/v1/letters'
 
 
 const mock_letter = [
@@ -113,6 +117,21 @@ const mock_community = [
 
 function MainSlide() {
   const dispatch = useDispatch();
+  const [list, setList] = useState([]);
+
+  const getLatestLetterList = async () => {
+    try {
+      const res = await getLatestLetterListAPI(10);
+      setList(res)
+      console.log("LatestList res: ", res)
+    } catch(e) {
+      console.log("e", e)
+    }
+  }
+
+  useEffect(() => {
+    getLatestLetterList()
+  }, [])
 
   return (    
     <div className="latest-card">
@@ -157,8 +176,8 @@ function MainSlide() {
 function UserInfoBar() {
   return (
     <div className="userInfo-bar layout-p">
-      <div className="desc"></div>
-      <div className="profile"></div>
+      <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
+      <UserProfile />
     </div>
   )
 }
@@ -166,6 +185,21 @@ function UserInfoBar() {
 function Home() {
   const storeUser = useSelector(state => { return state?.user; });
   const { userInfo, isLoggedIn } = storeUser;
+  const [communityList, setCommunityList] = useState([])
+
+  const getLatestCommunityList = async () => {
+    try {
+      const res = await getLatestCommunityListAPI();
+      setCommunityList(res)
+      console.log("CommunityList res: ", res)
+    } catch(e) {
+      console.log("e", e)
+    }
+  }
+
+  useEffect(() => {
+    getLatestCommunityList()
+  }, [])
   
   return (
     <div className="home">

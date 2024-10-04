@@ -3,15 +3,23 @@
   height: 40px;
   margin-bottom: 28px;
 
-  .desc {
-    @include size(129px, 100%);
-    background-color: var(--gray200);
+  .logo {
+    height: 24px;
+    object-fit: contain;
   }
   .profile {
     @include same(40px);
     object-fit: contain;
     background-color: #D9D9D9;
     border-radius: 50%;
+  }
+}
+
+.loading-container {
+  @include flex;
+  height: 100%;
+  .MuiCircularProgress-root {
+    color: var(--purple07);
   }
 }
 
@@ -190,10 +198,10 @@
           margin-bottom: 13px;
           margin-left: 18px;
           background-color: var(--purple07);
-          position: relative;
           padding: 6px 14px;
           border-radius: 20px;
           max-width: 300px;
+          position: relative;
           z-index: 2;
           &::after {
             @include size(16.76px, 13.12px);
@@ -264,25 +272,41 @@
     display: grid;
     grid-template-rows: 1fr auto;
     gap: 24px;
-    padding: 24px 16px;
-    height: calc(100% - 48px);
+    padding: 24px 16px 84px;
+    height: calc(100% - 108px);
     .body {
       @include flex;
-      height: 100%;
-      img {
-        height: 300px;
+      height: 100%; 
+      .rabbit {
+        height: 288px;
         aspect-ratio: 1/1;
+      }
+      .logo {
+        height: 44px;
+        aspect-ratio: 204/44;
+        margin-top: 12px;
       }
     }
     .foot {
       display: grid;
       grid-auto-rows: auto;
-      gap: 11px;
       button {
-        @include string(16px, 24px, normal, 700, center, var(--white));
-        background-color: #9452D6;
+        display: grid;
+        grid-template-columns: 20px auto;
+        gap: 8px;
+        align-items: center;
+        justify-content: center;
+        @include string(16px, 24px, normal, 700, center, var(--black));
+        background-color: #FEE500;
         border-radius: 4px;
         padding: 16px 8px;
+
+        &::before {
+          @include same(20px);
+          content: "";
+          display: block;
+          background: url($G-path-icon + 'talk.svg') $G-img-contain;
+        }
       }
     }
   }
@@ -355,15 +379,17 @@
   &__inner {
     padding: 20px 20px 0;
     display: grid;
-    grid-template-rows: 28px 1fr;
+    grid-template-rows: 40px 1fr;
     gap: 12px;
     position: relative;
     z-index: 1;
 
     .head {
-      height: 28px;
-      .logo p {
-        @include string(20px, 28px, -0.08px, 700, left, var(--white));
+      @include flex(flex-start, center, row);
+      height: 40px;
+      .logo {
+        height: 24px;
+        object-fit: contain;
       }
     }
     .body {
@@ -375,6 +401,15 @@
         border-radius: 8px;
         backdrop-filter: blur(2px);
         position: relative;
+        &::after {
+          @include same(20px);
+          content: "";
+          position: absolute;
+          bottom: -19px; /* 꼬리의 아래쪽 위치 조정 */
+          left: 50%;    /* 꼬리의 왼쪽 위치 조정 */
+          transform: translate(-50%);
+          transition: background 0.25s ease;
+        }
         &__inner {
           @include scrollCustomSmall;
           // height: 378px;
@@ -388,9 +423,15 @@
         transition: background-color 0.25s ease;
         &.type-T {
           background-color: rgba(102, 163, 255, 0.80);
+          &::after {
+            background: url($G-path-content + 'speech-bubble-tail-b.svg') $G-img-contain;
+          }
         }
         &.type-F {
           background-color: rgba(255, 145, 153, 0.90);
+          &::after {
+            background: url($G-path-content + 'speech-bubble-tail-p.svg') $G-img-contain;
+          }
         }
       }
       .assets-container {
@@ -415,7 +456,7 @@
 
           .desc {
             position: absolute;
-            bottom: 143px;
+            bottom: 136px;
             right: 183px;
             font-family: 'Ownglyph_kimkonghae';
             font-size: 14px;

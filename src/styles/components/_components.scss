@@ -23,15 +23,21 @@
     .icon-btn {
       @include flex;
       border-radius: 50%;
-      border: 1px solid var(--gray200, #E6E6EB);
-      background: #FFF;
       box-shadow: 44px 48px 18px 0px rgba(0, 0, 0, 0.00), 28px 31px 17px 0px rgba(0, 0, 0, 0.01), 16px 17px 14px 0px rgba(0, 0, 0, 0.05), 7px 8px 10px 0px rgba(0, 0, 0, 0.09), 2px 2px 6px 0px rgba(0, 0, 0, 0.10);
 
-      &.read img {
-        @include size(22px, 16.5px);
+      &.read {
+        img {
+          @include size(22px, 16.5px);          
+        }
+        border: 1px solid var(--gray200, #E6E6EB);
+        background: #FFF;
       }
-      &.write img {
-        @include size(17.62px, 20.74px);
+      &.write {
+        img {
+          @include size(17.62px, 20.74px);          
+        }
+        border: 1px solid var(--purple07);
+        background: var(--purple06);
       }
     }
   }

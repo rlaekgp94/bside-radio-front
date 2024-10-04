@@ -1,47 +1,51 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import PrivateRoute from './utils/PrivateRoute';
+
+import { setUserInfo } from 'store/modules/user';
+import useAuth from 'hooks/useAuth';
+import { getCookie } from 'utils/cookie';
 
 import Layout from './Layout';
 
-import Login from './pages/user/Login';
-import Register from './pages/user/Register';
-
-import Home from './pages/Home';
-import Letterbox from './pages/service/Letterbox';
-import Write from './pages/service/Write';
-import Result from './pages/service/Result';
-
-import NotFound from './pages/error/NotFound';
-
-// TODO:
-// login: 로그인이 되어있을때 로그인 페이지 진입 안되게
-// login: 로그인 스킵하면 홈은 갈 수 있게
-// register: 회원 정보 수정 페이지를 다시 갈 수 있는가?
-// result: 아무 결과 값이 없다면 notFound로
+import AutoRouter from 'router/AutoRouter';
 
 function App() {
-  // const storeUser = useSelector(state => { return state?.user; });
-  // const { userInfo, sessionLoading, isLoggedIn, firstLogin, jwtToken } = storeUser;
-  // const userSkip = false;
+  const [isLoading, setIsLoading] = useState(true);
+  const storeUser = useSelector(state => { return state?.user; });
+  const { userInfo, isLoggedIn } = storeUser;
+  const { getJwtDecoding, getUserInfo } = useAuth();
+  const dispatch = useDispatch();
 
-  const isLoggedIn = localStorage.getItem('isLoggedIn'); // 로그인 상태 확인
-  const isSkipped = localStorage.getItem('isSkipped'); // 스킵 상태
+  useEffect(() => {
+    const accessToken = getJwtDecoding();
+    const userData = getCookie('--user-data');
+    
+    if (accessToken) {
+      const userId = accessToken?.sub;
+      if (userData) {
+        dispatch(setUserInfo(JSON.parse(userData)));
+        setIsLoading(false);
+      } else {
+        getUserInfo(userId).finally(() => {
+          setIsLoading(false);
+        });
+      }
+    } else {
+      setIsLoading(false);
+    }
+  }, [dispatch]);
 
-  return (      
-    <Routes>
-      <Route path="/" element={<Layout />} >
-      <Route index element={<PrivateRoute path="/"><Home /></PrivateRoute>} />
-      <Route path="/login" element={isLoggedIn ? <Navigate to="/" replace /> : <Login />} />
-      <Route path="/register" element={<PrivateRoute><Register /></PrivateRoute>} />
-      <Route path="/write" element={<Write />} />
-      <Route path="/result" element={<Result />} />
-      <Route path="/letterbox" element={<Letterbox />} />
-      <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+  
+  useEffect(() => {
+    console.log("userInfo stroe: ", userInfo, isLoggedIn)
+  }, [userInfo, isLoggedIn])  
+
+  return (    
+    <Layout>
+      <AutoRouter isLoading={isLoading} /> 
+    </Layout>
   );
 }
+
 
 export default App;

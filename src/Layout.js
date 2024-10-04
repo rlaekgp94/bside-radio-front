@@ -6,7 +6,7 @@ import ScrollToTop from 'components/common/ScrollToTop';
 import GlobalModal from 'components/modal/Global';
 import FixedActionButton from 'components/common/FixedActionButton';
 
-const Layout = () => {
+const Layout = ({children}) => {
   const vh = window.innerHeight * 0.01;
   const pvh = window.innerHeight;
   document.documentElement.style.setProperty('--vh', `${vh}px`)
@@ -23,7 +23,7 @@ const Layout = () => {
     <div className="root-container">
       <div className="main-content" id="scrollbar">
         <ScrollToTop>
-          <Outlet /> 
+          {children}
         </ScrollToTop>
         <FixedActionButton /> 
       </div>

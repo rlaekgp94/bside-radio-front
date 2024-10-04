@@ -66,6 +66,7 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
 
 function Write() {
   const navigate = useNavigate();
+  const userInfo = useSelector(state => { return state?.user.userInfo; });
   const [active, setActive] = useState(false); // false는 F true는 T
   const [textareaVal, setTextareVal] = useState("");
   const [loading, setLoading] = useState(false);
@@ -73,25 +74,18 @@ function Write() {
   
   const letterResponse = async () => {
     const preference = active ? "T" : "F";
-    if (!textareaVal || !preference) return;
-    console.log(1)
+    if (!userInfo?.userId || !textareaVal || !preference) return;
     setLoading(true);
 
     try {      
-      // const res = await letterResponseAPI(email, textareaVal, preference);    
-      const res = {
-        message_t: `1. ${textareaVal}`,
-        message_f: `2. ${textareaVal}`
-      }
-      setTimeout(() => {
-        navigate("/result", { state: { resultData: res, preference } });
-      }, 7000);
+      const res = await letterResponseAPI(userInfo?.userId, textareaVal, preference);    
+      navigate("/result", { state: { resultData: res, preference } });
     } catch(e) {
       console.log("e: ", e)
       setError(true);
+      setLoading(false);
     }
   }
-
   
   useEffect(() => {
     const handleBeforeUnload = (event) => { // 새로고침 시 페이지 벗어날건지 확인

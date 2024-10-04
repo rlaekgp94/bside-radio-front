@@ -6,8 +6,10 @@ import { openModal } from 'store/modules/components';
 import Skeleton from '@mui/material/Skeleton';
 import GoBackTitleBar from 'components/common/GoBackTitleBar';
 
-import ImgLetterF from 'assets/Content/f-letter-item.svg'
-import ImgLetterT from 'assets/Content/t-letter-item.svg'
+import { getUserLetterListAPI } from 'api/v1/letters'
+
+import ImgLetterF from 'assets/Content/f-letter-item.png'
+import ImgLetterT from 'assets/Content/t-letter-item.png'
 import ImgLetterStampF from 'assets/Content/f-letter-stamp.svg'
 import ImgLetterStampT from 'assets/Content/t-letter-stamp.svg'
 
@@ -211,12 +213,29 @@ function LetterIistItem({item}) {
 }
 
 function LetterIist() {
-  const [loading, setLoading] = useState(true);
+  const userInfo = useSelector(state => { return state?.user.userInfo; });
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const size = 10;
+
+  const getUserLetterList = async () => {
+    if (!userInfo?.userId) return;
+    console.log(1)
+    setLoading(true)
+    try {
+      const res = await getUserLetterListAPI(userInfo.userId, 1, 10);
+      console.log("res", res?.content)
+      setList(res?.content)
+      setLoading(false)
+    } catch(e) {
+      console.log("e", e)
+      setLoading(false)
+    }
+  }
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 1000);
+    getUserLetterList()
   }, [])
   
   return (
@@ -226,11 +245,11 @@ function LetterIist() {
           return (
             <LoadingSkeleton key={index} />
           )
-        }) : mock_letter.map((item, index) => {
+        }) : list?.length ? list.map((item, index) => {
         return (
           <LetterIistItem item={item} key={index} />
         )
-      })}
+      }) : !list?.length ? <div>리스트 없음</div> : null}
     </ul>
   )
 }
