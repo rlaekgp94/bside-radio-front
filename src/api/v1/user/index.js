@@ -25,11 +25,12 @@ export const getUserInfoAPI = async (userId) => {
  *
  * @param {string} userId 유저 고유 아이디
  */
-export const patchUserInfoAPI = async (userId) => {
+export const patchUserInfoAPI = async (userId, nickname, preference, profileImageDisable) => {
   try {
     const result = await apiRequest({
       method: 'patch',
       url: `/${version}/users/${userId}`,
+      data: { nickname, preference, profileImageDisable }
     });
     return result;
   } catch (e) {

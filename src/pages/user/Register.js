@@ -1,26 +1,60 @@
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 
 import Switch from 'components/item/Toggle'
 
+import LogoImg from 'assets/Logo/logo_s.svg';
 import ImgLetterStamp from 'assets/Content/purple-letter-stamp.svg'
+
+import { patchUserInfoAPI } from 'api/v1/user'
+import { setUserInfo } from 'store/modules/user';
+import useAuth from 'hooks/useAuth';
 
 export default function Register() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { setUserDataCookie } = useAuth();
+  const userInfo = useSelector(state => { return state?.user.userInfo; });  
+
   const [nickname, setNickname] = useState("");
   const [type, setType] = useState("F");
-  const [active, setActive] = useState(false);
+  const [profileImageDisable, setProfileImageDisable] = useState(false);
 
   const changeHandler = (e) => {
     const { value } = e.target;
-    setNickname(value);
+    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
+    if (value === "") {
+      setNickname(""); 
+      return;
+    }
+    
+    const isValidInput = regex.test(value) && value.length <= 12;
+
+    if (isValidInput) {
+      setNickname(value); 
+    }  
+  }
+
+  const patchUserInfo = async () => {
+    if (!userInfo?.userId) return;
+    // console.log("userInfo.userId, nickname, type, profileImageDisable", userInfo.userId, nickname, type, profileImageDisable)
+    try {
+      const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageDisable);
+      console.log("res", res)
+      setUserDataCookie(JSON.stringify(res))
+      dispatch(setUserInfo(res));
+      navigate("/")
+    } catch(e) {
+      console.log("patchUserInfo e: ", e)
+    }
   }
 
   return (
     <div className="register">
       <div className="register__inner">
         <div className="head">
-          <div className="logo"></div>
+          <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
         </div>
         <div className="body">
           <div className="letter-content">
@@ -68,12 +102,12 @@ export default function Register() {
               <div className="data-box__title">
                 <p>카카오톡 프로필 사진 동기화 여부</p>
               </div>
-              <Switch active={active} setActive={setActive} />              
+              <Switch active={profileImageDisable} setActive={setProfileImageDisable} />              
             </div>
           </div>
         </div>
         <div className="foot">
-          <button disabled={!nickname || !type}>시작하기</button>
+          <button onClick={patchUserInfo} disabled={!nickname || !type}>시작하기</button>
         </div>
       </div>
     </div>

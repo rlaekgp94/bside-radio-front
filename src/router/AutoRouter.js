@@ -20,11 +20,14 @@ const RouterInfo = [
   { redirect: '/login', path: '/letterbox', element: <Letterbox />, withAuthorization: true },
 ];
 
-const Authorization = ({ children, isAuthenticated, isLoading, redirect, withAuthorization }) => {
+const Authorization = ({ children, isAuthenticated, isFirstLogin, isLoading, redirect, withAuthorization }) => {
   if (isLoading) return <div className="loading-container"><CircularProgress size={100} /></div>;
-  
   if (withAuthorization && !isAuthenticated) {
     return <Navigate to={redirect} />;
+  }
+
+  if (isFirstLogin && withAuthorization && window.location.pathname !== '/register') {
+    return <Navigate to="/register" />;
   }
   
   if (!withAuthorization && isAuthenticated) {
@@ -36,7 +39,7 @@ const Authorization = ({ children, isAuthenticated, isLoading, redirect, withAut
 
 const AutoRouter = ({isLoading}) => {
   const storeUser = useSelector(state => { return state?.user; });
-  const { isLoggedIn } = storeUser;
+  const { isLoggedIn, userInfo } = storeUser;
 
   return (
     <Routes>
@@ -50,6 +53,7 @@ const AutoRouter = ({isLoading}) => {
                 redirect={route.redirect}
                 isLoading={isLoading}
                 isAuthenticated={isLoggedIn}
+                isFirstLogin={userInfo?.firstLogin}
                 withAuthorization={route.withAuthorization}
               >
                 {route.element}

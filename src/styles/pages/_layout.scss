@@ -536,11 +536,11 @@
     gap: 24px;
     align-items: space-between;
     .head {
+      @include flex(flex-start, center, row);
       height: 40px;
       .logo {
-        width: 129px;
-        height: 100%;
-        background-color: var(--gray200);
+        height: 24px;
+        object-fit: contain;
       }
     }
     .body {

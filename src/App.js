@@ -36,9 +36,9 @@ function App() {
   }, [dispatch]);
 
   
-  useEffect(() => {
-    console.log("userInfo stroe: ", userInfo, isLoggedIn)
-  }, [userInfo, isLoggedIn])  
+  // useEffect(() => {
+  //   console.log("userInfo stroe: ", userInfo, isLoggedIn)
+  // }, [userInfo, isLoggedIn])  
 
   return (    
     <Layout>
