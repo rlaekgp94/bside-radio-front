@@ -97,7 +97,7 @@ function MainSlide() {
         {loading ?
           Array.from(new Array(3)).map((item, index) => {
             return <SwiperSlide key={index}>
-              <Skeleton sx={{ bgcolor: '#E6E6EB' }} animation="wave" width={276} height={280} variant="rectangular" />
+              <Skeleton sx={{ bgcolor: '#ececf0' }} animation="wave" width={276} height={280} variant="rectangular" />
             </SwiperSlide>
           }) :
           latestList.map((item, index) => {

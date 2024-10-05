@@ -31,10 +31,10 @@ const formattedDates = (isoDate) => {
 function LoadingSkeleton() {
   return (
     <div className="loading-skeleton">
-      <Skeleton animation="wave" variant="circular" width={128} height={128} />
+      <Skeleton sx={{ bgcolor: '#ececf0' }} animation="wave" variant="circular" width={128} height={128} />
       <div className="loading-skeleton__text">
-        <Skeleton animation="wave" height={20} width="60%" style={{ marginBottom: 6 }} />
-        <Skeleton animation="wave" height={20} width="40%" />
+        <Skeleton sx={{ bgcolor: '#ececf0' }} animation="wave" height={20} width="60%" style={{ marginBottom: 6 }} />
+        <Skeleton sx={{ bgcolor: '#ececf0' }} animation="wave" height={20} width="40%" />
       </div>
     </div>
   )

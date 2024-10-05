@@ -762,95 +762,98 @@
   }
 }
 
-.latest-card .swiper {
-  .swiper-wrapper {
-    box-sizing: content-box;
-    .swiper-slide {
-      width: fit-content !important;
-      @include flex;
-      .MuiSkeleton-root {
-        border-radius: 16px;
-      }
-      .slide-card {
-        @include disableDrag;
-        @include flex(flex-start, flex-start);
-        width: 276px;
-        min-width: 276px;
-        height: 280px;
-        min-height: 280px;
-        border-radius: 16px;    
-        background-color: var(--white);
-        &__inner {
-          @include flex(space-between, flex-start);
-          padding: 32px 24px;
-          height: 100%;
-          width: calc(100% - 48px);
-          .top-inner {
-            @include flex(flex-start, flex-start);
-            .card-title {
-              display: grid;
-              grid-template-columns: 40px auto;
-              gap: 8px;
-              align-items: center;
-              &__profile {
-                @include same(40px);
-                background-color: var(--gray500);
-                border-radius: 50%;
-              }
-              &__desc {
-                @include flex(flex-start, center, row);
-                gap: 3px;
-               .id {
-                  @include string(16px, 24px, normal, 700, left, var(--purple08));
-                }
-               .info {
-                  @include string(16px, 24px, normal, 700, left, var(--gray900));
-                } 
-              }
-            }
-            .card-content {
-              margin-top: 12px;
-              display: grid;
-              grid-auto-rows: auto;
-              gap: 16px;
-              &__desc {
-                @include string(14px, 22px, normal, 500, left, var(--gray800));
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 4;
-                -webkit-box-orient: vertical;
-              }
-              &__tags {
-                @include flex(flex-start, center, row);
-                flex-wrap: wrap;
+.latest-card {
+  min-height: 280px;
+  .swiper {
+    .swiper-wrapper {
+      box-sizing: content-box;
+      .swiper-slide {
+        width: fit-content !important;
+        @include flex;
+        .MuiSkeleton-root {
+          border-radius: 16px;
+        }
+        .slide-card {
+          @include disableDrag;
+          @include flex(flex-start, flex-start);
+          width: 276px;
+          min-width: 276px;
+          height: 280px;
+          min-height: 280px;
+          border-radius: 16px;    
+          background-color: var(--white);
+          &__inner {
+            @include flex(space-between, flex-start);
+            padding: 32px 24px;
+            height: 100%;
+            width: calc(100% - 48px);
+            .top-inner {
+              @include flex(flex-start, flex-start);
+              .card-title {
+                display: grid;
+                grid-template-columns: 40px auto;
                 gap: 8px;
-                li {
-                  @include flex;
-                  height: 24px;
-                  padding: 0 8px;
-                  border-radius: 100px;
-                  background-color: var(--purple01);
-                  p {                  
-                    @include string(14px, 22px, normal, 500, left, var(--purple07));
+                align-items: center;
+                &__profile {
+                  @include same(40px);
+                  background-color: var(--gray500);
+                  border-radius: 50%;
+                }
+                &__desc {
+                  @include flex(flex-start, center, row);
+                  gap: 3px;
+                 .id {
+                    @include string(16px, 24px, normal, 700, left, var(--purple08));
+                  }
+                 .info {
+                    @include string(16px, 24px, normal, 700, left, var(--gray900));
+                  } 
+                }
+              }
+              .card-content {
+                margin-top: 12px;
+                display: grid;
+                grid-auto-rows: auto;
+                gap: 16px;
+                &__desc {
+                  @include string(14px, 22px, normal, 500, left, var(--gray800));
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 4;
+                  -webkit-box-orient: vertical;
+                }
+                &__tags {
+                  @include flex(flex-start, center, row);
+                  flex-wrap: wrap;
+                  gap: 8px;
+                  li {
+                    @include flex;
+                    height: 24px;
+                    padding: 0 8px;
+                    border-radius: 100px;
+                    background-color: var(--purple01);
+                    p {                  
+                      @include string(14px, 22px, normal, 500, left, var(--purple07));
+                    }
                   }
                 }
               }
             }
-          }
-          .card-result-btn {
-            @include flex;
-            margin-top: 32px;
-            @include size(100%, 44px);
-            background-color: var(--purple06);
-            border-radius: 8px;
-            p {
-              @include string(16px, 24px, normal, 700, center, var(--white));
+            .card-result-btn {
+              @include flex;
+              margin-top: 32px;
+              @include size(100%, 44px);
+              background-color: var(--purple06);
+              border-radius: 8px;
+              p {
+                @include string(16px, 24px, normal, 700, center, var(--white));
+              }
             }
           }
         }
       }
     }
-  }
+  } 
+  
 }
-
