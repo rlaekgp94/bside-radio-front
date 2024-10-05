@@ -13,8 +13,6 @@ const useAuth = () => {
       const payload = jwtAccess.substring(jwtAccess.indexOf(".") + 1, jwtAccess.lastIndexOf("."));
       const decodingInfo = base64.decode(payload);
       const jwtToken = decodingInfo ? JSON.parse(decodingInfo) : null;
-
-      // console.log("--------------- 초기 jwtAccess", jwtAccess, jwtToken)
       return jwtToken;
     } else {
       return null;
@@ -32,7 +30,6 @@ const useAuth = () => {
     if (!userId) return;
     try {
       const res = await getUserInfoAPI(userId);
-      console.log("============== 유저정보조회 API 호출", res)
       setUserDataCookie(JSON.stringify(res))
       dispatch(setUserInfo(res));
     } catch(e) {

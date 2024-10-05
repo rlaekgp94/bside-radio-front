@@ -41,10 +41,8 @@ export default function Register() {
   const patchUserInfo = async () => {
     if (!userInfo?.userId) return;
     setLoading(true)
-    // console.log("userInfo.userId, nickname, type, profileImageDisable", userInfo.userId, nickname, type, profileImageDisable)
     try {
       const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageDisable);
-      console.log("res", res)
       setUserDataCookie(JSON.stringify(res))
       dispatch(setUserInfo(res));
       navigate("/")

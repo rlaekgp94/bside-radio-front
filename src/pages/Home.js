@@ -72,7 +72,6 @@ function MainSlide() {
     setLoading(true)
     try {
       const res = await getLatestLetterListAPI(10);
-      console.log("res", res)
       setLatestList(res);
       setLoading(false)
     } catch(e) {
