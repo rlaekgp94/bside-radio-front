@@ -10,8 +10,9 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   
   const SocialKakaoLogin = () => {
-    // TODO: https://upup-radio.site/oauth2/authorization/kakao
-    window.location.href = "http://localhost:8080/oauth2/authorization/kakao"
+    TODO: 
+    // window.location.href = "http://localhost:8080/oauth2/authorization/kakao" // local
+    window.location.href = `${process.env.REACT_APP_SERVER_BASE_URL}/oauth2/authorization/kakao` // prod
     setLoading(true);
   }
   
