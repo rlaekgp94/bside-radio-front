@@ -2,8 +2,8 @@ import axios from 'axios';
 import { getCookie } from 'utils/cookie';
 import { jwtDecodingCookie } from 'utils/jwtDecodingCookie'
 
-let BASE_URL = "http://localhost:8080/api"; // local
-// let BASE_URL = `${process.env.REACT_APP_SERVER_BASE_URL}/api` // prod
+// let BASE_URL = "http://localhost:8080/api"; // local
+let BASE_URL = `${process.env.REACT_APP_SERVER_BASE_URL}/api` // prod
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
