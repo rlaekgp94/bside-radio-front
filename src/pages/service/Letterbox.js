@@ -15,166 +15,17 @@ import ImgLetterStampT from 'assets/Content/t-letter-stamp.svg'
 
 import ImgListNotItem from 'assets/Content/list-not-item.png'
 
-const mock_letter = [
-  {
-    id: 1,
-    email: "danyekgp@gmail.com",
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.10.01"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 2,
-    content: "친구와 큰 다툼을 했는데, 서로의 감정이 격해져서 더 이상 대화가 불가능한 상황입니다. 어떻게 하면 다시 친구와 화해할 수 있을까요?",
-    tag: ["우정", "화해"],
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "T",
-    date: "2024.09.24"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 3,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "T",
-    date: "2024.09.10"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 4,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.09.10"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 5,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.09.04"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 1,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "T",
-    date: "2024.09.02"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 1,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.10.01"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 2,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "T",
-    date: "2024.09.24"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 3,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.09.10"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 4,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.09.10"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 5,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.09.04"
-  },
-  {
-    email: "danyekgp@gmail.com",
-    id: 1,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "T",
-    date: "2024.09.02"
-  },
-]
 
+const formattedDates = (isoDate) => {
+  const date = new Date(isoDate);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  
+  const formattedDate = `${year}.${month}.${day}`;
 
+  return formattedDate;
+}
 
 
 function LoadingSkeleton() {
@@ -188,79 +39,123 @@ function LoadingSkeleton() {
     </div>
   )
 }
+
 function LetterIistItem({item}) {
   const dispatch = useDispatch();
-
-  const data = { item };
-  
   
   return (
     <>
-      {/* {item.letterId ?  */}
-        <div onClick={() => dispatch(openModal({modalType: "Read", data}))} className="letter-item">
-          <div className="letter-item__inner">
-            <img className="letter-img" src={item.preference === "T" ? ImgLetterT : ImgLetterF} alt={`type ${item.preference} letter img 편지 이미지`} />
-            <div className="letter-info">
-              <img className="stamp-img" src={item.preference === "T" ? ImgLetterStampT : ImgLetterStampF} alt={`type ${item.preference} letter stamp img 편지 스탬프 이미지`} />
-              <div className="letter-info__content">
-                <p className="date">{item.date ? item.date : "-"}</p>
-                <p className="desc">당신에게 도착한 편지를 읽어보세요.</p>
-              </div>
+      <div onClick={() => dispatch(openModal({modalType: "Read", data: { item }}))} className="letter-item">
+        <div className="letter-item__inner">
+          <img className="letter-img" src={item?.preference === "T" ? ImgLetterT : ImgLetterF} alt={`type ${item?.preference} letter img 편지 이미지`} />
+          <div className="letter-info">
+            <img className="stamp-img" src={item?.preference === "T" ? ImgLetterStampT : ImgLetterStampF} alt={`type ${item?.preference} letter stamp img 편지 스탬프 이미지`} />
+            <div className="letter-info__content">
+              <p className="date">{item?.createdAt ? formattedDates(item.createdAt) : "-"}</p>
+              <p className="desc">당신에게 도착한 편지를 읽어보세요.</p>
             </div>
           </div>
         </div>
-        {/* : <LoadingSkeleton />}     */}
+      </div>
     </>
   )
 }
 
 function Letterbox() {  
   const userInfo = useSelector(state => { return state?.user.userInfo; });
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const size = 10;
+  const [page, setPage] = useState(0);
+  const [count, setCount] = useState(null);
 
-  const getUserLetterList = async () => {
+  const getLetterList = async () => {
     if (!userInfo?.userId) return;
     setLoading(true)
     try {
-      const res = await getUserLetterListAPI(userInfo.userId, 1, 10);
-      console.log("res", res)
-      setList(res)
-      setLoading(false)
+      const res = await getUserLetterListAPI(userInfo.userId, page);
+      setList(res?.content)
+      setCount(res?.totalPages)
     } catch(e) {
-      console.log("e", e)
-      setLoading(false)
+      console.log("e: ", e);
+    } finally {
+      setLoading(false);
     }
   }
 
+  const pushLetterList = async (page) => {
+    setLoading(true);
+    try {
+      const res = await getUserLetterListAPI(userInfo.userId, page)
+      setList(prevState => [...prevState, ...res?.content]);
+    } catch (e) {
+      console.log("e: ", e);
+    } finally {
+      setLoading(false);
+    }
+  }
+  
   useEffect(() => {
-    getUserLetterList()
+    if (page > 0) {
+      pushLetterList(page)
+    }
+  }, [page]);
+
+  useEffect(() => {
+    getLetterList()
   }, [])
+
+  const handleObserver = (entries) => {
+    const target = entries[0];
+    if (target.isIntersecting && !loading) {
+      setPage((prevPage) => {
+        if (prevPage === count) return prevPage;
+        return prevPage + 1;
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (!list?.length) return;
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0,
+    });
+    const observerTarget = document.getElementById("observer");
+    if (observerTarget) {
+      observer.observe(observerTarget);
+    }
+  }, [count]);
 
   return (
     <div className={`letterbox ${!list?.length ? "isHeight" : ""}`}>
       <GoBackTitleBar title="편지함" />
-      {!list?.length ? <div className="letterbox__not">
-          <img className="rabbit" src={ImgListNotItem} alt="리스트 없음 이미지" />
-          <p>아직 편지가 도착하지 않았어요...<br />
-          첫 번째 사연을 보내볼까요?</p>
-      </div> : 
-      <div className="letterbox__inner layout-p">
-        <div className="letter-list">
-          {loading ? 
-            Array.from(new Array(5)).map((item, index) => {
-              return (
-                <LoadingSkeleton key={index} />
-              )
-            }) : list?.length ? list.map((item, index) => {
-            return (
-              <LetterIistItem item={item} key={index} />
-            )
-          }) : null}
+      {list === null && loading ? (
+        <div className="letterbox__inner layout-p">
+          <div className="letter-list">
+            {Array.from(new Array(5)).map((_, index) => (
+              <LoadingSkeleton key={index} />
+            ))}
+          </div>
         </div>
-      </div>}
+      ) : (
+        <>
+          {list?.length ? (
+            <div className="letterbox__inner layout-p">
+              <div className="letter-list">
+                {list.map((item, index) => (
+                  <LetterIistItem item={item} key={index} />
+                ))}
+              </div>
+              <div id="observer" style={{ height: "10px" }}></div>
+            </div>
+          ) : list?.length === 0 ? (
+            <div className="letterbox__not">
+              <img className="rabbit" src={ImgListNotItem} alt="리스트 없음 이미지" />
+              <p>아직 편지가 도착하지 않았어요...<br />
+              첫 번째 사연을 보내볼까요?</p>
+            </div>
+          ) : null}
+        </>
+      )}
     </div>
   )
 }

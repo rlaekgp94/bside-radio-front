@@ -28,11 +28,11 @@ export const letterResponseAPI  = async (userId, message, preference) => {
  *
  * @param {string} userId 유저 고유 아이디
  */
-export const getUserLetterListAPI = async (userId, lastLetterId, size) => {
+export const getUserLetterListAPI = async (userId, page) => {
   try {
     const result = await apiRequest({
       method: 'get',
-      url: `/${version}/replies/users/${userId}`,
+      url: `/${version}/replies/users/${userId}?page=${page}&size=10`,
     });
     return result;
   } catch (e) {
