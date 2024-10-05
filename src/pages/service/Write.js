@@ -49,7 +49,7 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
             <textarea
               className="write-textarea"
               name="write-textarea"
-              placeholder="편지를 써보세요..."
+              placeholder="DJ 달토에게 위로받고 싶은 내용을 담아 편지를 써보세요..."
               value={textareaVal}
               onChange={changeHandler}
             />

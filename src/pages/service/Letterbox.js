@@ -42,10 +42,16 @@ function LoadingSkeleton() {
 
 function LetterIistItem({item}) {
   const dispatch = useDispatch();
+
+  const openReadModal = (item) => {
+    if (!item) return;
+    dispatch(openModal({modalType: "Read", data: { item }}))
+  }
+
   
   return (
     <>
-      <div onClick={() => dispatch(openModal({modalType: "Read", data: { item }}))} className="letter-item">
+      <div onClick={() => openReadModal(item)} className="letter-item">
         <div className="letter-item__inner">
           <img className="letter-img" src={item?.preference === "T" ? ImgLetterT : ImgLetterF} alt={`type ${item?.preference} letter img 편지 이미지`} />
           <div className="letter-info">

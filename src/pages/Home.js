@@ -83,6 +83,11 @@ function MainSlide() {
     getData()
   }, [])
 
+  const openReadModal = (item, index) => {
+    if (!item) return;
+    dispatch(openModal({modalType: "Read", data: { item, id: index }}))
+  }
+
   return (    
     <div className="latest-card">
       <Swiper
@@ -100,8 +105,8 @@ function MainSlide() {
               <Skeleton sx={{ bgcolor: '#ececf0' }} animation="wave" width={276} height={280} variant="rectangular" />
             </SwiperSlide>
           }) :
-          latestList.map((item, index) => {
-            return <SwiperSlide key={item.replyId}>
+          latestList.length && latestList.map((item, index) => {
+            return <SwiperSlide key={item?.replyId}>
               <div className="slide-card">
                 <div className="slide-card__inner">  
                   <div className="top-inner">        
@@ -113,7 +118,7 @@ function MainSlide() {
                       </div>
                     </div>
                     <div className="card-content">
-                      <p className="card-content__desc">{item.content}</p>
+                      <p className="card-content__desc">{item?.content ? item.content : "-"}</p>
                       {/* <ul className="card-content__tags">
                         {item.tag.map((itm, idx) => {
                           return <li key={idx}><p>#{itm}</p></li>
@@ -121,7 +126,7 @@ function MainSlide() {
                       </ul> */}
                     </div>
                   </div>      
-                  <button onClick={() => dispatch(openModal({modalType: "Read", data: { item, id: index }}))} className="card-result-btn"><p>DJ의 답변 보기</p></button>
+                  <button onClick={() => openReadModal(item, index)} className="card-result-btn"><p>DJ의 답변 보기</p></button>
                 </div>
               </div>
             </SwiperSlide> 

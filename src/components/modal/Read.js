@@ -24,8 +24,8 @@ const formattedDates = (isoDate) => {
 
 const MessageList = ({ reply, preference }) => {
   const messages = [
-    { content: reply.message_f, type: 'F', stmapImg: ImgLetterStampF },
-    { content: reply.message_t, type: 'T', stmapImg: ImgLetterStampT },
+    { content: reply?.message_f || "-", type: 'F', stmapImg: ImgLetterStampF },
+    { content: reply?.message_t || "-", type: 'T', stmapImg: ImgLetterStampT },
   ];
 
   const sortedMessages = messages.sort((a, b) => {
@@ -38,11 +38,11 @@ const MessageList = ({ reply, preference }) => {
         <li key={index} className={`message__inner type-${message.type}`}>
           <div className="content-layout">
             <p className="title">{message.type === "F" ? "F의 답은," : "T의 답은,"}</p>
-            <p className="desc">{message.content}</p>
+            <p className="desc">{message?.content ? message.content : "-"}</p>
           </div>
           <div className="img-layout">
             {/* <img className="post" src={message.postImg} alt="rabbit post text 토끼 편지 문구 이미지" /> */}
-            <p className={`post color-${message.type}`}>Rabbit Post-{message.type}</p>
+            <p className={`post color-${message?.type}`}>Rabbit Post-{message?.type ? message.type : "-"}</p>
             <img className="stamp" src={message.stmapImg} alt="rabbit stamp img 토끼 스탬프 이미지" />
           </div>
         </li>
@@ -56,9 +56,9 @@ export default function Read() {
   const { modalType, isOpen, data } = useSelector(selectModal);
   const userInfo = useSelector(state => { return state?.user.userInfo; });
   const { item, id } = data;
-
+  
   const handleClose = () => { dispatch(closeModal()); };
-
+  
   return (
     <Dialog
       open={modalType === "Read" && isOpen}
@@ -73,12 +73,12 @@ export default function Read() {
           <div className="card-title">
             <img className="card-title__profile" src={DATA.defaultProfile} alt="profile img" />
             <div className="card-title__desc">
-              <p className="id">#{userInfo?.userId === item?.userId ? formattedDates(item?.createdAt) : `${id+1}.`} </p>
+              <p className="id">#{userInfo?.userId === item?.userId ? formattedDates(item.createdAt) : `${id+1}.`} </p>
               <p className="info">{userInfo?.userId === item?.userId ? "내 사연 🌕" : "누군가의 사연 🌕"}</p>
             </div>
           </div>
           <div className="card-content">
-            <p className="card-content__desc">{item.content}</p>
+            <p className="card-content__desc">{item?.content ? item.content : "-"}</p>
             {/* <ul className="card-content__tags">
               {item.tag.map((itm, idx) => {
                 return <li key={idx}><p>#{itm}</p></li>
@@ -86,7 +86,7 @@ export default function Read() {
             </ul> */}
           </div>
         </div>
-        <MessageList reply={item.reply} preference={item.preference} />
+        <MessageList reply={item?.reply} preference={item?.preference} />
       </div>
     </Dialog>
   )
