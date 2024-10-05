@@ -11,16 +11,15 @@ import IconClose from 'assets/Icon/icon-close-b.svg'
 import ImgLetterStampF from 'assets/Content/f-letter-stamp.svg'
 import ImgLetterStampT from 'assets/Content/t-letter-stamp.svg'
 
-const mock = {
-  id: 1,
-  content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-  tag: ["창업", "비즈니스", "결정"],  
-  replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-  reply: {
-    message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-    message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-  },
-  preference: "F"
+const formattedDates = (isoDate) => {
+  const date = new Date(isoDate);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  
+  const formattedDate = `${year}.${month}.${day}`;
+
+  return formattedDate;
 }
 
 const MessageList = ({ reply, preference }) => {
@@ -55,11 +54,10 @@ const MessageList = ({ reply, preference }) => {
 export default function Read() {
   const dispatch = useDispatch();
   const { modalType, isOpen, data } = useSelector(selectModal);
-  const { item } = data;
+  const userInfo = useSelector(state => { return state?.user.userInfo; });
+  const { item, id } = data;
 
   const handleClose = () => { dispatch(closeModal()); };
-
-  const userEmail = "danyekgp@gmail.com"
 
   return (
     <Dialog
@@ -75,17 +73,17 @@ export default function Read() {
           <div className="card-title">
             <img className="card-title__profile" src={DATA.defaultProfile} alt="profile img" />
             <div className="card-title__desc">
-              <p className="id">#{userEmail === item.email ? item.date : `${item.id}.`} </p>
-              <p className="info">{userEmail === item.email ? "내 사연 🌕" : "누군가의 사연 🌕"}</p>
+              <p className="id">#{userInfo?.userId === item?.userId ? formattedDates(item?.createdAt) : `${id+1}.`} </p>
+              <p className="info">{userInfo?.userId === item?.userId ? "내 사연 🌕" : "누군가의 사연 🌕"}</p>
             </div>
           </div>
           <div className="card-content">
             <p className="card-content__desc">{item.content}</p>
-            <ul className="card-content__tags">
+            {/* <ul className="card-content__tags">
               {item.tag.map((itm, idx) => {
                 return <li key={idx}><p>#{itm}</p></li>
               })}
-            </ul>
+            </ul> */}
           </div>
         </div>
         <MessageList reply={item.reply} preference={item.preference} />

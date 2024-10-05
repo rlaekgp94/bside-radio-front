@@ -2,73 +2,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from 'react';
 
-import { openModal } from 'store/modules/components';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
+import { openModal } from 'store/modules/components';
 import { DATA } from 'constants'
+
+import UserProfile from 'components/item/UserProfile'
+import Skeleton from '@mui/material/Skeleton';
+
 import UnLike from 'assets/Icon/btn-unlike.svg';
 import LogoImg from 'assets/Logo/logo_s.svg';
-import UserProfile from 'components/item/UserProfile'
 
 import { getLatestLetterListAPI, getLatestCommunityListAPI } from 'api/v1/letters'
 
-
-const mock_letter = [
-  {
-    email: "test@gmail.com",
-    id: 1,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.10.01"
-  },
-  {
-    email: "test@gmail.com",
-    id: 2,
-    content: "친구와 큰 다툼을 했는데, 서로의 감정이 격해져서 더 이상 대화가 불가능한 상황입니다. 어떻게 하면 다시 친구와 화해할 수 있을까요?",
-    tag: ["우정", "화해"],
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "T",
-    date: "2024.09.24"
-  },
-  {
-    email: "test@gmail.com",
-    id: 3,
-    content: "지금 직장을 다니고 있지만, 오래전부터 창업에 대한 생각을 해왔습니다. 하지만 창업이 현실적으로 가능한지, 위험 부담이 너무 큰 것은 아닌지 걱정이 됩니다.",
-    tag: ["창업", "비즈니스", "결정"],  
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "F",
-    date: "2024.10.01"
-  },
-  {
-    email: "test@gmail.com",
-    id: 4,
-    content: "친구와 큰 다툼을 했는데, 서로의 감정이 격해져서 더 이상 대화가 불가능한 상황입니다. 어떻게 하면 다시 친구와 화해할 수 있을까요?",
-    tag: ["우정", "화해"],
-    replyId: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-    reply: {
-      message_f: "그 꿈을 이루기 위해 도전해볼 가치가 있어. 네가 정말로 열정을 가지고 있다면, 실패하더라도 후회하지 않을 거야. 꿈은 이루기 위해 있는 거니까, 마음이 가는 대로 가봐!",
-      message_t: "너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. 너가 하려는 사업이...시장에서 경쟁력이 있는지 먼저 냉정하게 분석해봐. "
-    },
-    preference: "T",
-    date: "2024.09.24"
-  },
-]
 
 const mock_community = [
   {
@@ -87,36 +34,55 @@ const mock_community = [
   },
   {
     id: 3,
-    title: "오늘 너무 힘들었어요, 공감 부탁해요....",
-    content: "오늘 너무 바빠서 힘들었어요. 공감과 위로가 필요해요...",
+    title: "면접장에만 가면 너무 떨려요..",
+    content: "면접을 볼 때 너무 떨리고, 계속 결과가 좋지 않아서 자신감이 떨어져요..",
     likeCount: 2,
     date: "1시간 전",
   },
   {
     id: 4,
-    title: "친구 위로, 어떻게 해야 할까요? 😢",
-    content: "친구가 힘들어하는데 어떻게 위로해야 할지 모르겠어요.",
+    title: "시험에 합격하고 싶습니다. 어떻게 하면 좋을까요?",
+    content: "열심히 준비하고 시험을 치루는데도 계속 떨어지네요. 시험을 치룬 기간이 오래되다 보니 고민이 됩니다.",
     likeCount: 4,
-    date: "1시간 전",
+    date: "2시간 전",
   },
   {
     id: 5,
-    title: "오늘 너무 힘들었어요, 공감 부탁해요....",
-    content: "오늘 너무 바빠서 힘들었어요. 공감과 위로가 필요해요...",
+    title: "친구하고 사소한 일로 싸웠어요...",
+    content: "친구하고 놀다가 정말 사소한 일로 다투었는데 어떻게 화해할 수 있을까요?",
     likeCount: 6,
-    date: "1시간 전",
+    date: "2시간 전",
   },
   {
     id: 6,
-    title: "오늘 너무 힘들었어요, 공감 부탁해요....",
-    content: "오늘 너무 바빠서 힘들었어요. 공감과 위로가 필요해요...",
+    title: "한 가지 일에 몰두해서 할 수가 없어요...ㅠ",
+    content: "책을 읽거나 공부할 때 집중할 수 있는 시간이 너무 짧아서 제가 너무 한심한 것 같아요..",
     likeCount: 2,
-    date: "1시간 전",
+    date: "4시간 전",
   }
 ]
 
-function MainSlide({list}) {
+
+function MainSlide() {
   const dispatch = useDispatch();
+  const [latestList, setLatestList] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const getData = async () => {   
+    setLoading(true)
+    try {
+      const res = await getLatestLetterListAPI(10);
+      console.log("res", res)
+      setLatestList(res);
+      setLoading(false)
+    } catch(e) {
+      console.log("getLatestLetterListAPI e: ", e)
+    }
+  }
+
+  useEffect(() => {
+    getData()
+  }, [])
 
   return (    
     <div className="latest-card">
@@ -128,31 +94,40 @@ function MainSlide({list}) {
         spaceBetween={12}   // 슬라이드 간격 
         slidesPerView="auto"
         // slidesPerView={1.35}   // 한번에 보이는 슬라이드 갯수
-      >      
-        {mock_letter.map(item => (
-          <SwiperSlide key={item.id}>
-            <div className="slide-card">
-              <div className="slide-card__inner">                
-                <div className="card-title">
-                  <img className="card-title__profile" src={DATA.defaultProfile} alt="profile img" />
-                  <div className="card-title__desc">
-                    <p className="id">#{item.id}. </p>
-                    <p className="info">누군가의 사연 🌕</p>
-                  </div>
+      >          
+        {loading ?
+          Array.from(new Array(3)).map((item, index) => {
+            return <SwiperSlide key={index}>
+              <Skeleton sx={{ bgcolor: '#E6E6EB' }} animation="wave" width={276} height={280} variant="rectangular" />
+            </SwiperSlide>
+          }) :
+          latestList.map((item, index) => {
+            return <SwiperSlide key={item.replyId}>
+              <div className="slide-card">
+                <div className="slide-card__inner">  
+                  <div className="top-inner">        
+                    <div className="card-title">
+                      <img className="card-title__profile" src={DATA.defaultProfile} alt="profile img" />
+                      <div className="card-title__desc">
+                        <p className="id">#{index+1}. </p>
+                        <p className="info">누군가의 사연 🌕</p>
+                      </div>
+                    </div>
+                    <div className="card-content">
+                      <p className="card-content__desc">{item.content}</p>
+                      {/* <ul className="card-content__tags">
+                        {item.tag.map((itm, idx) => {
+                          return <li key={idx}><p>#{itm}</p></li>
+                        })}
+                      </ul> */}
+                    </div>
+                  </div>      
+                  <button onClick={() => dispatch(openModal({modalType: "Read", data: { item, id: index }}))} className="card-result-btn"><p>DJ의 답변 보기</p></button>
                 </div>
-                <div className="card-content">
-                  <p className="card-content__desc">{item.content}</p>
-                  <ul className="card-content__tags">
-                    {item.tag.map((itm, idx) => {
-                      return <li key={idx}><p>#{itm}</p></li>
-                    })}
-                  </ul>
-                </div>
-                <button onClick={() => dispatch(openModal({modalType: "Read", data: { item }}))} className="card-result-btn"><p>DJ의 답변 보기</p></button>
               </div>
-            </div>
-          </SwiperSlide>    
-        ))}  
+            </SwiperSlide> 
+          })
+        }
       </Swiper>
     </div>
   )
@@ -174,33 +149,13 @@ function UserInfoBar() {
 }
 
 function Home() {
-  // const storeUser = useSelector(state => { return state?.user; });
-  const [latestList, setLatestList] = useState([]);
-  const [communityList, setCommunityList] = useState([])
-
-  const getData = async () => {    
-    Promise.all([
-      getLatestCommunityListAPI(),
-      getLatestLetterListAPI(10)
-    ]).then((res) => {
-      const [res_communityList, res_latestList] = res;
-      setCommunityList(res_communityList)
-      setLatestList(res_latestList)
-      console.log("res_communityList", res_communityList)
-      console.log("res_latestList", res_latestList)
-    })
-  }
-
-  useEffect(() => {
-    getData()
-  }, [])
   
   return (
     <div className="home">
       {/* <UserInfoBar /> */}
       <section className="layout-bg">
         <UserInfoBar />
-        <MainSlide list={latestList} />
+        <MainSlide />
       </section>
       <section className="community-layout layout-p">
         <p className="community-layout__title">커뮤니티</p>

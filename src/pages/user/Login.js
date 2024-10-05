@@ -11,8 +11,8 @@ export default function Login() {
   
   const SocialKakaoLogin = () => {
     TODO: 
-    // window.location.href = "http://localhost:8080/oauth2/authorization/kakao" // local
-    window.location.href = `${process.env.REACT_APP_SERVER_BASE_URL}/oauth2/authorization/kakao` // prod
+    window.location.href = "http://localhost:8080/oauth2/authorization/kakao" // local
+    // window.location.href = `${process.env.REACT_APP_SERVER_BASE_URL}/oauth2/authorization/kakao` // prod
     setLoading(true);
   }
   

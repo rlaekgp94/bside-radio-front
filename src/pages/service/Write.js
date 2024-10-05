@@ -67,7 +67,7 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
 function Write() {
   const navigate = useNavigate();
   const userInfo = useSelector(state => { return state?.user.userInfo; });
-  const [active, setActive] = useState(false); // false는 F true는 T
+  const [active, setActive] = useState(userInfo?.preference === "T" ? true : "F"); // false는 F true는 T
   const [textareaVal, setTextareVal] = useState("");
   const [loading, setLoading] = useState(false);
   
