@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { setUserInfo } from 'store/modules/user';
 import useAuth from 'hooks/useAuth';
@@ -11,8 +11,6 @@ import AutoRouter from 'router/AutoRouter';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const storeUser = useSelector(state => { return state?.user; });
-  const { userInfo, isLoggedIn } = storeUser;
   const { getJwtDecoding, getUserInfo } = useAuth();
   const dispatch = useDispatch();
 
@@ -34,12 +32,7 @@ function App() {
       deleteCookie('--user-data');
       setIsLoading(false);
     }
-  }, [dispatch]);
-
-  
-  // useEffect(() => {
-  //   console.log("userInfo stroe: ", userInfo, isLoggedIn)
-  // }, [userInfo, isLoggedIn])  
+  }, []);
 
   return (    
     <Layout>

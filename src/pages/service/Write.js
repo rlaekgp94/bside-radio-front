@@ -70,7 +70,6 @@ function Write() {
   const [active, setActive] = useState(false); // false는 F true는 T
   const [textareaVal, setTextareVal] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
   
   const letterResponse = async () => {
     const preference = active ? "T" : "F";
@@ -78,11 +77,10 @@ function Write() {
     setLoading(true);
 
     try {      
-      const res = await letterResponseAPI(userInfo?.userId, textareaVal, preference);    
+      const res = await letterResponseAPI(userInfo.userId, textareaVal, preference);    
       navigate("/result", { state: { resultData: res, preference } });
     } catch(e) {
-      console.log("e: ", e)
-      setError(true);
+      console.log("letterResponseAPI e: ", e)
       setLoading(false);
     }
   }

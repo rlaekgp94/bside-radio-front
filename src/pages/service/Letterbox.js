@@ -13,6 +13,8 @@ import ImgLetterT from 'assets/Content/t-letter-item.png'
 import ImgLetterStampF from 'assets/Content/f-letter-stamp.svg'
 import ImgLetterStampT from 'assets/Content/t-letter-stamp.svg'
 
+import ImgListNotItem from 'assets/Content/list-not-item.png'
+
 const mock_letter = [
   {
     id: 1,
@@ -195,7 +197,7 @@ function LetterIistItem({item}) {
   return (
     <>
       {/* {item.letterId ?  */}
-        <li onClick={() => dispatch(openModal({modalType: "Read", data}))} className="letter-item">
+        <div onClick={() => dispatch(openModal({modalType: "Read", data}))} className="letter-item">
           <div className="letter-item__inner">
             <img className="letter-img" src={item.preference === "T" ? ImgLetterT : ImgLetterF} alt={`type ${item.preference} letter img 편지 이미지`} />
             <div className="letter-info">
@@ -206,13 +208,13 @@ function LetterIistItem({item}) {
               </div>
             </div>
           </div>
-        </li>
+        </div>
         {/* : <LoadingSkeleton />}     */}
     </>
   )
 }
 
-function LetterIist() {
+function Letterbox() {  
   const userInfo = useSelector(state => { return state?.user.userInfo; });
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -221,12 +223,11 @@ function LetterIist() {
 
   const getUserLetterList = async () => {
     if (!userInfo?.userId) return;
-    console.log(1)
     setLoading(true)
     try {
       const res = await getUserLetterListAPI(userInfo.userId, 1, 10);
-      console.log("res", res?.content)
-      setList(res?.content)
+      console.log("res", res)
+      setList(res)
       setLoading(false)
     } catch(e) {
       console.log("e", e)
@@ -237,31 +238,29 @@ function LetterIist() {
   useEffect(() => {
     getUserLetterList()
   }, [])
-  
-  return (
-    <ul className="letter-list">
-      {loading ? 
-        Array.from(new Array(5)).map((item, index) => {
-          return (
-            <LoadingSkeleton key={index} />
-          )
-        }) : list?.length ? list.map((item, index) => {
-        return (
-          <LetterIistItem item={item} key={index} />
-        )
-      }) : !list?.length ? <div>리스트 없음</div> : null}
-    </ul>
-  )
-}
-
-function Letterbox() {  
 
   return (
-    <div className="letterbox">
+    <div className={`letterbox ${!list?.length ? "isHeight" : ""}`}>
       <GoBackTitleBar title="편지함" />
+      {!list?.length ? <div className="letterbox__not">
+          <img className="rabbit" src={ImgListNotItem} alt="리스트 없음 이미지" />
+          <p>아직 편지가 도착하지 않았어요...<br />
+          첫 번째 사연을 보내볼까요?</p>
+      </div> : 
       <div className="letterbox__inner layout-p">
-        <LetterIist />
-      </div>
+        <div className="letter-list">
+          {loading ? 
+            Array.from(new Array(5)).map((item, index) => {
+              return (
+                <LoadingSkeleton key={index} />
+              )
+            }) : list?.length ? list.map((item, index) => {
+            return (
+              <LetterIistItem item={item} key={index} />
+            )
+          }) : null}
+        </div>
+      </div>}
     </div>
   )
 }

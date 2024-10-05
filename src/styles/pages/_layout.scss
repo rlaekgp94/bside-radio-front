@@ -1,4 +1,28 @@
 .userInfo-bar {
+  // @include flex;
+  // // margin-bottom: 28px;
+  // height: 80px;
+  // position: sticky;
+  // top: 0;
+  // left: 0;
+  // z-index: 10;
+  // background-color: var(--gray100);
+  // &__inner {
+  //   @include flex(space-between, center, row);
+  //   // height: 40px;
+  //   width: calc(100% - 40px);
+
+  //   .logo {
+  //     height: 24px;
+  //     object-fit: contain;
+  //   }
+  //   .profile {
+  //     @include same(40px);
+  //     object-fit: contain;
+  //     background-color: #D9D9D9;
+  //     border-radius: 50%;
+  //   }
+  // }
   @include flex(space-between, center, row);
   height: 40px;
   margin-bottom: 28px;
@@ -46,8 +70,10 @@
 }
 
 .home {  
+  // position: relative;
   .layout-bg {
     background-color: var(--gray100);
+    // padding: 8px 0 40px;
     padding: 20px 0 40px;
   }
   .community-layout {
@@ -99,6 +125,22 @@
 .letterbox {
   position: relative;
   background-color: var(--white);
+  &.isHeight {
+    height: calc(100% - 92px);
+  }
+    
+  &__not {
+    @include flex;
+    height: calc(100% - 92px);
+    .rabbit {
+      height: 280px;
+      aspect-ratio: 300/280;
+    }
+    p {
+      @include string(16px, 24px, normal, 600, center, var(--gray800));
+      margin-top: 16px;
+    }
+  }
 
   &__inner {
     @include breakpoint(tablet) {
@@ -316,6 +358,35 @@
   }
 }
 
+.error {
+  background-color: var(--white);
+  height: 100%;
+  &__inner {
+    display: grid;
+    grid-template-rows: 1fr 56px;
+    gap: 24px;
+    padding: 24px 16px 84px;
+    height: calc(100% - 108px);
+    .body {
+      @include flex;
+      height: 100%; 
+      .rabbit {
+        height: 288px;
+        aspect-ratio: 1/1;
+      }
+    }
+    .foot {
+      display: grid;
+      grid-auto-rows: auto;
+      button {
+        @include string(16px, 24px, normal, 700, center, var(--white));
+        background-color: var(--purple06);
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
 .result {
   height: 100%;
   display: grid;
@@ -326,14 +397,14 @@
 
   &::after {
     position: absolute;
-    top: 45%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     content: "";
     display: block;
     @include same(100%);
     background: url($G-path-content + 'bg-start-item.png') $G-img-contain;
-
+    opacity: 0.8;
   }
 
 
@@ -667,13 +738,15 @@
       }
     }
     .foot {
-      width: 100%;
+      display: grid;
+      grid-auto-rows: auto;
       button {
+        @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
         background-color: #9452D6;
         border-radius: 4px;
-        padding: 16px 8px;
-        width: 100%;
+        // padding: 16px 8px;
+        min-height: 56px;
   
         &:disabled {
           background-color: var(--gray300);

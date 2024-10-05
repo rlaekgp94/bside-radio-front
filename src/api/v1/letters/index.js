@@ -27,16 +27,12 @@ export const letterResponseAPI  = async (userId, message, preference) => {
  * 내 편지함 리스트 API
  *
  * @param {string} userId 유저 고유 아이디
-- 유저 편지함: `/api/v1/replies/{userUUID}?{lastLetterId}={UUID}&size=10`
-  - **유저 편지함 첫 진입 시**: `/api/v1/replies/{userUUID}?size=10`
-유저 편지함 첫 진입 시는 lastLetterId 필요없기 땜에 저렇게 해주심 되요
-size 도 안넘기시면 기본값 10입니다
  */
-export const getUserLetterListAPI = async (userId, page, size) => {
+export const getUserLetterListAPI = async (userId, lastLetterId, size) => {
   try {
     const result = await apiRequest({
       method: 'get',
-      url: `/${version}/replies/${userId}?size=${size}`,
+      url: `/${version}/replies/users/${userId}`,
     });
     return result;
   } catch (e) {

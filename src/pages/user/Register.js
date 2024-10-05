@@ -2,24 +2,26 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
-import Switch from 'components/item/Toggle'
-
 import LogoImg from 'assets/Logo/logo_s.svg';
 import ImgLetterStamp from 'assets/Content/purple-letter-stamp.svg'
 
+import useAuth from 'hooks/useAuth';
 import { patchUserInfoAPI } from 'api/v1/user'
 import { setUserInfo } from 'store/modules/user';
-import useAuth from 'hooks/useAuth';
+
+import Switch from 'components/item/Toggle'
+import { CircularProgress } from '@mui/material';
 
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setUserDataCookie } = useAuth();
   const userInfo = useSelector(state => { return state?.user.userInfo; });  
-
+  
   const [nickname, setNickname] = useState("");
   const [type, setType] = useState("F");
   const [profileImageDisable, setProfileImageDisable] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const changeHandler = (e) => {
     const { value } = e.target;
@@ -38,6 +40,7 @@ export default function Register() {
 
   const patchUserInfo = async () => {
     if (!userInfo?.userId) return;
+    setLoading(true)
     // console.log("userInfo.userId, nickname, type, profileImageDisable", userInfo.userId, nickname, type, profileImageDisable)
     try {
       const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageDisable);
@@ -45,8 +48,10 @@ export default function Register() {
       setUserDataCookie(JSON.stringify(res))
       dispatch(setUserInfo(res));
       navigate("/")
+      setLoading(false)
     } catch(e) {
       console.log("patchUserInfo e: ", e)
+      setLoading(false)
     }
   }
 
@@ -107,7 +112,7 @@ export default function Register() {
           </div>
         </div>
         <div className="foot">
-          <button onClick={patchUserInfo} disabled={!nickname || !type}>시작하기</button>
+          <button disabled={!nickname} onClick={patchUserInfo}>{loading ? <CircularProgress size={20} color="inherit" /> : "시작하기"}</button>
         </div>
       </div>
     </div>

@@ -1,20 +1,19 @@
 import { useNavigate } from 'react-router-dom';
-import BaseButton from 'components/ui/button/BaseButton';
+
+import ImgListNotItem from 'assets/Content/list-not-item.png'
 
 export default function NotFound() {
   const nav = useNavigate();
 
-  const goToHome = () => {
-    nav("/")
-  }
   return (
-    <div className="error-wrapper">
-      <div className="pageNotFound-wrapper">
-        <div className="pageNotFound-inner">
-          <p>Page not found</p>
-          <span>Sorry, the page you were looking for doesn’t exist.</span>
+    <div className="error">
+      <div className="error__inner">
+        <div className="body">
+          <img className="rabbit" src={ImgListNotItem} alt="error rabbit img 에러 이미지" />
         </div>
-        <BaseButton onClick={goToHome} color="primary" label="Go to Home" size="large" />
+        <div className="foot">
+          <button onClick={()=> nav("/")}>홈으로 가기</button>
+        </div>
       </div>
     </div>
   )

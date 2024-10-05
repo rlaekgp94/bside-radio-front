@@ -6,12 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const useAuth = () => {
   const dispatch = useDispatch();
-  
-  const setUserDataCookie = (userData) => {
-    const accessToken = getCookie('jwt-access')
-    if (!accessToken) return;
-    setCookie("--user-data", userData, accessToken.exp)
-  };
 
   const getJwtDecoding = () => {    
     const jwtAccess = getCookie('jwt-access');  
@@ -19,12 +13,20 @@ const useAuth = () => {
       const payload = jwtAccess.substring(jwtAccess.indexOf(".") + 1, jwtAccess.lastIndexOf("."));
       const decodingInfo = base64.decode(payload);
       const jwtToken = decodingInfo ? JSON.parse(decodingInfo) : null;
-  
+
+      // console.log("--------------- 초기 jwtAccess", jwtAccess, jwtToken)
       return jwtToken;
     } else {
       return null;
     }
   } 
+  
+  const setUserDataCookie = (userData) => {
+    const accessToken = getJwtDecoding()
+    if (!accessToken) return;
+    setCookie("--user-data", userData, accessToken.exp)
+  };
+
 
   const getUserInfo = async (userId) => {
     if (!userId) return;

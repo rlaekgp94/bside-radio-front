@@ -3,9 +3,9 @@ import useAuth from 'hooks/useAuth';
 import { DATA } from 'constants'
 
 const UserProfile = () => {
-  const userInfo = useSelector(state => { return state?.user.userInfo; });  
+  const userInfo = useSelector(state => { return state?.user?.userInfo; });  
   const { getJwtDecoding } = useAuth();
-  const { profileImageDisable, firstLogin } = userInfo;
+  const { profileImageDisable, firstLogin } = userInfo || {};
 
   const accessToken = getJwtDecoding();
   const profileImageUrl = accessToken?.profileImageUrl || {};

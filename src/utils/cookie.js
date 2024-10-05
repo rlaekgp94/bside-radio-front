@@ -1,7 +1,15 @@
-export const setCookie = (cname, cvalue, exhours) => {
-  const expires = `expires=${new Date(Date.now() + exhours * 60 * 60 * 1000).toUTCString()}`;
-  document.cookie = `${cname}=${cvalue};${expires};path=/`;
+// export const setCookie = (cname, cvalue, exhours) => {
+//   const expires = `expires=${new Date(Date.now() + exhours * 60 * 60 * 1000).toUTCString()}`;
+//   document.cookie = `${cname}=${cvalue};${expires};path=/`;
+// }
+
+
+export const setCookie = (name, value, expiresTimestamp) => {
+  const date = new Date(expiresTimestamp * 1000); // 타임스탬프(초)를 밀리초로 변환
+  const expires = date.toUTCString(); // UTC 시간 문자열로 변환
+  document.cookie = `${name}=${value}; expires=${expires}; path=/`;
 }
+
 
 export const getCookie = (cname) => {
   const name = cname + '=';

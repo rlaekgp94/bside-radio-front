@@ -115,23 +115,8 @@ const mock_community = [
   }
 ]
 
-function MainSlide() {
+function MainSlide({list}) {
   const dispatch = useDispatch();
-  const [list, setList] = useState([]);
-
-  const getLatestLetterList = async () => {
-    try {
-      const res = await getLatestLetterListAPI(10);
-      setList(res)
-      console.log("LatestList res: ", res)
-    } catch(e) {
-      console.log("e", e)
-    }
-  }
-
-  useEffect(() => {
-    getLatestLetterList()
-  }, [])
 
   return (    
     <div className="latest-card">
@@ -179,33 +164,43 @@ function UserInfoBar() {
       <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
       <UserProfile />
     </div>
+    // <div className="userInfo-bar">
+    //   <div className="userInfo-bar__inner layout-p">
+    //     <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
+    //     <UserProfile />
+    //   </div>
+    // </div>
   )
 }
 
 function Home() {
-  const storeUser = useSelector(state => { return state?.user; });
-  const { userInfo, isLoggedIn } = storeUser;
+  // const storeUser = useSelector(state => { return state?.user; });
+  const [latestList, setLatestList] = useState([]);
   const [communityList, setCommunityList] = useState([])
 
-  const getLatestCommunityList = async () => {
-    try {
-      const res = await getLatestCommunityListAPI();
-      setCommunityList(res)
-      console.log("CommunityList res: ", res)
-    } catch(e) {
-      console.log("e", e)
-    }
+  const getData = async () => {    
+    Promise.all([
+      getLatestCommunityListAPI(),
+      getLatestLetterListAPI(10)
+    ]).then((res) => {
+      const [res_communityList, res_latestList] = res;
+      setCommunityList(res_communityList)
+      setLatestList(res_latestList)
+      console.log("res_communityList", res_communityList)
+      console.log("res_latestList", res_latestList)
+    })
   }
 
   useEffect(() => {
-    getLatestCommunityList()
+    getData()
   }, [])
   
   return (
     <div className="home">
+      {/* <UserInfoBar /> */}
       <section className="layout-bg">
         <UserInfoBar />
-        <MainSlide />
+        <MainSlide list={latestList} />
       </section>
       <section className="community-layout layout-p">
         <p className="community-layout__title">커뮤니티</p>
