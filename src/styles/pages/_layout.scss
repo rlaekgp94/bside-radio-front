@@ -374,6 +374,10 @@
         height: 288px;
         aspect-ratio: 1/1;
       }
+      p {
+        @include string(16px, 24px, normal, 600, center, var(--gray800));
+        margin-top: 16px;
+      }
     }
     .foot {
       display: grid;
