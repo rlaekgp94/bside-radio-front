@@ -12,7 +12,7 @@ const UserProfile = () => {
 
   return (
     <>
-      {!firstLogin && !profileImageDisable && profileImageUrl ?  
+      {!firstLogin && profileImageDisable && profileImageUrl ?  
         <img className="profile" src={profileImageUrl} alt="profile img" /> :
         <img className="profile" src={DATA.defaultProfile} alt="defaultProfile img" />
       }
