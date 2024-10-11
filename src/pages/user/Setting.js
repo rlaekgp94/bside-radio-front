@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { clearUserInfo } from 'store/modules/user';
+import { DATA } from 'constants'
 
 import UserProfile from 'components/item/UserProfile'
 import IconPin from 'assets/Icon/icon-pinned-filled.svg'
@@ -25,7 +26,7 @@ export default function Setting() {
     {
       name: "개인정보처리방침",
       icon: IconDesc,
-      link: "#"
+      link: DATA.PRIVACY_POLICY_URL
     },
     {
       name: "계정 탈퇴",
@@ -43,6 +44,14 @@ export default function Setting() {
     },
   ]
 
+  const move = (item) => {
+    if (item.link) {
+      window.open(item.link, '_blank');
+    } else if (item.isFunction) {
+      item.isFunction()
+    }
+  }
+
   return (
     <div className="setting">
       <div className="setting__inner">
@@ -59,7 +68,7 @@ export default function Setting() {
           <p className="common-zone__title">환경설정</p>
           <ul className="common-zone__list">
             {setList.map((item, index) => {
-              return <li key={index} onClick={() => { if (item.isFunction) item.isFunction() }}>
+              return <li key={index} onClick={() => move(item)}>
                 <div className="title">
                   <img className="icon" src={item.icon} alt={`${item.name} 아이콘 icon`} />
                   <p>{item.name}</p>
