@@ -11,7 +11,6 @@ export default function FixedActionButton() {
   const storeUser = useSelector(state => { return state?.user; });
   const { isLoggedIn } = storeUser;
 
-  // const excludedPaths = ['/login', '/register', '/result', '/write'];
   const paths = ['/', '/letterbox'];
   
   if (!paths.includes(pathname) || !isLoggedIn) {

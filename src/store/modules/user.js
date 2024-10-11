@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { deleteCookie } from 'utils/cookie';
 // import { setCookie, getCookie } from 'utils/cookie';
 
 const initialState = {
   userInfo: null,
   isLoggedIn: null,
-  sessionLoading: false,
+  sessionLoading: true,
 };
 const userSlice = createSlice({
   name: 'user',
@@ -20,8 +21,11 @@ const userSlice = createSlice({
       }
     },
     clearUserInfo:(state) => {
-      state.userInfo = null
-      state.isLoggedIn = null
+      state.userInfo = null;
+      state.isLoggedIn = null;
+      deleteCookie('--user-data');
+      deleteCookie('jwt-access');
+      deleteCookie('jwt-refresh');
     },
   },
 });

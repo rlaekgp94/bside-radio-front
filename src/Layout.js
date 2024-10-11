@@ -1,12 +1,15 @@
-import { Outlet } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, useLocation } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 import ScrollToTop from 'components/common/ScrollToTop';
 import GlobalModal from 'components/modal/Global';
-import FixedActionButton from 'components/common/FixedActionButton';
+import NavigationBar from 'components/common/NavigationBar';
 
 const Layout = ({children}) => {
+  const sessionLoading = useSelector(state => { return state?.user.sessionLoading; });
+  const { pathname } = useLocation();
+  const paths = ['/', '/letterBox', '/setting']; // community
+
   const vh = window.innerHeight * 0.01;
   const pvh = window.innerHeight;
   document.documentElement.style.setProperty('--vh', `${vh}px`)
@@ -21,12 +24,13 @@ const Layout = ({children}) => {
 
   return (
     <div className="root-container">
-      <div className="main-content" id="scrollbar">
+      <div className={`main-content ${paths.includes(pathname) && !sessionLoading ? "main-navi-content" : ""}`} id="scrollbar">
         <ScrollToTop>
           {children}
         </ScrollToTop>
-        <FixedActionButton /> 
+        {/* <FixedActionButton />  */}
       </div>
+      {paths.includes(pathname) && !sessionLoading && <NavigationBar />}
       <GlobalModal />
     </div>
   );

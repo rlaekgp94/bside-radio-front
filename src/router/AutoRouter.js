@@ -1,9 +1,11 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import Register from 'pages/user/Register';
 import Home from 'pages/Home';
 import Login from 'pages/user/Login';
+import Register from 'pages/user/Register';
+import MyPage from 'pages/user/MyPage';
+import Setting from 'pages/user/Setting';
 import Letterbox from 'pages/service/Letterbox';
 import Write from 'pages/service/Write';
 import Result from 'pages/service/Result';
@@ -19,6 +21,8 @@ const RouterInfo = [
   { redirect: '/login', path: '/write', element: <Write />, withAuthorization: true },
   { redirect: '/login', path: '/result', element: <Result />, withAuthorization: true },
   { redirect: '/login', path: '/letterbox', element: <Letterbox />, withAuthorization: true },
+  { redirect: '/login', path: '/setting', element: <Setting />, withAuthorization: true },
+  { redirect: '/login', path: '/myPage', element: <MyPage />, withAuthorization: true },
 ];
 
 const Authorization = ({ children, isAuthenticated, isFirstLogin, isLoading, redirect, withAuthorization }) => {
@@ -38,9 +42,9 @@ const Authorization = ({ children, isAuthenticated, isFirstLogin, isLoading, red
   return children;
 };
 
-const AutoRouter = ({isLoading}) => {
+const AutoRouter = () => {
   const storeUser = useSelector(state => { return state?.user; });
-  const { isLoggedIn, userInfo } = storeUser;
+  const { isLoggedIn, userInfo, sessionLoading } = storeUser;
 
   return (
     <Routes>
@@ -52,7 +56,7 @@ const AutoRouter = ({isLoading}) => {
             element={
               <Authorization
                 redirect={route.redirect}
-                isLoading={isLoading}
+                isLoading={sessionLoading}
                 isAuthenticated={isLoggedIn}
                 isFirstLogin={userInfo?.firstLogin}
                 withAuthorization={route.withAuthorization}
