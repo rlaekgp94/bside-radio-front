@@ -120,6 +120,16 @@
       }
     }
   }
+  .footer {
+    @include flex;
+    background-color: var(--gray100);
+    padding: 16px 0 24px;
+    .link {
+      @include string(12px, 16px, normal, 600, center);
+      text-decoration-line: underline;
+      color: var(--gray600) !important;
+    }
+  }
 }
 
 .letterbox {
@@ -312,10 +322,10 @@
   height: 100%;
   &__inner {
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr 100px;
     gap: 24px;
-    padding: 24px 16px 84px;
-    height: calc(100% - 108px);
+    padding: 24px 16px 40px;
+    height: calc(100% - 64px);
     .body {
       @include flex;
       height: 100%; 
@@ -331,8 +341,15 @@
     }
     .foot {
       display: grid;
-      grid-auto-rows: auto;
-      button {
+      grid-auto-rows: repeat(2, auto);
+      gap: 16px;
+      align-items: center;
+      .link {
+        @include string(12px, 16px, normal, 600, center);
+        text-decoration-line: underline;
+        color: var(--gray600) !important;
+      }
+      .login-btn {
         @include string(16px, 24px, normal, 700, center, var(--black));
         display: grid;
         grid-template-columns: 20px auto;
@@ -340,9 +357,8 @@
         align-items: center;
         justify-content: center;
         background-color: #FEE500;
-        border-radius: 4px;
-        // padding: 16px 8px;
-        min-height: 56px;
+        border-radius: 8px;
+        height: 56px;
 
         &.not {
           &::before {
@@ -352,7 +368,6 @@
             background: url($G-path-icon + 'talk.svg') $G-img-contain;
           }
         }
-
       }
     }
   }
@@ -362,21 +377,51 @@
   background-color: var(--white);
   height: 100%;
   &__inner {
+    padding: 20px;
     display: grid;
-    grid-template-rows: 1fr 56px;
-    gap: 24px;
-    padding: 24px 16px 84px;
-    height: calc(100% - 108px);
-    .body {
-      @include flex;
-      height: 100%; 
-      .rabbit {
-        height: 288px;
-        aspect-ratio: 1/1;
+    grid-template-rows: 40px 1fr 56px;
+    height: calc(100% - 40px);
+
+    .head {
+      @include flex(flex-start, center, row);
+      height: 40px;
+      .logo {
+        height: 24px;
+        object-fit: contain;
       }
-      p {
-        @include string(16px, 24px, normal, 600, center, var(--gray800));
-        margin-top: 16px;
+    }
+    .body {
+      display: grid;
+      grid-template-rows: 255px auto;
+      justify-items: center;
+      height: calc(100% - 83px); 
+      margin-top: 83px;
+      .img-wrapper {
+        @include flex;
+        height: 255px;
+        .rabbit {
+          height: 255px;
+          aspect-ratio: 1/1;
+        }
+        .img4xx {
+          height: 255px;
+          aspect-ratio: 288/255;
+        }
+        .img5xx {
+          height: 184.76px;
+          aspect-ratio: 258.96/184.76;
+        }
+      }
+      &__desc {
+        @include flex;
+        .code {
+          @include string(20px, 28px, normal, 700, center, var(--black));
+          margin-bottom: 20px;
+        }
+        .message {
+          @include string(14px, 22px, normal, 500, center, var(--gray700));
+          min-height: 44px;
+        }
       }
     }
     .foot {
@@ -385,7 +430,7 @@
       button {
         @include string(16px, 24px, normal, 700, center, var(--white));
         background-color: var(--purple06);
-        border-radius: 4px;
+        border-radius: 8px;
       }
     }
   }
@@ -748,7 +793,7 @@
         @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
         background-color: #9452D6;
-        border-radius: 4px;
+        border-radius: 8px;
         // padding: 16px 8px;
         min-height: 56px;
   

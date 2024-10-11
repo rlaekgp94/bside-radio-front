@@ -179,6 +179,9 @@ function Home() {
           })}
         </ul>
       </section>
+      <div className="footer">
+        <a className="link" target="_black" href={DATA.PRIVACY_POLICY_URL}>개인정보처리방침</a>
+      </div>
     </div>
   )
 }

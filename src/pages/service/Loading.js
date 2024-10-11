@@ -1,5 +1,4 @@
 
-// import ImgRabbitRead from 'assets/Content/read-rabbit-origin.svg';
 import GifRabbitRead from 'assets/Content/read-rabbit.gif';
 
 import ImgMicRead from 'assets/Content/read-mic.png';

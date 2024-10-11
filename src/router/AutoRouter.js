@@ -8,6 +8,7 @@ import Letterbox from 'pages/service/Letterbox';
 import Write from 'pages/service/Write';
 import Result from 'pages/service/Result';
 import NotFound from 'pages/error/NotFound';
+import Error from 'pages/error/Error';
 
 import { CircularProgress } from '@mui/material';
 
@@ -62,6 +63,7 @@ const AutoRouter = ({isLoading}) => {
           />
         );
       })}
+      <Route path='error/:code' element={<Error />} />
       <Route path="*" element={<NotFound />} />
     </Routes>      
   );

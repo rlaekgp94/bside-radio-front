@@ -7,11 +7,13 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import store from './store/configureStore';
 import './styles/style.scss';
+import AxiosNavigation from './utils/AxiosNavigation';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
     <BrowserRouter>
+      <AxiosNavigation />
       <App />
     </BrowserRouter>
   </Provider>
