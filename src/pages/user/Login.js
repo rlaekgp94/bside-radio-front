@@ -8,11 +8,12 @@ import { CircularProgress } from '@mui/material';
 
 import { DATA } from 'constants'
 
+
 export default function Login() {
   const [loading, setLoading] = useState(false);
   
   const SocialKakaoLogin = () => {
-    window.location.href = `${process.env.REACT_APP_SERVER_BASE_URL}/oauth2/authorization/kakao`
+    window.location.href = `${DATA.BASE_URL}/oauth2/authorization/kakao`
     setLoading(true);
   }
   

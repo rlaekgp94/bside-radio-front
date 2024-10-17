@@ -1,3 +1,4 @@
+import mixpanel from 'mixpanel-browser';
 import base64 from "base-64";
 import { getCookie, setCookie } from 'utils/cookie';
 import { getUserInfoAPI } from 'api/v1/user'
@@ -32,6 +33,11 @@ const useAuth = () => {
       const res = await getUserInfoAPI(userId);
       setUserDataCookie(JSON.stringify(res))
       dispatch(setUserInfo(res));
+      mixpanel.people.set({
+        "$email": res?.email,
+        "$name": res?.nickname
+      });
+
     } catch(e) {
       console.log("getUserInfo e: ", e)
     }
