@@ -17,7 +17,7 @@ function App() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    mixpanel.init("e37c0a57024fa52ef338e66808c216f4", {
+    mixpanel.init("e6769d0990d9d69011e4902258f94ad6", {
       debug: process.env.REACT_APP_ENV === 'development',
       track_pageview: true,
     });
