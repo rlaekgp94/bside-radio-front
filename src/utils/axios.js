@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { getCookie } from 'utils/cookie';
 import { jwtDecodingCookie } from 'utils/jwtDecodingCookie'
+import { DATA } from 'constants'
 
-let BASE_URL = `${process.env.REACT_APP_SERVER_BASE_URL}/api`
+let BASE_URL = `${DATA.BASE_URL}/api`
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,
