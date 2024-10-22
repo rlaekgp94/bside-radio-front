@@ -5,6 +5,7 @@ import Home from 'pages/Home';
 import Login from 'pages/user/Login';
 import Register from 'pages/user/Register';
 import EditProfile from 'pages/user/EditProfile';
+import DeleteAccount from 'pages/user/DeleteAccount';
 import MyPage from 'pages/user/MyPage';
 import Letterbox from 'pages/service/Letterbox';
 import Write from 'pages/service/Write';
@@ -23,6 +24,7 @@ const RouterInfo = [
   { redirect: '/login', path: '/letterBox', element: <Letterbox />, withAuthorization: true },
   { redirect: '/login', path: '/myPage', element: <MyPage />, withAuthorization: true },
   { redirect: '/login', path: '/editProfile', element: <EditProfile />, withAuthorization: true },
+  { redirect: '/login', path: '/deleteAccount', element: <DeleteAccount />, withAuthorization: true },
 ];
 
 const Authorization = ({ children, isAuthenticated, isFirstLogin, isLoading, redirect, withAuthorization }) => {

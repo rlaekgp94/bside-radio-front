@@ -1,3 +1,49 @@
+.MuiButtonBase-root {
+  &.MuiRadio-root {
+    color: var(--gray600);
+    &.Mui-checked {
+      color: var(--purple07);
+    }
+  }
+}
+/* checkbox custom */
+.MuiFormGroup-root.checkbox-custom-root {
+  margin: 0 0 0 12px;
+  @include flex(flex-start, center, row);
+  .MuiFormControlLabel-root {
+    margin: 0;
+    align-items: center;
+    gap: 12px;
+    .MuiFormControlLabel-asterisk {
+      display: none;
+    }
+  }
+  .MuiTypography-root {
+    @include string(14px, 22px, normal, 500, left, var(--black));
+    @include disableDrag;
+    @include breakpoint(tablet) {
+      transform: translateY(0);
+    }
+    &.Mui-disabled {
+      color: var(--gray400) !important;
+    }
+  }
+  .MuiCheckbox-root {
+    &.Mui-checked {
+      color: var(--purple07);
+    }
+    &.Mui-disabled {
+      color: var(--gray300);
+    }
+    color: var(--gray600);
+    padding: 0;
+    border-radius: 0;
+    .MuiSvgIcon-root {
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
 
 
 // /* caution style */

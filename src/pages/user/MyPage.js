@@ -24,6 +24,11 @@ export default function MyPage() {
       link: "#"
     },
     {
+      name: "이용약관",
+      icon: IconDesc,
+      link: "#"
+    },
+    {
       name: "개인정보처리방침",
       icon: IconDesc,
       link: DATA.PRIVACY_POLICY_URL
@@ -32,7 +37,7 @@ export default function MyPage() {
       name: "계정 탈퇴",
       icon: IconMinus,
       isFunction: () => {
-        console.log("계정 탈퇴")
+        navigate("/deleteAccount")
       }
     },
     {

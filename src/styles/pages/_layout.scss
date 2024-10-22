@@ -54,17 +54,20 @@
   background-color: var(--white);
   z-index: 10;
   &__inner {
-    padding: 32px 0;
-    display: grid;
-    grid-template-columns: 20px auto;
-    gap: 8px;
+    @include flex(space-between, center, row);
+    padding: 10px 15px;
     align-items: center;
+    &::after {
+      @include same(20px);
+      content: "";
+      display: block;
+    }
     .icon {
       @include same(20px);
       cursor: pointer;
     }
     .title {
-      @include string(20px, 28px, -0.08px, 700, left, var(--gray900));
+      @include string(16px, 24px, normal, 600, center, var(--black));
     }
   }
 }
@@ -1082,18 +1085,14 @@
 .editProfile {
   height: 100%;
   display: grid;
-  grid-template-rows: 92px 1fr;
+  grid-template-rows: 44px 1fr;
   &__inner {
     background-color: var(--gray100);
-    padding: 0 20px 20px;
+    padding: 26px 20px 20px;
     display: grid;
     grid-template-rows: 1fr 56px;
     gap: 26px;
     align-items: space-between;
-    .head {
-      @include flex(flex-start, center, row);
-      height: 44px;
-    }
     .body {
       .user-data-container {
         display: grid;
@@ -1159,6 +1158,108 @@
     .foot {
       display: grid;
       grid-auto-rows: auto;
+      button {
+        @include flex;
+        @include string(16px, 24px, normal, 700, center, var(--white));
+        background-color: #9452D6;
+        border-radius: 8px;
+        // padding: 16px 8px;
+        min-height: 56px;
+  
+        &:disabled {
+          background-color: var(--gray300);
+          color: var(--gray600);
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
+.deleteAccount {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 44px 1fr;
+  &__inner {
+    padding: 26px 20px 20px;
+    display: grid;
+    grid-template-rows: 1fr 104px;
+    gap: 16px;
+    align-items: space-between;
+    .body {
+      .delete-data-container {
+        display: grid;
+        grid-auto-rows: auto;
+        gap: 30px;
+        .info-wrapper {
+          display: grid;
+          grid-auto-rows: auto;
+          gap: 30px;
+          &__title {
+            @include string(20px, 28px, -0.08px, 700, left, var(--black));   
+          }
+          ul {
+            li {
+              margin-left: 8px;
+              &:not(:last-of-type) {
+                margin-bottom: 8px;
+              }
+              p {
+                @include string(14px, 22px, normal, 500, left, var(--gray700));   
+                text-indent: -8px;
+                margin-left: 8px;
+                &::before {
+                  content: "•";
+                  display: inline-block;
+                  margin-right: 7px;
+                  margin-left: 5px;
+                }
+              }
+            }
+          }
+        }
+      }
+      .delete-data-form {
+        display: grid;
+        grid-auto-rows: auto;
+        gap: 10px;
+        &__title {
+          @include string(12px, 16px, normal, 600, left, var(--gray500));   
+          span {
+            margin-right: 5px;
+          }
+        }
+        &__inner {
+          li {
+            min-height: 48px;
+            .row {
+              @include flex(flex-start, center, row);
+              p {
+                @include string(14px, 22px, normal, 500, left, var(--black));   
+              }
+            }
+            .reason-textarea {
+              @include scrollCustomSmall(var(--purple06));
+              @include string(14px, 22px, normal, 500, left, var(--black));
+              padding: 10px 12px;
+              min-height: calc(130px - 20px);
+              max-height: calc(130px - 20px);
+              resize: none;
+              border-radius: 8px;
+              background: var(--gray200);
+              width: calc(100% - 24px);
+              &::placeholder {
+                @include string(14px, 22px, normal, 500, left, var(--gray500));   
+                white-space: pre-line;             
+              }
+            }
+          }
+        }
+      }
+    }
+    .foot {
+      display: grid;
+      grid-auto-rows: 48px 56px;
       button {
         @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));

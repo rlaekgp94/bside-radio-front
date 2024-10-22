@@ -2,9 +2,6 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
-import LogoImg from 'assets/Logo/logo_s.svg';
-import ImgLetterStamp from 'assets/Content/purple-letter-stamp.svg'
-
 import useAuth from 'hooks/useAuth';
 import { patchUserInfoAPI } from 'api/v1/user'
 import { setUserInfo } from 'store/modules/user';
@@ -23,10 +20,13 @@ export default function Mypage() {
     preference: currentPreference, 
     profileImageDisable: currentProfileImageDisable
   } = userInfo;
+
+  let currentHasMarketingAgreement = false;
   
   const [nickname, setNickname] = useState(currentNickname ? currentNickname : "");
   const [type, setType] = useState(currentPreference ? currentPreference : "");
   const [profileImageDisable, setProfileImageDisable] = useState(currentProfileImageDisable !== undefined ? currentProfileImageDisable: false);
+  const [hasMarketingAgreement, setHasMarketingAgreement] = useState(currentHasMarketingAgreement !== undefined ? currentHasMarketingAgreement : false);
   const [loading, setLoading] = useState(false);
 
   const updatedData = {};
@@ -41,6 +41,10 @@ export default function Mypage() {
 
   if (profileImageDisable !== currentProfileImageDisable) {
     updatedData.profileImageDisable = profileImageDisable;
+  }
+
+  if (hasMarketingAgreement !== currentHasMarketingAgreement) {
+    updatedData.hasMarketingAgreement = hasMarketingAgreement;
   }
 
 
@@ -60,9 +64,9 @@ export default function Mypage() {
   }
 
   const patchUserInfo = async () => {
-    console.log(updatedData)
     if (!userInfo?.userId || !Object.keys(updatedData).length) return;
     setLoading(true)
+    // hasMarketingAgreement 추가할 것
     try {
       const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageDisable);
       setUserDataCookie(JSON.stringify(res))
@@ -77,13 +81,13 @@ export default function Mypage() {
   
   return (
     <div className="editProfile">
-      <GoBackTitleBar title="뒤로" />
+      <GoBackTitleBar title="프로필 수정하기" />
       <div className="editProfile__inner">
         <div className="body">
           <div className="user-data-container">
             <div className="data-box">
               <div className="data-box__title">
-                <p>사연을 보낼 닉네임을 입력해 주세요.</p>
+                <p>변경할 닉네임을 입력해주세요.</p>
               </div>
               <input type="text"
                 className="user-nickname"
@@ -109,6 +113,12 @@ export default function Mypage() {
                 <p>카카오톡 프로필 사진 동기화 여부</p>
               </div>
               <Switch active={profileImageDisable} setActive={setProfileImageDisable} />              
+            </div>
+            <div className="data-box rows">
+              <div className="data-box__title">
+                <p>E-mail 광고성 정보 수신 동의</p>
+              </div>
+              <Switch active={hasMarketingAgreement} setActive={setHasMarketingAgreement} />              
             </div>
           </div>
         </div>

@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { openModal } from 'store/modules/components';
 
 import Skeleton from '@mui/material/Skeleton';
-import GoBackTitleBar from 'components/common/GoBackTitleBar';
 
 import { getUserLetterListAPI } from 'api/v1/letters'
 

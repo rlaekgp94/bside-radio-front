@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { deleteCookie } from 'utils/cookie';
+import mixpanel from 'mixpanel-browser';
 // import { setCookie, getCookie } from 'utils/cookie';
 
 const initialState = {
@@ -21,7 +22,7 @@ const userSlice = createSlice({
       }
     },
     clearUserInfo:(state) => {
-      // mixpanel.reset();
+      mixpanel.reset();
       state.userInfo = null;
       state.isLoggedIn = null;
       deleteCookie('--user-data');

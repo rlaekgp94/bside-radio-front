@@ -13,7 +13,7 @@ function GoBackTitleBar({title}) {
   };
 
   return (
-    <div className="go-back-title-bar layout-p">
+    <div className="go-back-title-bar">
       <div className="go-back-title-bar__inner">        
         <img onClick={handleBack} className="icon" src={IconBack} alt="go back img 뒤로가기 이미지" />
         <p className="title">{title}</p>
