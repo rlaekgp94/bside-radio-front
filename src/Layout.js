@@ -4,11 +4,12 @@ import { useSelector } from 'react-redux';
 import ScrollToTop from 'components/common/ScrollToTop';
 import GlobalModal from 'components/modal/Global';
 import NavigationBar from 'components/common/NavigationBar';
+import FixedActionButton from 'components/common/FixedActionButton';
 
 const Layout = ({children}) => {
   const sessionLoading = useSelector(state => { return state?.user.sessionLoading; });
   const { pathname } = useLocation();
-  const paths = ['/', '/letterBox', '/setting']; // community
+  const paths = ['/', '/letterBox', '/myPage']; // community
 
   const vh = window.innerHeight * 0.01;
   const pvh = window.innerHeight;
@@ -28,7 +29,7 @@ const Layout = ({children}) => {
         <ScrollToTop>
           {children}
         </ScrollToTop>
-        {/* <FixedActionButton />  */}
+        <FixedActionButton /> 
       </div>
       {paths.includes(pathname) && !sessionLoading && <NavigationBar />}
       <GlobalModal />

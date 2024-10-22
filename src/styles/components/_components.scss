@@ -1,7 +1,7 @@
 .fixed-action-wrapper { 
   @include flex(flex-end, flex-start, row);  
   position: fixed;
-  bottom: 30px;
+  bottom: 90px;
   z-index: 10;
 
   @media only screen and (max-width: 480px) {
@@ -38,6 +38,60 @@
         }
         border: 1px solid var(--purple07);
         background: var(--purple06);
+      }
+    }
+  }
+}
+
+.navi-bar {
+  width: 100%;
+  height: var(--G-nav-height);
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: var(--white);
+  border-top: 1px solid var(--gray200);
+  z-index: 10;
+  &__inner {
+    padding: 0 20px;
+    height: 100%;
+    ul {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      li {
+        @include flex;
+        @include same(100%);
+        cursor: pointer;   
+        &.active p {
+          color: var(--purple07) !important;
+        }
+        p {
+          @include string(11px, 135%, normal, 700, center, var(--gray600));
+          margin-top: 2px;
+        }
+
+        @each $icon in home, letterbox, my {
+          &.#{$icon}-on {
+            &::before {
+              @include same(24px);
+              content: "";
+              display: block;
+              background: url($G-path-icon + 'nav-#{$icon}-on.svg') $G-img-contain;              
+            }
+          } 
+          &.#{$icon}-off {
+            &::before {
+              @include same(24px);
+              content: "";
+              display: block;
+              background: url($G-path-icon + 'nav-#{$icon}-off.svg') $G-img-contain;              
+            }
+          } 
+        }
       }
     }
   }

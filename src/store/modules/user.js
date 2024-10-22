@@ -21,6 +21,7 @@ const userSlice = createSlice({
       }
     },
     clearUserInfo:(state) => {
+      // mixpanel.reset();
       state.userInfo = null;
       state.isLoggedIn = null;
       deleteCookie('--user-data');
