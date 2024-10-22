@@ -133,7 +133,6 @@ function Letterbox() {
 
   return (
     <div className={`letterbox ${!list?.length ? "isHeight" : ""}`}>
-      <GoBackTitleBar title="편지함" />
       {list === null && loading ? (
         <div className="letterbox__inner layout-p">
           <div className="letter-list">

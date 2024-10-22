@@ -129,6 +129,51 @@
     }
   }
   &.base-dialog-wrapper {
+    &.Coming {
+      .MuiDialog-paper {
+        scrollbar-width: none;
+        --ms-overflow-style: none;
+        border-radius: 12px;
+        background-color: var(--white);
+        width: 100%;
+        max-width: 320px;
+        margin: 20px;
+        max-height: auto;
+        // height: calc(100% - 40px);
+
+        .base-dialog-inner {
+          padding: 32px;
+
+          .info {
+            @include flex;
+            margin-bottom: 24px;
+            &__title {
+              @include string(20px, 28px, -0.08px, 700, center, var(--gary800));
+              margin-bottom: 12px;
+            }
+            &__desc {
+              li {                
+                @include string(16px, 24px, normal, 500, center, var(--gary800));
+              }
+            }
+          }
+
+          button {
+            @include string(16px, 24px, normal, 700, center, var(--white));
+            background-color: #9452D6;
+            border-radius: 4px;
+            padding: 10px 8px;
+            width: 100%;
+      
+            &:disabled {
+              background-color: var(--gray300);
+              color: var(--gray600);
+              cursor: default;
+            }
+          }
+        }
+      }
+    }
     &.LoginPrompt {
       .MuiDialog-paper {
         scrollbar-width: none;

@@ -4,22 +4,58 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
 
 import { openModal } from 'store/modules/components';
 import { DATA } from 'constants'
-import { MOCK } from 'constants/mock'
 
 import UserProfile from 'components/item/UserProfile'
 import Skeleton from '@mui/material/Skeleton';
 
-import UnLike from 'assets/Icon/btn-unlike.svg';
 import LogoImg from 'assets/Logo/logo_s.svg';
+import IconTime from 'assets/Icon/icon-time.svg';
 
-import { getLatestLetterListAPI, getLatestCommunityListAPI } from 'api/v1/letters'
+import ProgramCoverDalto from 'assets/Content/program/cover-dalto.png'
+import ProgramCoverDoto from 'assets/Content/program/cover-doto.png'
+import ProgramCoverByulto from 'assets/Content/program/cover-byulto.png'
+
+import { getLatestLetterListAPI } from 'api/v1/letters'
 
 
 
-function MainSlide() {
+function NoticeList() {
+  const notice = [
+    {
+      id: 1,
+      tag: "공지",
+      title: "올려올려 라디오 서비스 소개",
+      link: "https://www.notion.so/tetroco/12679bf3bae180549fc4ed30f6924870?pvs=4"
+    },
+  ]
+  return (    
+    <div className="notice-card layout-p">
+      <Swiper
+        pagination={true} 
+        modules={[Pagination]}
+        grabCursor={true}
+      >          
+        {notice.map(item => {
+          return <SwiperSlide key={item.id}>
+              <div className="notice-card">
+                <div className="notice-card__tag"><p>{item.tag}</p></div>
+                <p onClick={() => {if (item.link) window.open(item.link)} } className={`notice-card__title ${item.link ? "cursor" : ""}`}>{item.title}</p>
+              </div>
+            </SwiperSlide> 
+          })
+        }
+      </Swiper>
+    </div>
+  )
+}
+
+
+function LatestLetterList() {
   const dispatch = useDispatch();
   const [latestList, setLatestList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -51,9 +87,8 @@ function MainSlide() {
         slidesOffsetAfter={20}      
         loop={true}
         grabCursor={true}
-        spaceBetween={12}   // 슬라이드 간격 
+        spaceBetween={12}  // 슬라이드 간격 
         slidesPerView="auto"
-        // slidesPerView={1.35}   // 한번에 보이는 슬라이드 갯수
       >          
         {loading ?
           Array.from(new Array(3)).map((item, index) => {
@@ -93,18 +128,82 @@ function MainSlide() {
   )
 }
 
-function UserInfoBar() {
-  return (
-    <div className="userInfo-bar layout-p">
-      <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
-      <UserProfile />
+function ProgramList() {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+
+  const openComingModal = () => {
+    dispatch(openModal({modalType: "Coming"}))
+  }
+  const program = [
+    {
+      id: "dalto",
+      title: "달토의 힐링 라디오",
+      time: "04:00~12:00",
+      status: "ON",
+      coverImage: ProgramCoverDalto
+    },
+    {
+      id: "doto",
+      title: "도토의 도토리 파워",
+      time: "12:00~18:00",
+      status: "COMING",
+      coverImage: ProgramCoverDoto
+    },
+    {
+      id: "byulto",
+      title: "별토의 보라빛 밤",
+      time: "18:00~04:00",
+      status: "COMING",
+      coverImage: ProgramCoverByulto
+    },
+  ]
+
+  return (    
+    <div className="program-wrapper">
+      <div className="program-title layout-p">
+        <p>편성 프로그램</p>
+      </div>
+      <div className="program-card">
+        <Swiper
+          slidesOffsetBefore={20}
+          slidesOffsetAfter={20}    
+          grabCursor={true}
+          spaceBetween={8} // 슬라이드 간격 
+          slidesPerView="auto"
+        >          
+          {loading ?
+          Array.from(new Array(3)).map((item, index) => {
+            return <SwiperSlide key={index}>
+              <Skeleton sx={{ bgcolor: '#ececf0' }} animation="wave" width={276} height={280} variant="rectangular" />
+            </SwiperSlide>
+          }) :
+            program.length && program.map(item => {
+              return <SwiperSlide key={item.id}>
+                <div onClick={openComingModal} className="slide-card">
+                  <div className="card-cover">
+                    {item.status === "COMING" ? <div className="card-cover__coming">
+                      <p>coming soon</p>
+                    </div> : null}
+                    {item.status === "ON" ? <div className="card-cover__on">
+                      <p>ON AIR</p>
+                    </div> : null}
+                    <img className="card-cover__image" src={item.coverImage} alt="coverImage img" />
+                  </div>
+                  <div className="card-info">
+                    <p className="card-info__title">{item.title}</p>
+                    <div className="card-info__time">
+                      <img className="time-icon" src={IconTime} alt="icon time img" />
+                      <p>{item.time}</p>
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide> 
+            })
+          }
+        </Swiper>
+      </div>
     </div>
-    // <div className="userInfo-bar">
-    //   <div className="userInfo-bar__inner layout-p">
-    //     <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
-    //     <UserProfile />
-    //   </div>
-    // </div>
   )
 }
 
@@ -112,32 +211,13 @@ function Home() {
   
   return (
     <div className="home">
-      {/* <UserInfoBar /> */}
-      <section className="layout-bg">
-        <UserInfoBar />
-        <MainSlide />
-      </section>
-      <section className="community-layout layout-p">
-        <p className="community-layout__title">커뮤니티</p>
-        <ul className="community-list">
-          {MOCK.community.map(item => {
-            return <li key={item.id} className="list-item">
-              <p className="list-item__title">{item.title}</p>
-              <p className="list-item__content">{item.content}</p>
-              <div className="list-item__footer">
-                <p className="list-item__footer--date">{item.date}</p>
-                <div className="list-item__footer--like">
-                  <img className="like-btn" src={UnLike}></img>
-                  <p>{item.likeCount}</p>
-                </div>
-              </div>
-            </li>
-          })}
-        </ul>
-      </section>
-      {/* <div className="footer">
-        <a className="link" target="_black" href={DATA.PRIVACY_POLICY_URL}>개인정보처리방침</a>
-      </div> */}
+      <div className="userInfo-bar layout-p">
+        <img className="logo" src={LogoImg} alt="logo img 로고 이미지" />
+        <UserProfile />
+      </div>
+      <NoticeList />
+      <LatestLetterList />   
+      <ProgramList />
     </div>
   )
 }
