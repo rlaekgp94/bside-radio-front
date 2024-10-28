@@ -2,17 +2,96 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 
-import LogoImg from 'assets/Logo/logo_s.svg';
-import ImgLetterStamp from 'assets/Content/purple-letter-stamp.svg'
-
+import { setUserInfo } from 'store/modules/user';
 import useAuth from 'hooks/useAuth';
 import { patchUserInfoAPI } from 'api/v1/user'
-import { setUserInfo } from 'store/modules/user';
+import { DATA } from 'constants'
 
+import { CircularProgress, Checkbox } from '@mui/material'
+import GoBackTitleBar from 'components/common/GoBackTitleBar';
 import Switch from 'components/item/Toggle'
-import { CircularProgress } from '@mui/material';
+;
+import LogoImg from 'assets/Logo/logo_s.svg';
+import IconLink from 'assets/Icon/icon-external-link.svg';
+import ImgLetterStamp from 'assets/Content/purple-letter-stamp.svg'
 
-export default function Register() {
+function SignupTerms(props) {
+  const { setNext, agreements, setAgreements } = props;
+
+  const handleAllAgree = (event) => {
+      const checked = event.target.checked;
+      setAgreements({
+        allAgreed: checked,
+        agreeToTerms: checked,
+        agreeToPrivacyPolicy: checked,
+        emailAdsConsented: checked
+      });
+  };
+
+  const handleIndividualCheck = (event) => {
+      const { name, checked } = event.target;
+      const updatedAgreements = {
+          ...agreements,
+          [name]: checked
+      };
+      updatedAgreements.allAgreed = updatedAgreements.agreeToTerms && updatedAgreements.agreeToPrivacyPolicy && updatedAgreements.emailAdsConsented;
+      setAgreements(updatedAgreements);
+  };
+  
+  return (
+    <div className="signupTerms">
+      <GoBackTitleBar title="약관 동의" />
+      <div className="signupTerms__inner"> 
+        <div className="body">
+          <div className="data-container">
+            <div className="info-wrapper">
+              <p className="info-wrapper__title">필수 약관에 동의해 주세요.</p>
+              <ul>
+                <li><p>올려올려 라디오 서비스 제공 및 이용을 위하여<br />
+                아래의 약관 동의 및 회원가입이 필요합니다.</p></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div className="foot">
+          <div className="foot__checkbox">            
+            <div className="all">
+              <Checkbox checked={agreements.allAgreed} onChange={handleAllAgree} />
+              <p>약관 전체동의</p>
+            </div>
+            <ul>
+              <li>
+                <Checkbox checked={agreements.agreeToTerms} onChange={handleIndividualCheck} name="agreeToTerms" />
+                <div className="rows">
+                  <p>(필수) 이용 약관 동의</p>
+                  <img onClick={() => window.open(DATA.TERMS_OF_SERVICE_URL, '_blank')} className="icon" src={IconLink} alt="링크 아이콘 link icon" />
+                </div>
+              </li>
+              <li>
+                <Checkbox checked={agreements.agreeToPrivacyPolicy} onChange={handleIndividualCheck} name="agreeToPrivacyPolicy" />
+                <div className="rows">
+                  <p>(필수) 개인정보 처리 방침</p>
+                  <img onClick={() => window.open(DATA.PRIVACY_POLICY_URL, '_blank')} className="icon" src={IconLink} alt="링크 아이콘 link icon" />
+                </div>
+              </li>
+              <li>
+                <Checkbox checked={agreements.emailAdsConsented} onChange={handleIndividualCheck} name="emailAdsConsented" />
+                <div className="rows">
+                  <p>(선택) E-mail 광고성 정보 수신동의</p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <button disabled={!agreements.agreeToTerms || !agreements.agreeToPrivacyPolicy} onClick={() => setNext("PatchField")}>동의하고 시작하기</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function PatchField(props) {
+  const { agreements } = props;
+  console.log(agreements)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { setUserDataCookie } = useAuth();
@@ -41,8 +120,9 @@ export default function Register() {
   const patchUserInfo = async () => {
     if (!userInfo?.userId) return;
     setLoading(true)
+    const { emailAdsConsented, agreeToTerms, agreeToPrivacyPolicy } = agreements;
     try {
-      const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageEnabled);
+      const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageEnabled, emailAdsConsented, agreeToTerms, agreeToPrivacyPolicy);
       setUserDataCookie(JSON.stringify(res))
       dispatch(setUserInfo(res));
       navigate("/")
@@ -114,5 +194,24 @@ export default function Register() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function Register() {
+  const [next, setNext] = useState("SignupTerms");
+
+  const [agreements, setAgreements] = useState({
+    allAgreed: false,
+    agreeToTerms: false,
+    agreeToPrivacyPolicy: false,
+    emailAdsConsented: false
+  });
+
+  const sharedProps = { next, setNext, agreements, setAgreements };
+  return (
+    <>    
+      {next === "SignupTerms" && <SignupTerms {...sharedProps} />}
+      {next === "PatchField" && <PatchField {...sharedProps} />}
+    </>
   )
 }

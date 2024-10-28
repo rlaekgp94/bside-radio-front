@@ -1364,3 +1364,113 @@
     }
   }
 }
+
+.signupTerms {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 44px 1fr;
+  &__inner {
+    padding: 26px 0 0;
+    display: grid;
+    grid-template-rows: 1fr 324px;
+    gap: 16px;
+    align-items: space-between;
+    .body {
+      padding: 0 20px 20px;
+      .data-container {
+        display: grid;
+        grid-auto-rows: auto;
+        gap: 30px;
+        .info-wrapper {
+          display: grid;
+          grid-auto-rows: auto;
+          gap: 30px;
+          &__title {
+            @include string(20px, 28px, -0.08px, 700, left, var(--black));   
+          }
+          ul {
+            li {
+              &:not(:last-of-type) {
+                margin-bottom: 8px;
+              }
+              
+              p {
+                @include string(14px, 22px, normal, 500, left, var(--gray700));   
+              }
+            }
+          }
+        }
+      }
+    }
+    .foot {
+      display: grid;
+      grid-auto-rows: 228px 56px;
+      gap: 20px;
+      padding: 0 20px 20px;
+      &__checkbox {
+        .all {
+          display: grid;
+          grid-template-columns: 48px auto;
+          align-items: center;
+          border-bottom: 1px solid var(--gray200);
+          padding: 10px 0;
+          p {
+            @include string(20px, 28px, -0.08px, 700, left, var(--black));
+          }
+          .MuiButtonBase-root.MuiCheckbox-root {
+            &.Mui-checked {
+              color: var(--purple07);
+            }
+            color: var(--gray600);
+            padding: 0;
+            border-radius: 0;
+            .MuiSvgIcon-root {
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+        ul > li {
+          min-height: 48px;
+          display: grid;
+          grid-template-columns: 48px auto;
+          align-items: center;
+          .MuiButtonBase-root.MuiCheckbox-root {
+            &.Mui-checked {
+              color: var(--purple07);
+            }
+            color: var(--gray600);
+            padding: 0;
+            border-radius: 0;
+            .MuiSvgIcon-root {
+              width: 24px;
+              height: 24px;
+            }
+          }
+          .rows {
+            @include flex(space-between, center, row);
+            p {
+              @include string(14px, 22px, normal, 500, left, var(--gray600));
+            }
+            .icon {
+              @include same(24px);
+            }
+          }
+        }
+      }
+      button {
+        @include flex;
+        @include string(16px, 24px, normal, 700, center, var(--white));
+        background-color: #9452D6;
+        border-radius: 4px;
+        min-height: 56px;
+  
+        &:disabled {
+          background-color: var(--gray300);
+          color: var(--gray600);
+          cursor: default;
+        }
+      }
+    }
+  }
+}
