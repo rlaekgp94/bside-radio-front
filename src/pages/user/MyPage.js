@@ -21,12 +21,12 @@ export default function MyPage() {
     {
       name: "공지사항",
       icon: IconPin,
-      link: "#"
+      link: DATA.NOTICE_BOARD_URL
     },
     {
       name: "이용약관",
       icon: IconDesc,
-      link: "#"
+      link: DATA.TERMS_OF_SERVICE_URL
     },
     {
       name: "개인정보처리방침",

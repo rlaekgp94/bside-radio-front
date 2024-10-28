@@ -5,14 +5,14 @@ import { DATA } from 'constants'
 const UserProfile = () => {
   const userInfo = useSelector(state => { return state?.user?.userInfo; });  
   const { getJwtDecoding } = useAuth();
-  const { profileImageDisable, firstLogin } = userInfo || {};
+  const { profileImageEnabled, firstLogin } = userInfo || {};
 
   const accessToken = getJwtDecoding();
   const profileImageUrl = accessToken?.profileImageUrl || {};
 
   return (
     <>
-      {!firstLogin && profileImageDisable && profileImageUrl ?  
+      {!firstLogin && profileImageEnabled && profileImageUrl ?  
         <img className="profile" src={profileImageUrl} alt="profile img" /> :
         <img className="profile" src={DATA.defaultProfile} alt="defaultProfile img" />
       }

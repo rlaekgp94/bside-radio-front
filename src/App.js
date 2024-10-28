@@ -49,7 +49,6 @@ function App() {
       }
 
     } else {
-      // TODO 추후 로그아웃에도 설정
       mixpanel.reset();
       setUserId(null);
       deleteCookie('--user-data');

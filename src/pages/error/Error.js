@@ -1,5 +1,7 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 
+import { getCookie } from 'utils/cookie';
+
 import LogoImg from 'assets/Logo/logo_s.svg';
 import Img4XXError from 'assets/Content/error/4xx_error_image.png'
 import Img5XXError from 'assets/Content/error/5xx_error_image.png'
@@ -19,9 +21,18 @@ const errorMessages = {
 export default function NotFound() {
   const nav = useNavigate();
   const { code } = useParams();
+  const userData = getCookie('--user-data');
   // const location = useLocation();
   // const { errorCode, errorMessages } = location.state || {};
   // console.log(errorCode, code, errorMessages)
+
+  const movePage = () => {
+    if (userData) {
+      nav("/")
+    } else {
+      nav("/login")
+    }
+  }
 
   return (
     <div className="error">
@@ -43,7 +54,7 @@ export default function NotFound() {
           </div>
         </div>
         <div className="foot">
-          <button onClick={()=> nav("/")}>홈으로 가기</button>
+          <button onClick={movePage}>홈으로 가기</button>
         </div>
       </div>
     </div>

@@ -25,12 +25,52 @@ export const getUserInfoAPI = async (userId) => {
  *
  * @param {string} userId 유저 고유 아이디
  */
-export const patchUserInfoAPI = async (userId, nickname, preference, profileImageDisable) => {
+export const patchUserInfoAPI = async (userId, nickname, preference, profileImageEnabled, emailAdsConsented) => {
   try {
     const result = await apiRequest({
       method: 'patch',
       url: `/${version}/users/${userId}`,
-      data: { nickname, preference, profileImageDisable }
+      data: { nickname, preference, profileImageEnabled, emailAdsConsented }
+    });
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+/**
+ * 계정 탈퇴 API
+ *
+ * @param {string} userId 유저 고유 아이디
+ * @param {integer} selectedNumber 선택한 탈퇴 사항
+ * @param {string} detailReason 상세 탈퇴 사유
+ */
+export const deleteAccountAPI = async (userId, selectedNumber, detailReason) => {
+  try {
+    const result = await apiRequest({
+      method: 'delete',
+      url: `/${version}/users/${userId}`,
+      data: { selectedNumber, detailReason }
+    });
+    return result;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
+
+/**
+ * 계정 탈퇴 API
+ *
+ * @param {string} userId 유저 고유 아이디
+ */
+
+export const getUserLetterLimitAPI = async (userId) => {
+  try {
+    const result = await apiRequest({
+      method: 'get',
+      url: `/${version}/users/${userId}/usage`,
     });
     return result;
   } catch (e) {

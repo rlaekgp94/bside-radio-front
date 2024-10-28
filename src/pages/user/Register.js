@@ -20,7 +20,7 @@ export default function Register() {
   
   const [nickname, setNickname] = useState("");
   const [type, setType] = useState("F");
-  const [profileImageDisable, setProfileImageDisable] = useState(false);
+  const [profileImageEnabled, setProfileImageDisable] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const changeHandler = (e) => {
@@ -42,7 +42,7 @@ export default function Register() {
     if (!userInfo?.userId) return;
     setLoading(true)
     try {
-      const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageDisable);
+      const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageEnabled);
       setUserDataCookie(JSON.stringify(res))
       dispatch(setUserInfo(res));
       navigate("/")
@@ -105,7 +105,7 @@ export default function Register() {
               <div className="data-box__title">
                 <p>카카오톡 프로필 사진 동기화 여부</p>
               </div>
-              <Switch active={profileImageDisable} setActive={setProfileImageDisable} />              
+              <Switch active={profileImageEnabled} setActive={setProfileImageDisable} />              
             </div>
           </div>
         </div>

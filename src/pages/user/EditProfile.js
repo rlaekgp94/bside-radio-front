@@ -18,15 +18,14 @@ export default function Mypage() {
   const { 
     nickname: currentNickname, 
     preference: currentPreference, 
-    profileImageDisable: currentProfileImageDisable
+    profileImageEnabled: currentProfileImageDisable,
+    emailAdsConsented: currentEmailAdsConsented,
   } = userInfo;
-
-  let currentHasMarketingAgreement = false;
   
   const [nickname, setNickname] = useState(currentNickname ? currentNickname : "");
   const [type, setType] = useState(currentPreference ? currentPreference : "");
-  const [profileImageDisable, setProfileImageDisable] = useState(currentProfileImageDisable !== undefined ? currentProfileImageDisable: false);
-  const [hasMarketingAgreement, setHasMarketingAgreement] = useState(currentHasMarketingAgreement !== undefined ? currentHasMarketingAgreement : false);
+  const [profileImageEnabled, setProfileImageDisable] = useState(currentProfileImageDisable !== undefined ? currentProfileImageDisable: false);
+  const [emailAdsConsented, setEmailAdsConsented] = useState(currentEmailAdsConsented !== undefined ? currentEmailAdsConsented : false);
   const [loading, setLoading] = useState(false);
 
   const updatedData = {};
@@ -39,12 +38,12 @@ export default function Mypage() {
     updatedData.type = type;
   }
 
-  if (profileImageDisable !== currentProfileImageDisable) {
-    updatedData.profileImageDisable = profileImageDisable;
+  if (profileImageEnabled !== currentProfileImageDisable) {
+    updatedData.profileImageEnabled = profileImageEnabled;
   }
 
-  if (hasMarketingAgreement !== currentHasMarketingAgreement) {
-    updatedData.hasMarketingAgreement = hasMarketingAgreement;
+  if (emailAdsConsented !== currentEmailAdsConsented) {
+    updatedData.emailAdsConsented = emailAdsConsented;
   }
 
 
@@ -66,9 +65,10 @@ export default function Mypage() {
   const patchUserInfo = async () => {
     if (!userInfo?.userId || !Object.keys(updatedData).length) return;
     setLoading(true)
-    // hasMarketingAgreement 추가할 것
+    console.log(userInfo.userId, nickname, type, profileImageEnabled, emailAdsConsented)
     try {
-      const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageDisable);
+      const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageEnabled, emailAdsConsented);
+      console.log("res", res)
       setUserDataCookie(JSON.stringify(res))
       dispatch(setUserInfo(res));
       navigate("/myPage")
@@ -112,13 +112,13 @@ export default function Mypage() {
               <div className="data-box__title">
                 <p>카카오톡 프로필 사진 동기화 여부</p>
               </div>
-              <Switch active={profileImageDisable} setActive={setProfileImageDisable} />              
+              <Switch active={profileImageEnabled} setActive={setProfileImageDisable} />              
             </div>
             <div className="data-box rows">
               <div className="data-box__title">
                 <p>E-mail 광고성 정보 수신 동의</p>
               </div>
-              <Switch active={hasMarketingAgreement} setActive={setHasMarketingAgreement} />              
+              <Switch active={emailAdsConsented} setActive={setEmailAdsConsented} />              
             </div>
           </div>
         </div>

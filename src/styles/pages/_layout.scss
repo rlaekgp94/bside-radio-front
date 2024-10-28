@@ -132,6 +132,7 @@
   .program-wrapper {
     min-height: 213px;
     margin-top: 40px;
+    padding-bottom: 80px;
     .program-title {
       margin-bottom: 15px;
       p {      
@@ -488,7 +489,46 @@
         }
       }
       .content-foot {
-        @include flex(flex-end, content, row);
+        @include flex(space-between, center, row);
+        .limit-wrapper {
+          display: grid;
+          grid-template-columns: 39px auto;
+          gap: 21.96px;
+          align-items: center;
+          .letter-paper {
+            @include flex;
+            @include size(39.131px, 49px);
+            position: relative;
+            background: url($G-path-content + 'letter-paper.png') $G-img-contain;              
+            p {
+              @include string(12px, 16px, normal, 600, center, var(--purple09));
+              transform: translate(1.5px, -3px);
+            }
+            &::after {
+              @include size(15.78px, 17.98px); 
+              content: "";
+              display: block;
+              background: url($G-path-content + 'pencil.png') $G-img-contain;  
+              position: absolute;
+              bottom: 7px;
+              right: -7.5px;
+            }
+          }
+          .reflash-timer {
+            &__desc {
+              @include string(9px, 16px, normal, 600, left, var(--gray600));
+            }
+            &__inner {
+              display: grid;
+              grid-template-columns: 15px auto;
+              gap: 6px;
+              align-items: center;
+              .timer-num {
+                @include string(16px, 24px, normal, 700, left, var(--black));
+              }
+            }
+          }
+        }
         .submit {
           @include size(auto, 44px);
           @include string(16px, 24px, normal, 700, center, var(--white));
@@ -1176,17 +1216,59 @@
   }
 }
 
+.deleteComplete {
+  background-color: var(--white);
+  height: 100%;
+  &__inner {
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 1fr 56px;
+    height: calc(100% - 40px);
+    .body {
+      display: grid;
+      grid-template-rows: auto 89px;
+      justify-items: center;
+      height: calc(100% - 50px); 
+      margin-bottom: 50px;
+      &__desc {
+        @include flex;
+        p {
+          @include string(20px, 28px, -0.08px, 700, center, var(--gray800));
+          margin-bottom: 12px;
+        }
+        span {
+          @include string(16px, 24px, normal, 500, center, var(--gray800));
+        }
+      }
+      .logo {
+        @include size(173px, 80px);
+      }
+    }
+    .foot {
+      display: grid;
+      grid-auto-rows: auto;
+      button {
+        @include string(16px, 24px, normal, 700, center, var(--white));
+        background-color: var(--purple06);
+        border-radius: 4px;
+      }
+    }
+  }
+}
+
 .deleteAccount {
   height: 100%;
   display: grid;
   grid-template-rows: 44px 1fr;
   &__inner {
-    padding: 26px 20px 20px;
+    padding: 26px 0 0;
     display: grid;
-    grid-template-rows: 1fr 104px;
+    grid-template-rows: 1fr 124px;
     gap: 16px;
     align-items: space-between;
+    position: relative;
     .body {
+      padding: 0 20px 20px;
       .delete-data-container {
         display: grid;
         grid-auto-rows: auto;
@@ -1258,13 +1340,18 @@
       }
     }
     .foot {
+      position: sticky;
+      bottom: 0;
+      left: 0;
       display: grid;
       grid-auto-rows: 48px 56px;
+      padding: 0 20px;
+      background-color: var(--gray100);
       button {
         @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
         background-color: #9452D6;
-        border-radius: 8px;
+        border-radius: 4px;
         // padding: 16px 8px;
         min-height: 56px;
   

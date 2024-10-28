@@ -2,17 +2,56 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 
+import { getUserLetterLimitAPI } from 'api/v1/user'
 import { letterResponseAPI } from 'api/v1/letters'
 import TypeToggle from 'components/item/TypeToggle'
 
+import IconClock from 'assets/Icon/icon-clock.svg'
 import IconClose from 'assets/Icon/icon-close-b.svg'
 import RabbitImg from 'assets/Content/letter-write-rabbit-top.png'
 
 import LoadingLayout from './Loading'
 
-
 function WriteLayout({active, setActive, textareaVal, setTextareVal, letterResponse}) {
   const navigate = useNavigate();
+  const [seconds, setSeconds] = useState(null);
+  const userInfo = useSelector(state => { return state?.user.userInfo; });
+  const [letterLimitObj, setLetterLimitObj] = useState({});
+  
+  const getUserLetterLimit = async () => {
+    if (!userInfo?.userId) return;
+
+    try {      
+      const res = await getUserLetterLimitAPI(userInfo.userId);    
+      setLetterLimitObj(res)
+      setSeconds(res?.ttl)
+    } catch(e) {
+      console.log("getUserLetterLimitAPI e: ", e)
+    }
+  }
+  
+
+  const formatTime = (time) => {
+    return time.toString().padStart(2, '0');
+  };
+
+  useEffect(() => {
+    let timeout;
+    if (seconds > 0) {
+      timeout = setTimeout(() => {
+        setSeconds(seconds - 1);
+      }, 1000);
+    } else if (seconds <= 0) {
+      getUserLetterLimit()
+    }
+
+    return () => clearTimeout(timeout);
+  }, [seconds]);
+
+
+  const hours = formatTime(Math.floor(seconds / 3600));
+  const minutes = formatTime(Math.floor((seconds % 3600) / 60));
+  const sec = formatTime(seconds % 60);
 
   const changeHandler = (e) => {
     const { value } = e.target;
@@ -57,7 +96,23 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
           </div>
         </div>
         <div className="content-foot">
-          <button disabled={textareaVal.length < 10} className="submit" onClick={letterResponse}>사연 보내기</button>
+          {letterLimitObj.usage !== null && letterLimitObj.ttl > 0 && !!seconds? 
+            <div className="limit-wrapper">
+              <div className="letter-paper">
+                <p>{`${10-letterLimitObj.usage}/10`}</p>
+              </div>
+              <div className="reflash-timer">
+                <p className="reflash-timer__desc">전체 횟수 초기화까지</p>
+                <div className="reflash-timer__inner">
+                  <img src={IconClock} alt="clock icon 시계 아이콘" />
+                  <p className="timer-num">{`${hours}:${minutes}:${sec}`}</p>
+                </div>
+              </div>
+            </div> 
+            : 
+            <div></div>
+          }
+          <button disabled={textareaVal.length < 10 || Number(letterLimitObj.usage) === 10} className="submit" onClick={letterResponse}>사연 보내기</button>
         </div>
       </div>
     </div>
