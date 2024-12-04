@@ -1,25 +1,56 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { getUserLetterLimitAPI } from 'api/v1/user'
 import { letterResponseAPI } from 'api/v1/letters'
-import TypeToggle from 'components/item/TypeToggle'
 
 import IconClock from 'assets/Icon/icon-clock.svg'
-import IconClose from 'assets/Icon/icon-close-b.svg'
-import RabbitImg from 'assets/Content/letter-write-rabbit-top.png'
+import RabbitImg from 'assets/Content/write/letter-write-rabbit-top.png'
+import IconLetterMode from 'assets/Content/write/icon-letter-mode.svg'
+import IconDiaryMode from 'assets/Content/write/icon-diary-mode.svg'
+import IconFMode from 'assets/Content/write/icon-F-mode.svg'
+import IconTMode from 'assets/Content/write/icon-T-mode.svg'
+import BubbleLetter from 'assets/Content/write/letter-speech-bubble.png'
+import BubbleDiary from 'assets/Content/write/diary-speech-bubble.png'
+import AccessoryLetter from 'assets/Content/write/letter-accessory.svg'
+import AccessoryDiary from 'assets/Content/write/diary-accessory.svg'
+import WritingLetter from 'assets/Content/write/writing-letter-post.svg'
 
 import LoadingLayout from './Loading'
+import GoBackTitleBar from 'components/common/GoBackTitleBar';
+import Snackbar from '@mui/material/Snackbar';
 
-function WriteLayout({active, setActive, textareaVal, setTextareVal, letterResponse}) {
-  const navigate = useNavigate();
-  const [seconds, setSeconds] = useState(null);
+function currentDateFormat() {
+  const currentDate = new Date();
+  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = monthNames[currentDate.getMonth()];
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const year = currentDate.getFullYear();
+
+  const formattedDate = `${month} ${day} . ${year}`;
+  return formattedDate;
+}
+
+function WriteLayout({preference, setPreference, textareaVal, setTextareVal, published, setPublished, letterResponse}) {
   const userInfo = useSelector(state => { return state?.user.userInfo; });
+  const [seconds, setSeconds] = useState(null);
   const [letterLimitObj, setLetterLimitObj] = useState({});
+  const [snackState, setSnackState] = useState(false);
+  /* TODO: snack bar 적용하기 */
   
+  const handleModeChange = () => {
+    setPublished(!published);
+    // setSnackState(true)
+  };
+  
+  const handlePreferenceChange = () => {
+    const newMode = preference === "T" ? "F" : "T"
+    setPreference(newMode);
+  };
+
   const getUserLetterLimit = async () => {
-    if (!userInfo?.userId) return;
+    if (!userInfo?.userId && process.env.REACT_APP_ENV === 'production') return;
 
     try {      
       const res = await getUserLetterLimitAPI(userInfo.userId);    
@@ -60,61 +91,77 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
     }
   }
 
-  const handleBack = () => {
-    if (window.history.state && window.history.state.idx > 0) {
-      navigate(-1);
-    } else {
-      navigate('/');
-    }
-  };
+  const postAction = {
+    title: "완료",
+    fuc: () => {
+      letterResponse()
+    },
+    disabled: textareaVal.length < 10 || Number(letterLimitObj.usage) === 10
+  }
 
   return (    
-    <div className="write__inner">
-      <div className="custom-app-bar">
-        <img onClick={handleBack} src={IconClose} alt="close btn img 닫기 버튼 이미지" />
-      </div>
-      <div className="write-container layout-p">
-        <div className="content-head">
-          <TypeToggle setActive={setActive} active={active} />
-        </div>
-        <div className="asset-container">
-          <div className="speech-bubble">
-            <p>DJ에게 보낼 사연을 작성해 주세요 !</p>
-          </div>
-          <img className="asset-img" src={RabbitImg} alt="rabbit img 토끼 이미지" />
-        </div>
-        <div className="content-body">
-          <div className="write-textarea-wrapper">
+    <div className="write__wrapper">      
+      <GoBackTitleBar title="글쓰기" action={postAction} bg={true} />
+      <div className="write__wrapper--inner">   
+        <div className={`write-area-wrapper layout-p ${published ? "letter" : "diary"}`}>
+          <div className="asset-container">
+            <img className="asset-img" src={RabbitImg} alt="rabbit img 토끼 이미지" />
+            <img className="speech-bubble" src={published ? BubbleLetter : BubbleDiary} alt="speech bubble 말풍선" /> 
+            {published ?
+              <img className="letter-accessory" src={AccessoryLetter} alt="letter accessory 악세사리 이미지" /> :
+              <img className="diary-accessory" src={AccessoryDiary} alt="diary accessory 악세사리 이미지" />}
+          </div>     
+          <div className="write-area-inner">
+            {published && <img className="writing-letter-post" src={WritingLetter} alt="letter writing 타이포그래피" />}
+            <div className="write-info">
+              <p className={`title ${published ? "letter" : "diary"}`}>{published ? "To. DJ 달토" : "달로 보내는 비밀 일기"}</p>
+              <p className="date">{currentDateFormat()}</p>
+            </div>
             <textarea
               className="write-textarea"
               name="write-textarea"
-              placeholder="DJ 달토에게 위로받고 싶은 내용을 담아 편지를 써보세요..."
+              placeholder="달토에게 보내는 글을 적어보세요..."
               value={textareaVal}
               onChange={changeHandler}
             />
-            <div className="string-length"><p>{textareaVal?.length ? textareaVal.length : "0"} / 200</p></div>
           </div>
         </div>
-        <div className="content-foot">
-          {letterLimitObj.usage !== null && letterLimitObj.ttl > 0 && !!seconds? 
-            <div className="limit-wrapper">
-              <div className="letter-paper">
-                <p>{`${10-letterLimitObj.usage}/10`}</p>
-              </div>
-              <div className="reflash-timer">
-                <p className="reflash-timer__desc">전체 횟수 초기화까지</p>
-                <div className="reflash-timer__inner">
-                  <img src={IconClock} alt="clock icon 시계 아이콘" />
-                  <p className="timer-num">{`${hours}:${minutes}:${sec}`}</p>
-                </div>
-              </div>
-            </div> 
-            : 
-            <div></div>
-          }
-          <button disabled={textareaVal.length < 10 || Number(letterLimitObj.usage) === 10} className="submit" onClick={letterResponse}>사연 보내기</button>
+        <div className="write-status layout-p">
+          <div className="letter-usage">
+            <p className="length">{letterLimitObj?.usage ? 10-letterLimitObj.usage : "10"}</p>
+            <p className="limit">/10</p>
+          </div>
+          <div className="reflash-timer">
+            <p className="reflash-timer__desc">전체 횟수 초기화까지</p>
+            <div className="reflash-timer__inner">
+              <img src={IconClock} alt="clock icon 시계 아이콘" />
+              <p className="timer-num">{letterLimitObj.usage !== null && letterLimitObj.ttl > 0 && !!seconds ? `${hours}:${minutes}:${sec}` : "00:00:00"}</p>
+            </div>
+          </div>
+        </div>
+        <div className="write-mode-control">
+          <div className="change-btn-wrapper">
+            <button onClick={handleModeChange}>
+              <img src={published ? IconDiaryMode : IconLetterMode} alt={`${published ? "letter" : "diary"} 변경 아이콘 change icon`} />
+              <p>{published ? "일기모드" : "편지모드"}로 변경</p>
+            </button>
+            <button onClick={handlePreferenceChange}>
+              <img src={preference === "F" ? IconFMode : IconTMode} alt={`${preference} 변경 아이콘 change icon`} />
+              <p>{preference === "F" ? "F" : "T"}답변 먼저</p>
+            </button>
+          </div>
+          <div className="string-length">
+            <p className="length">{textareaVal?.length ? textareaVal.length : "0"}</p>
+            <p className="limit"> / 200</p>
+          </div>
         </div>
       </div>
+      {/* <Snackbar
+        anchorOrigin={{ vertical: "200px", horizontal: "center" }}
+        open={snackState}
+        autoHideDuration={500}
+        message={`${published ? "편지 글은 모두가 볼 수 있어요." : "일기 글은 나만 볼 수 있어요."}`}
+      /> */}
     </div>
   )
 }
@@ -122,17 +169,17 @@ function WriteLayout({active, setActive, textareaVal, setTextareVal, letterRespo
 function Write() {
   const navigate = useNavigate();
   const userInfo = useSelector(state => { return state?.user.userInfo; });
-  const [active, setActive] = useState(userInfo?.preference === "T" ? true : "F"); // false는 F true는 T
+  const [preference, setPreference] = useState(userInfo?.preference);
   const [textareaVal, setTextareVal] = useState("");
+  const [published, setPublished] = useState(true);
   const [loading, setLoading] = useState(false);
   
   const letterResponse = async () => {
-    const preference = active ? "T" : "F";
     if (!userInfo?.userId || !textareaVal || !preference) return;
     setLoading(true);
 
     try {      
-      const res = await letterResponseAPI(userInfo.userId, textareaVal, preference);    
+      const res = await letterResponseAPI(userInfo.userId, textareaVal, preference, published);    
       navigate("/result", { state: { resultData: res, preference } });
     } catch(e) {
       console.log("letterResponseAPI e: ", e)
@@ -154,7 +201,7 @@ function Write() {
     };
   }, [textareaVal?.length]);
 
-  const writeData = { active, setActive, textareaVal, setTextareVal, letterResponse };
+  const writeData = { preference, setPreference, textareaVal, setTextareVal, published, setPublished, letterResponse };
 
   return (
     <div className="write">        
