@@ -1,4 +1,4 @@
-import { apiRequest } from 'utils/axios';
+import axiosInstance from 'utils/axios';
 
 const version = "v1"
 
@@ -9,7 +9,7 @@ const version = "v1"
  */
 export const getUserInfoAPI = async (userId) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'get',
       url: `/${version}/users/${userId}`,
     });
@@ -27,7 +27,7 @@ export const getUserInfoAPI = async (userId) => {
  */
 export const patchUserInfoAPI = async (userId, nickname, preference, profileImageEnabled, emailAdsConsented, agreeToTerms, agreeToPrivacyPolicy) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'patch',
       url: `/${version}/users/${userId}`,
       data: { nickname, preference, profileImageEnabled, emailAdsConsented, agreeToTerms, agreeToPrivacyPolicy }
@@ -48,7 +48,7 @@ export const patchUserInfoAPI = async (userId, nickname, preference, profileImag
  */
 export const deleteAccountAPI = async (userId, selectedNumber, detailReason) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'delete',
       url: `/${version}/users/${userId}`,
       data: { selectedNumber, detailReason }
@@ -68,7 +68,7 @@ export const deleteAccountAPI = async (userId, selectedNumber, detailReason) => 
 
 export const getUserLetterLimitAPI = async (userId) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'get',
       url: `/${version}/users/${userId}/usage`,
     });

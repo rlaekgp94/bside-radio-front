@@ -1,4 +1,4 @@
-import { apiRequest } from 'utils/axios';
+import axiosInstance from 'utils/axios';
 
 const version = "v1"
 
@@ -11,7 +11,7 @@ const version = "v1"
  */
 export const letterResponseAPI  = async (userId, message, preference) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'post',
       url: `/${version}/letters`,
       data: { userId, message, preference }
@@ -30,7 +30,7 @@ export const letterResponseAPI  = async (userId, message, preference) => {
  */
 export const getUserLetterListAPI = async (userId, page) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'get',
       url: `/${version}/replies/users/${userId}?page=${page}&size=10`,
     });
@@ -47,7 +47,7 @@ export const getUserLetterListAPI = async (userId, page) => {
  */
 export const getLatestCommunityListAPI = async () => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'get',
       url: `/${version}/letters/latest`,
     });
@@ -66,7 +66,7 @@ export const getLatestCommunityListAPI = async () => {
  */ 
 export const getLetterIdRepliesAPI = async (letterId) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'get',
       url: `/${version}/replies/${letterId}`,
     });
@@ -85,7 +85,7 @@ export const getLetterIdRepliesAPI = async (letterId) => {
  */
 export const getLatestLetterListAPI = async (size) => {
   try {
-    const result = await apiRequest({
+    const result = await axiosInstance({
       method: 'get',
       url: `/${version}/replies?size=${size}`,
     });

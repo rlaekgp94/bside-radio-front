@@ -1,13 +1,13 @@
 import { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { apiClient } from './axios';
+import axiosInstance from './axios';
 
 
 export default function AxiosNavigation() {
   const navigate = useRef(useNavigate());
 
   useEffect(() => {
-    const intercetpor = apiClient.interceptors.response.use(
+    const intercetpor = axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {
         const statusCode = error.response?.status;

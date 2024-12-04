@@ -13,7 +13,7 @@ export default function FixedActionButton() {
 
   const paths = ['/', '/letterBox', '/myPage'];
   
-  if (!paths.includes(pathname) || !isLoggedIn) {
+  if (!paths.includes(pathname) || (!isLoggedIn && process.env.REACT_APP_ENV === 'production')) {
     return null;
   }
   

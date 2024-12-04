@@ -23,9 +23,10 @@ function App() {
     });
 
     const accessToken = getJwtDecoding();
+    const jwtRefresh = getCookie('jwt-refresh');  
     const userData = getCookie('--user-data');
     
-    if (accessToken) {
+    if (accessToken || jwtRefresh) {
       const userId = accessToken?.sub;
       mixpanel.identify(userId);
       setUserId(userId);

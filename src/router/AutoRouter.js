@@ -56,6 +56,12 @@ const AutoRouter = () => {
             key={route.path}
             path={route.path}
             element={
+              process.env.REACT_APP_ENV === 'development' ?
+              <Authorization
+                isLoading={sessionLoading}
+              >
+                {route.element}
+              </Authorization> :
               <Authorization
                 redirect={route.redirect}
                 isLoading={sessionLoading}

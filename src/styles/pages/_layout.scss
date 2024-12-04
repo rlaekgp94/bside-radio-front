@@ -490,6 +490,7 @@
       }
       .content-foot {
         @include flex(space-between, center, row);
+        min-height: 49px;
         .limit-wrapper {
           display: grid;
           grid-template-columns: 39px auto;

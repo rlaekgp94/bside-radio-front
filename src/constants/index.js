@@ -2,7 +2,7 @@ import PROFILE_IMG from "assets/Content/default-profile.svg"
 
 
 export const DATA = {
-  BASE_URL: process.env.REACT_APP_ENV === "production" ? "https://upup-radio.site" : "http://localhost:8080",
+  BASE_URL: process.env.REACT_APP_ENV === "production" ? "https://upup-radio.site" : "https://dev.upup-radio.site",
   defaultProfile: PROFILE_IMG,
   NOTICE_BOARD_URL: "https://www.notion.so/tetroco/00-00-12879bf3bae1804b9a9ef21b633ba21e", // 공지사항
   TERMS_OF_SERVICE_URL: "https://www.notion.so/tetroco/11f79bf3bae1804284adda6985f40f95", // 이용약관
