@@ -8,13 +8,14 @@ const version = "v1"
  * @param {string} userId 유저 고유 아이디
  * @param {string} message 유저가 작성한 메시지 내용
  * @param {string} preference 유저가 선호하는 답변 유형 F/T
+ * @param {boolean} published 편지 공개 여부
  */
-export const letterResponseAPI  = async (userId, message, preference) => {
+export const letterResponseAPI  = async (userId, message, preference, published) => {
   try {
     const result = await axiosInstance({
       method: 'post',
       url: `/${version}/letters`,
-      data: { userId, message, preference }
+      data: { userId, message, preference, published }
     });
     return result;
   } catch (e) {
