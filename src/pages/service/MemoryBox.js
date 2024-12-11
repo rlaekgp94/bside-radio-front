@@ -1,18 +1,23 @@
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { openModal } from 'store/modules/components';
 import { getUserLetterListAPI } from 'api/v1/letters'
-import Skeleton from '@mui/material/Skeleton';
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+
+import Picker from 'react-mobile-picker'
 import dayjs from "dayjs";
+
+import { Dialog, Slide, Skeleton } from "@mui/material";
 
 import StampT from 'assets/Content/memoryBox/stamp_t.svg'
 import StampF from 'assets/Content/memoryBox/stamp_f.svg'
 import StampDiary from 'assets/Content/memoryBox/stamp_diary.svg'
 import ImgNotList from 'assets/Content/memoryBox/notlist.png'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 
 const tabItems = [
   {
@@ -39,6 +44,50 @@ const formattedDates = (isoDate) => {
 
   return formattedDate;
 }
+
+const YearPicker = ({open, onClose, currentDate, setCurrentDate}) => {
+  const [pickerValue, setPickerValue] = useState({ years: currentDate })  
+  const selections = { years: Array.from({ length: 5 }, (_, i) => 2020 + i) }
+  const handleConfirm = () => {
+    setCurrentDate(pickerValue?.years);
+    onClose();
+  };
+
+  return (
+    <Dialog open={open} onClose={onClose}
+      TransitionComponent={Transition}
+      aria-describedby="year-month-selection-description"
+      className="bottom-dialog">        
+        <div className="year-month-selection">
+          <Picker wheelMode="normal" value={pickerValue} height={171} onChange={setPickerValue} className="year-month-selection__picker">
+            {Object.keys(selections).map(name => {
+              return <Picker.Column key={name} name={name} className="picker-column">
+                {selections[name].map(option => (                    
+                  <Picker.Item key={option} value={option} className="picker-item">
+                    {({ selected }) => (
+                      <div
+                        style={{
+                          color: selected ? "#000" : "#C8C8CD",
+                          backgroundColor: selected ? "#F5F5FA" : null,
+                          padding: "4px 0",
+                          borderRadius: "4px",
+                          width: "100%"
+                        }}
+                      >
+                        {option}{name === "months" ? "월" : ""}
+                      </div>
+                    )}
+                  </Picker.Item>
+                ))}
+              </Picker.Column>
+            })}
+          </Picker>
+          <button onClick={handleConfirm} className="active-btn">변경하기</button>
+        </div>
+    </Dialog>
+  );
+};
+
 
 /**
  * TODO: 리스트
@@ -228,10 +277,10 @@ const mock =
 }
 
 function MemoryBox() {  
-  const [selectedYear, setSelectedYear] = useState(dayjs().year());
+  const [currentDate, setCurrentDate] = useState(dayjs()?.year());
   const [tab, setTab] = useState(tabItems[0])
   const [list, setList] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [isYearPickerOpen, setIsYearPickerOpen] = useState(false);
   const dispatch = useDispatch();
 
   const openReadModal = (item) => {
@@ -246,7 +295,7 @@ function MemoryBox() {
         const published = JSON.parse(item.published);
 
         return (
-          year === selectedYear &&
+          year === currentDate &&
           (tab.id === "all" || (tab.id === "letter" && published) || (tab.id === "diary" && !published))
         );
       })
@@ -260,8 +309,7 @@ function MemoryBox() {
 
   useEffect(() => {
     filterAndGroupByMonth()
-    console.log("selectedYear", selectedYear)
-  }, [selectedYear, tab])
+  }, [currentDate, tab])
 
   const getLetterList = async () => {
     // if (!userInfo?.userId) return;
@@ -324,22 +372,7 @@ function MemoryBox() {
     <div className="memorybox">
       <div className="memorybox__head">
         <div className="date-switcher">
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <button className="date-change-btn" onClick={() => setOpen(true)}>{selectedYear}</button>            
-            <DatePicker
-              open={open}
-              onClose={() => setOpen(false)}
-              views={["year"]}
-              value={dayjs().year(selectedYear)}
-              minDate={dayjs().year(2011)} // 선택 가능한 최소 연도
-              maxDate={dayjs()} // 선택 가능한 최대 연도
-              onChange={(newValue) => {
-                setSelectedYear(newValue.year());
-                setOpen(false);
-              }}
-              renderInput={() => null}
-            />
-          </LocalizationProvider>
+          <button className="date-change-btn" onClick={() => setIsYearPickerOpen(true)}>{currentDate}</button>  
         </div>
         <ul className="tab-switcher">{tabItems.map((item, index) => {
           return <li key={index} onClick={() => setTab(item)} 
@@ -378,6 +411,7 @@ function MemoryBox() {
             </div>
         </div>}
       </div>
+      <YearPicker open={isYearPickerOpen} onClose={() => setIsYearPickerOpen(false)} currentDate={currentDate} setCurrentDate={setCurrentDate} />
     </div>
   )
 }

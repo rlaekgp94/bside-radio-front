@@ -334,6 +334,129 @@
   }
 }
 
+.reports {
+  background: url($G-path-content + '/reports/bg.png') $G-img-cover;   
+  height: 100%;
+  &__calendar {
+    user-select: none;
+    background-color: var(--white);
+
+    .date-switcher {
+      @include flex;
+      height: 44px;
+      .date-change-btn {
+        @include flex(flex-start, center, row);
+        @include string(20px, 28px, -0.08px, 700, center, var(--black));
+        &::after {
+          @include same(20px);
+          background: url($G-path-icon + 'icon-down.svg') $G-img-contain;
+          content: '';
+          display: block;
+        }
+      }
+    }
+    .calendar-body {
+      padding: 8px 20px 0;
+      .weekdays {
+        display: grid;
+        grid-template-columns: repeat(7, auto);
+        align-items: center;
+        justify-items: center;
+        gap: 4.5px;
+        p {
+          @include string(14px, normal, normal, 700, center, var(--gray900));
+          padding: 11px 0 9px;
+          max-width: 44px;
+          width: 44px;
+        }
+      }
+      .days-wrapper {
+        display: grid;
+        grid-template-columns: repeat(7, auto);
+        text-align: center;
+        justify-items: center;
+        gap: 4px 4.5px;
+        .days-inner {
+          @include flex(flex-start, center);
+          max-height: calc(64px - 18px);
+          height: calc(64px - 18px);
+          padding: 4px 0 14px;
+          max-width: 44px;
+          width: 44px;
+          cursor: pointer;
+          .day {
+            @include string(12px, 18px, normal, 600, center, var(--gray200));
+          }
+          &.outside {
+            // opacity: 0;
+            display: none;
+          }
+          &.today {
+            .day {            
+              border-radius: 20px;
+              background: var(--orange01, #FFF8E0);
+              color: var(--orange04);
+              padding: 0 10px;
+            }
+          }
+          &.future {
+            .day {
+              color: var(--gray500);
+            }
+          }
+        }
+      }
+    }
+    .info {
+      @include flex(flex-end, center, row);
+      padding: 51px 20px 20px;
+      position: relative;
+      &::before {
+        @include size(247px, 48px);
+        content: '';
+        display: block;
+        border-radius: 100px;
+        background: rgba(117, 102, 206, 0.25);
+        filter: blur(7.5px);
+        position: absolute;
+        bottom: -35px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      .week-reports-request {
+        @include size(247px, 48px);
+        @include flex(center, center, row);
+        gap: 8px;
+        position: absolute;
+        bottom: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+        border-radius: 100px;
+        background: var(--purple09, #360E67);
+        z-index: 1;
+        &::before {
+          @include same(24px);
+          background: url($G-path-icon + 'icon-search.svg') $G-img-contain;
+          content: '';
+          display: block;
+        }
+        p {
+          @include string(16px, 24px, -0.96px, 700, center, var(--white));
+        }
+      }
+      .onboarding-btn {
+        padding: 3px;
+        &::after {
+          @include same(18px);
+          background: url($G-path-icon + 'icon-info.svg') $G-img-contain;
+          content: '';
+          display: block;
+        }
+      }
+    }
+  }
+}
+
 .memorybox {
   position: relative;
   &__head {
@@ -355,9 +478,6 @@
           content: '';
           display: block;
         }
-      }
-      .MuiInputBase-root {
-        display: none;
       }
     }
     .tab-switcher {

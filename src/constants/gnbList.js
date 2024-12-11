@@ -11,6 +11,11 @@ export const GNB_ITEMS = [
     icon: 'memoryBox',
   },
   {
+    name: '리포트',
+    pathName: '/reports',
+    icon: 'reports',
+  },
+  {
     name: '마이',
     pathName: '/myPage',
     icon: 'my',

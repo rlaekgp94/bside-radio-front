@@ -4,6 +4,113 @@
 }
 
 .MuiDialog-root {
+  &.bottom-dialog {
+    .MuiDialog-container {
+      align-items: flex-end;
+      .MuiPaper-root {
+        margin: 0;
+        max-width: 480px;
+        width: 100%;
+        border-radius: 12px 12px 0px 0px;
+        background: var(--white);
+      }
+    }
+    .active-btn {
+      @include string(16px, 24px, -0.96px, 700, center, var(--white));
+      border-radius: 4px;
+      background: var(--purple09, #360E67);
+    }
+    .daily-report-analysis {      
+      padding: 71px 20px 20px;
+      display: grid;
+      grid-template-rows: auto 56px;
+      gap: 62px;
+      &__title {
+        @include flex;
+        p {
+          @include string(28px, 28px, normal, 700, center, var(--gray800));
+          margin-bottom: 28px;
+        }
+        span {
+          @include string(14px, 22px, -0.7px, 500, center, var(--gray600));
+        }
+      }
+    }
+    
+    .year-month-selection {
+      padding: 20px;
+      display: grid;
+      grid-template-rows: 171px 56px;
+      gap: 20px;
+      &__picker {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        > div:last-child > div {
+          display: none;
+        }
+        // overflow-y: auto;
+        // overflow-x: hidden;
+        .picker-item {
+          @include string(20px, 28px, -0.08px, 700, center);
+        }
+      }
+    }
+    .report-selection {
+      padding: 27px 20px 36px;
+      display: grid;
+      grid-template-rows: auto 196px;
+      gap: 24px;
+      &__title {
+        @include flex(flex-start, flex-start);
+        p {
+          @include string(20px, 28px, -0.08px, 700, left, var(--gray800));
+        }
+        span {
+          @include string(12px, 18px, normal, 600, left, var(--gray500));
+        }
+      }
+      &__choice {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        .btn-container {
+          @include flex(space-between, center);
+          border-radius: 8px;
+          cursor: pointer;
+          &__title {
+            @include flex;
+            p {
+              @include string(14px, normal, normal, 700, center, var(--black));
+            }
+            ul {
+              @include flex;
+              margin-top: 6px;
+              li {
+                @include string(11px, 16.5px, -0.22px, 400, center, var(--gary700));
+              }
+            }
+          }
+          &.daily {
+            border: 2px solid var(--orange03);
+            background: var(--orange01);
+            padding: 24px 0 16px;
+            img {
+              @include same(76px);
+            }
+          }
+          &.week {
+            border: 2px solid var(--purple04);
+            background: var(--bg02);
+            padding: 28px 0 16px;
+            img {
+              @include same(68px);
+            }
+          }
+        }
+      }
+    }
+  } 
   &.full-dialog-wrapper {
     .MuiDialog-container, .MuiBackdrop-root, .MuiDialog-paper {
       transition: none !important;

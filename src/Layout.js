@@ -9,7 +9,7 @@ import FixedActionButton from 'components/common/FixedActionButton';
 const Layout = ({children}) => {
   const sessionLoading = useSelector(state => { return state?.user.sessionLoading; });
   const { pathname } = useLocation();
-  const paths = ['/', '/memoryBox', '/myPage']; // community
+  const paths = ['/', '/memoryBox', '/myPage', '/reports']; // community
 
   const vh = window.innerHeight * 0.01;
   const pvh = window.innerHeight;
