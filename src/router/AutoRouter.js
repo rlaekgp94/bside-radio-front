@@ -7,7 +7,7 @@ import Register from 'pages/user/Register';
 import EditProfile from 'pages/user/EditProfile';
 import DeleteAccount from 'pages/user/DeleteAccount';
 import MyPage from 'pages/user/MyPage';
-import Letterbox from 'pages/service/Letterbox';
+import MemoryBox from 'pages/service/MemoryBox';
 import Write from 'pages/service/Write';
 import Result from 'pages/service/Result';
 import NotFound from 'pages/error/NotFound';
@@ -21,7 +21,7 @@ const RouterInfo = [
   { redirect: '/login', path: '/register', element: <Register />, withAuthorization: true },
   { redirect: '/login', path: '/write', element: <Write />, withAuthorization: true },
   { redirect: '/login', path: '/result', element: <Result />, withAuthorization: true },
-  { redirect: '/login', path: '/letterBox', element: <Letterbox />, withAuthorization: true },
+  { redirect: '/login', path: '/memoryBox', element: <MemoryBox />, withAuthorization: true },
   { redirect: '/login', path: '/myPage', element: <MyPage />, withAuthorization: true },
   { redirect: '/login', path: '/editProfile', element: <EditProfile />, withAuthorization: true },
   { redirect: '/login', path: '/deleteAccount', element: <DeleteAccount />, withAuthorization: true },

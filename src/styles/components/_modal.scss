@@ -262,7 +262,7 @@
 
           .card {
             @include flex(flex-start, flex-start);
-            padding: 0 20px 24px;
+            padding: 0 20px 60px;
             .card-title {
               display: grid;
               grid-template-columns: 40px auto;

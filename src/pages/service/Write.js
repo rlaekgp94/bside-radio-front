@@ -169,7 +169,7 @@ function WriteLayout({preference, setPreference, textareaVal, setTextareVal, pub
 function Write() {
   const navigate = useNavigate();
   const userInfo = useSelector(state => { return state?.user.userInfo; });
-  const [preference, setPreference] = useState(userInfo?.preference);
+  const [preference, setPreference] = useState(userInfo?.preference ?? "T");
   const [textareaVal, setTextareVal] = useState("");
   const [published, setPublished] = useState(true);
   const [loading, setLoading] = useState(false);

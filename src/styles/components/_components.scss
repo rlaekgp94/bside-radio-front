@@ -72,7 +72,7 @@
           margin-top: 2px;
         }
 
-        @each $icon in home, letterbox, my {
+        @each $icon in home, memoryBox, my {
           &.#{$icon}-on {
             &::before {
               @include same(24px);

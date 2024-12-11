@@ -1,0 +1,35 @@
+.MuiDialog-root {
+  .MuiDialog-container {
+    .MuiPaper-root {
+      .MuiPickersLayout-root {
+        * {        
+          font-family: 'Pretendard';
+        }
+        .MuiPickersToolbar-root {
+          .MuiDatePickerToolbar-title {
+            font-weight: 600;
+          }
+          .MuiTypography-root.MuiTypography-overline {
+            display: none;
+          }
+        }
+        .MuiDialogActions-root.MuiDialogActions-spacing.MuiPickersLayout-actionBar {
+          display: none;
+        }
+        .MuiPickersLayout-contentWrapper  {
+          .MuiDateCalendar-root {
+            * {
+              font-weight: 500;
+            }
+            max-height: auto;
+            height: auto;
+            padding-bottom: 30px;
+            .Mui-selected {
+              background-color: var(--purple09);
+            }
+          }
+        }
+      }
+    }
+  }
+}

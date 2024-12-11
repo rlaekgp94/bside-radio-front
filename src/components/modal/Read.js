@@ -74,7 +74,7 @@ export default function Read() {
             <img className="card-title__profile" src={DATA.defaultProfile} alt="profile img" />
             <div className="card-title__desc">
               <p className="id">#{userInfo?.userId === item?.userId ? formattedDates(item.createdAt) : `${id+1}.`} </p>
-              <p className="info">{userInfo?.userId === item?.userId ? "내 사연 🌕" : "누군가의 사연 🌕"}</p>
+              <p className="info">{userInfo?.userId === item?.userId ? "🌕" : "누군가의 사연 🌕"}</p>
             </div>
           </div>
           <div className="card-content">

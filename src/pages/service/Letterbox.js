@@ -72,12 +72,13 @@ function Letterbox() {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [count, setCount] = useState(null);
+    const userId = "6374fec7-65d3-40b0-a9a0-4dbec96eef75"
 
   const getLetterList = async () => {
-    if (!userInfo?.userId) return;
+    // if (!userInfo?.userId) return;
     setLoading(true)
     try {
-      const res = await getUserLetterListAPI(userInfo.userId, page);
+      const res = await getUserLetterListAPI(userId, page);
       setList(res?.content)
       setCount(res?.totalPages)
     } catch(e) {
@@ -90,7 +91,7 @@ function Letterbox() {
   const pushLetterList = async (page) => {
     setLoading(true);
     try {
-      const res = await getUserLetterListAPI(userInfo.userId, page)
+      const res = await getUserLetterListAPI(userId, page)
       setList(prevState => [...prevState, ...res?.content]);
     } catch (e) {
       console.log("e: ", e);

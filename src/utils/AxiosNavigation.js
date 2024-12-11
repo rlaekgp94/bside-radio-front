@@ -25,7 +25,7 @@ export default function AxiosNavigation() {
     );
 
     return () => {
-      apiClient.interceptors.response.eject(intercetpor);
+      axiosInstance.interceptors.response.eject(intercetpor);
     };
   }, []);
   return <></>;

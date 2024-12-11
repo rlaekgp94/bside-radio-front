@@ -7,8 +7,8 @@ export const GNB_ITEMS = [
   },
   {
     name: '보관함',
-    pathName: '/letterBox',
-    icon: 'letterbox',
+    pathName: '/memoryBox',
+    icon: 'memoryBox',
   },
   {
     name: '마이',
