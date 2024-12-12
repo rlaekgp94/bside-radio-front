@@ -17,7 +17,7 @@ import AccessoryLetter from 'assets/Content/write/letter-accessory.svg'
 import AccessoryDiary from 'assets/Content/write/diary-accessory.svg'
 import WritingLetter from 'assets/Content/write/writing-letter-post.svg'
 
-import LoadingLayout from './Loading'
+import LoadingLayout from './loading/WriteLoading'
 import GoBackTitleBar from 'components/common/GoBackTitleBar';
 import Snackbar from '@mui/material/Snackbar';
 

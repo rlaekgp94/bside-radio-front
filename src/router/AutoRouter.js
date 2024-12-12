@@ -7,7 +7,8 @@ import Register from 'pages/user/Register';
 import EditProfile from 'pages/user/EditProfile';
 import DeleteAccount from 'pages/user/DeleteAccount';
 import MyPage from 'pages/user/MyPage';
-import Reports from 'pages/service/Reports';
+import Reports from 'pages/service/reports/Main';
+import WeekReports from 'pages/service/reports/Week';
 import MemoryBox from 'pages/service/MemoryBox';
 import Write from 'pages/service/Write';
 import Result from 'pages/service/Result';
@@ -23,6 +24,7 @@ const RouterInfo = [
   { redirect: '/login', path: '/write', element: <Write />, withAuthorization: true },
   { redirect: '/login', path: '/result', element: <Result />, withAuthorization: true },
   { redirect: '/login', path: '/reports', element: <Reports />, withAuthorization: true },
+  { redirect: '/login', path: '/reports/week', element: <WeekReports />, withAuthorization: true },
   { redirect: '/login', path: '/memoryBox', element: <MemoryBox />, withAuthorization: true },
   { redirect: '/login', path: '/myPage', element: <MyPage />, withAuthorization: true },
   { redirect: '/login', path: '/editProfile', element: <EditProfile />, withAuthorization: true },

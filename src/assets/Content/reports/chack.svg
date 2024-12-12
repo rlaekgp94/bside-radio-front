@@ -1,0 +1,17 @@
+<svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="icon/chack" filter="url(#filter0_d_55034_20584)">
+<circle id="Ellipse 200" cx="25" cy="23" r="18" fill="#9452D6"/>
+<path id="icon" d="M21.6667 30L16 24.4681L17.9833 22.5319L21.6667 26.1277L31.0167 17L33 18.9362L21.6667 30Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_d_55034_20584" x="0" y="0" width="56" height="56" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dx="3" dy="5"/>
+<feGaussianBlur stdDeviation="5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.580392 0 0 0 0 0.321569 0 0 0 0 0.839216 0 0 0 0.25 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_55034_20584"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_55034_20584" result="shape"/>
+</filter>
+</defs>
+</svg>

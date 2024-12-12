@@ -1,12 +1,28 @@
 import React, { useRef, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 import dayjs from "dayjs";
 import Picker from 'react-mobile-picker'
 import { Dialog, Slide } from "@mui/material";
 
+import { getMonthlyOverviewAPI } from 'api/v1/reports'
+
 import StickerDailyReport from 'assets/Content/reports/sticker-daily-report.png'
 import StickerWeekReport from 'assets/Content/reports/sticker-week-report.png'
 
+
+/**
+ * TODOLIST
+ * 1. 리포트 온보딩
+ * 2. 데이터별 캘린더 스티커 및 스타일
+//  * 3. 주간 리포트 리스트
+//  * 4. 주간 리포트 리스트 없음
+//  * 5. 주간 리포트 리스트 셀렉트
+//  * 6. 주간 리포트 리스트 찾는중
+//  * 7. 주간 리포트 리스트 생성중
+ * 8. 데일리 리포트 레이아웃
+ * 9. 주간 리포트 레이아웃
+ */
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -63,7 +79,9 @@ const YearMonthPicker = ({open, onClose, currentDate, setCurrentDate}) => {
   );
 };
 
-function Reports() {
+function ReportsMain() {
+  const navigate = useNavigate();
+
   const [currentDate, setCurrentDate] = useState(dayjs(new Date()));
   const [startX, setStartX] = useState(null);
   const [isDailyReportOpen, setIsDailyReportOpen] = useState(false);
@@ -74,6 +92,24 @@ function Reports() {
     month: null,
     day: null,
   });
+
+  // const getMonthlyOverview = async () => {
+  //   const userId = "6374fec7-65d3-40b0-a9a0-4dbec96eef75"
+  //   const yearMonth = "2024-10-01"
+  //   // const response = await fetch(`https://dev.upup-radio.site/api/v1/reports/monthly/${userId}?yearMonth=${yearMonth}`);
+  //   // const data = await response.json();
+  //   // console.log("data", data)
+  //   try {
+  //     const res = await getMonthlyOverviewAPI(userId, "2024-10-01");
+  //     console.log("res", res)
+  //   } catch(e) {
+  //     console.log("e: ", e);
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   getMonthlyOverview()
+  // }, [])
 
   const handleIsDailyReportOpen = (dateItem) => {
     setIsDailyReportOpen(true);
@@ -170,7 +206,7 @@ function Reports() {
         </div>
         <div className="info">
           <button className="onboarding-btn"></button>
-          <button className="week-reports-request"><p>주간 리포트 분석</p></button>
+          <button onClick={() =>  navigate("/reports/week", { state: { year: currentDate.year(), month: currentDate.month() + 1 } })} className="week-reports-request"><p>주간 리포트 분석</p></button>
         </div>
       </div>
       <Dialog
@@ -229,4 +265,4 @@ function Reports() {
   );
 };
 
-export default Reports;
+export default ReportsMain;

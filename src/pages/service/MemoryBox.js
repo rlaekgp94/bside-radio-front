@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { openModal } from 'store/modules/components';
-import { getUserLetterListAPI } from 'api/v1/letters'
+import { getUserMemoryListAPI } from 'api/v1/letters'
 
 import Picker from 'react-mobile-picker'
 import dayjs from "dayjs";
@@ -90,12 +90,13 @@ const YearPicker = ({open, onClose, currentDate, setCurrentDate}) => {
 
 
 /**
- * TODO: 리스트
+ * TODOLIST
  * 1. 탭 이동시 스크롤 초기화
  * 2. 무한스크롤링
  * 3. 편지/일기 모달 타이틀 변경 -> 날짜포맷/"내 사연" 빼기
  * 4. 스켈레톤 로딩
  * 5. letterBox 관련 데이터 삭제
+ * 6. 스낵바
  */
 const mock = 
 {
@@ -309,13 +310,17 @@ function MemoryBox() {
 
   useEffect(() => {
     filterAndGroupByMonth()
+    // getLetterList()
+    console.log("currentDate", currentDate)
   }, [currentDate, tab])
 
   const getLetterList = async () => {
-    // if (!userInfo?.userId) return;
+    if (!userInfo?.userId) return;
+    const userId = "6374fec7-65d3-40b0-a9a0-4dbec96eef75"
     setLoading(true)
     try {
-      const res = await getUserLetterListAPI(userId, page);
+      const res = await getUserMemoryListAPI(userId, currentDate.toString(), 0);
+      console.log("res", res)
       setList(res?.content)
       setCount(res?.totalPages)
     } catch(e) {
@@ -328,7 +333,7 @@ function MemoryBox() {
   const pushLetterList = async (page) => {
     setLoading(true);
     try {
-      const res = await getUserLetterListAPI(userId, page)
+      const res = await getUserMemoryListAPI(userId, page)
       setList(prevState => [...prevState, ...res?.content]);
     } catch (e) {
       console.log("e: ", e);

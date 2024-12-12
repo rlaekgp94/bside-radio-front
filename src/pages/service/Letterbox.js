@@ -5,7 +5,7 @@ import { openModal } from 'store/modules/components';
 
 import Skeleton from '@mui/material/Skeleton';
 
-import { getUserLetterListAPI } from 'api/v1/letters'
+import { getUserMemoryListAPI } from 'api/v1/letters'
 
 import ImgLetterF from 'assets/Content/f-letter-item.png'
 import ImgLetterT from 'assets/Content/t-letter-item.png'
@@ -78,7 +78,7 @@ function Letterbox() {
     // if (!userInfo?.userId) return;
     setLoading(true)
     try {
-      const res = await getUserLetterListAPI(userId, page);
+      const res = await getUserMemoryListAPI(userId, page);
       setList(res?.content)
       setCount(res?.totalPages)
     } catch(e) {
@@ -91,7 +91,7 @@ function Letterbox() {
   const pushLetterList = async (page) => {
     setLoading(true);
     try {
-      const res = await getUserLetterListAPI(userId, page)
+      const res = await getUserMemoryListAPI(userId, page)
       setList(prevState => [...prevState, ...res?.content]);
     } catch (e) {
       console.log("e: ", e);

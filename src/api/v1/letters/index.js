@@ -29,11 +29,12 @@ export const letterResponseAPI  = async (userId, message, preference, published)
  *
  * @param {string} userId 유저 고유 아이디
  */
-export const getUserLetterListAPI = async (userId, page) => {
+export const getUserMemoryListAPI = async (userId, year, page) => {
   try {
     const result = await axiosInstance({
       method: 'get',
       url: `/${version}/replies/users/${userId}?page=${page}&size=10`,
+      // url: `/${version}/replies/users/${userId}?year=${year}&page=${page}&size=10`,
     });
     return result;
   } catch (e) {
