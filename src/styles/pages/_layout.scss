@@ -836,6 +836,7 @@
     &--inner {
       display: grid;
       grid-template-rows: 1fr 52px 46px;
+      position: relative;
     }
     .write-area-wrapper {
       margin: 88px 0 68px;
@@ -957,6 +958,10 @@
       padding: 11px 8px;
       border-top: 1px solid var(--gray200);
       background-color: var(--gray100);
+      position: sticky;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
       .change-btn-wrapper {
         @include flex(flex-start, center, row);
         gap: 12px;
@@ -985,6 +990,32 @@
         .limit {
           color: var(--gray500)
         }
+      }
+    }
+    .snackbar {
+      @include flex;
+      position: absolute;
+      bottom: 58px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      border-radius: 30px;
+      background: var(--gray800);
+      height: 26px;
+      padding: 0 20px;
+      opacity: 0;
+      transition: opacity 0.25s ease-in-out;
+      p {
+        @include string(14px, 22px, -0.7px, 500, center, var(--white));
+        white-space: nowrap;
+      }
+
+      &.fade-in {
+        opacity: 1;
+      }
+
+      &.fade-out {
+        opacity: 0;
       }
     }
   }

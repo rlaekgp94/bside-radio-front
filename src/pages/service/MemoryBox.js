@@ -96,7 +96,6 @@ const YearPicker = ({open, onClose, currentDate, setCurrentDate}) => {
  * 3. 편지/일기 모달 타이틀 변경 -> 날짜포맷/"내 사연" 빼기
  * 4. 스켈레톤 로딩
  * 5. letterBox 관련 데이터 삭제
- * 6. 스낵바
  */
 const mock = 
 {

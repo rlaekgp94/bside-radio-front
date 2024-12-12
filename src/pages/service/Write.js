@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,6 @@ import WritingLetter from 'assets/Content/write/writing-letter-post.svg'
 
 import LoadingLayout from './loading/WriteLoading'
 import GoBackTitleBar from 'components/common/GoBackTitleBar';
-import Snackbar from '@mui/material/Snackbar';
 
 function currentDateFormat() {
   const currentDate = new Date();
@@ -37,13 +36,23 @@ function WriteLayout({preference, setPreference, textareaVal, setTextareVal, pub
   const [seconds, setSeconds] = useState(null);
   const [letterLimitObj, setLetterLimitObj] = useState({});
   const [snackState, setSnackState] = useState(false);
-  /* TODO: snack bar 적용하기 */
+  const timerRef = useRef(null); // 타이머 ID 저장
   
   const handleModeChange = () => {
     setPublished(!published);
-    // setSnackState(true)
+    showSnackbar()
   };
   
+  const showSnackbar = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    setSnackState(true);
+    timerRef.current = setTimeout(() => {
+      setSnackState(false);
+      timerRef.current = null;
+    }, 2000);
+  };
   const handlePreferenceChange = () => {
     const newMode = preference === "T" ? "F" : "T"
     setPreference(newMode);
@@ -156,12 +165,7 @@ function WriteLayout({preference, setPreference, textareaVal, setTextareVal, pub
           </div>
         </div>
       </div>
-      {/* <Snackbar
-        anchorOrigin={{ vertical: "200px", horizontal: "center" }}
-        open={snackState}
-        autoHideDuration={500}
-        message={`${published ? "편지 글은 모두가 볼 수 있어요." : "일기 글은 나만 볼 수 있어요."}`}
-      /> */}
+      <div className={`snackbar ${snackState ? "fade-in" : "fade-out"}`}><p>{published ? "편지 글은 모두가 볼 수 있어요." : "일기 글은 나만 볼 수 있어요."}</p></div>
     </div>
   )
 }
