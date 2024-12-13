@@ -1,5 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModal } from 'store/modules/components';
 
 import dayjs from "dayjs";
 import Picker from 'react-mobile-picker'
@@ -81,7 +83,11 @@ const YearMonthPicker = ({open, onClose, currentDate, setCurrentDate}) => {
 
 function ReportsMain() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
+  const openOnBoardingModal = () => {
+    dispatch(openModal({modalType: "OnBoarding"}))
+  }
   const [currentDate, setCurrentDate] = useState(dayjs(new Date()));
   const [startX, setStartX] = useState(null);
   const [isDailyReportOpen, setIsDailyReportOpen] = useState(false);
@@ -205,7 +211,7 @@ function ReportsMain() {
           </div>
         </div>
         <div className="info">
-          <button className="onboarding-btn"></button>
+          <button onClick={openOnBoardingModal} className="onboarding-btn"></button>
           <button onClick={() =>  navigate("/reports/week", { state: { year: currentDate.year(), month: currentDate.month() + 1 } })} className="week-reports-request"><p>주간 리포트 분석</p></button>
         </div>
       </div>

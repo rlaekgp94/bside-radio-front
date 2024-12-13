@@ -4,6 +4,76 @@
 }
 
 .MuiDialog-root {
+  &.long-dialog-wrapper {    
+    .MuiDialog-container, .MuiBackdrop-root, .MuiDialog-paper {
+      transition: none !important;
+    }
+    .MuiDialog-paper {
+      margin: 12px;
+      max-width: calc(480px - 24px);
+      width: 100%;
+      border-radius: 8px;
+      position: relative;
+      overflow-x: hidden;
+    }
+    &.OnBoarding {
+      .long-dialog-inner {
+        padding: 8px;
+        background-color: var(--white);
+        overflow-x: hidden;
+        position: relative;
+        .close-btn {
+          @include string(16px, 24px, -0.96px, 700, right, var(--orange05));
+          position: absolute;
+          top: 18px;
+          right: 25px;
+          z-index: 10;
+        }
+        .custom-next-button {
+          @include size(13px, 38px);
+          position: absolute;
+          right: 20px;
+          top: 61%;
+          z-index: 10;
+          background: url($G-path-content + '/reports/onboarding/icon-next.svg') $G-img-contain;
+          &.disabled {
+            display: none;
+          }
+        }
+        .custom-prev-button {
+          @include size(13px, 38px);
+          position: absolute;
+          left: 20px;
+          top: 61%;
+          z-index: 10;
+          background: url($G-path-content + '/reports/onboarding/icon-prev.svg') $G-img-contain;
+          &.disabled {
+            display: none;
+          }
+        }
+        .swiper {
+          overflow: hidden;
+          @include same(100%);
+          background-color: var(--purple09);
+          border-radius: 8px;
+          aspect-ratio: 320/589.37;
+          .swiper-wrapper {
+            .swiper-slide {
+              border-radius: 8px;
+              transform: translateY(2px);
+              img {
+                @include same(100%);
+                -webkit-user-select:none;
+                -moz-user-select:none;
+                -ms-user-select:none;
+                user-select:none;
+              }
+            }
+          }
+        }   
+      }
+    }
+  }
   &.bottom-dialog {
     .MuiDialog-container {
       align-items: flex-end;
