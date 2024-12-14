@@ -4,16 +4,16 @@ const version = "v1"
 
 
 /**
- * 월간 현황 조회 API
+ * 데일리 리포트 상태 조회 API
  *
  * @param {string} userId 유저 고유 아이디
- * @param {string} yearMonth yyyy-MM
+ * @param {string} yearMonth yyyy-mm
  */
-export const getMonthlyOverviewAPI = async (userId, yearMonth) => {
+export const getReportDailyStatusAPI = async (userId, yearMonth) => {
   try {
     const result = await axiosInstance({
       method: 'get',
-      url: `/${version}/reports/monthly/${userId}?yearMonth=${yearMonth}`,
+      url: `/${version}/reports/daily/status/${userId}?yearMonth=${yearMonth}`,
     });
     return result;
   } catch (e) {
@@ -22,17 +22,18 @@ export const getMonthlyOverviewAPI = async (userId, yearMonth) => {
   }
 }
 
+
 /**
- * 주간 리포트 생성 가능 여부 조회 API
+ * 위클리 리포트 상태 조회 API
  *
  * @param {string} userId 유저 고유 아이디
+ * @param {string} yearMonth yyyy-mm
  */
-export const getWeeklyReportCreationStatusAPI  = async (userId, date) => {
+export const getReportWeeklyStatusAPI = async (userId, yearMonth) => {
   try {
     const result = await axiosInstance({
       method: 'get',
-      url: `/${version}/reports/weekly/status?date=${date}`,
-      body: { userId }
+      url: `/${version}/reports/weekly/status/${userId}?yearMonth=${yearMonth}`,
     });
     return result;
   } catch (e) {
