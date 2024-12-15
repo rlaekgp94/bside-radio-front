@@ -5,12 +5,16 @@ import ReadModal from 'components/modal/Read';
 import LoginPromptModal from 'components/modal/LoginPrompt';
 import ComingModal from 'components/modal/Coming';
 import OnBoardingModal from 'components/modal/OnBoarding';
+import DailyReportModal from 'components/modal/DailyReport';
+import ReportSelectionModal from 'components/modal/ReportSelection';
 
 const MODAL_TYPES = {
   Read: "Read",
   LoginPrompt: "LoginPrompt",
   Coming: "Coming",
   OnBoarding: "OnBoarding",
+  DailyReport: "DailyReport",
+  ReportSelection: "ReportSelection",
 };
 
 const MODAL_COMPONENTS = [
@@ -29,6 +33,14 @@ const MODAL_COMPONENTS = [
   {
     type: MODAL_TYPES.OnBoarding,
     component: <OnBoardingModal />
+  },
+  {
+    type: MODAL_TYPES.DailyReport,
+    component: <DailyReportModal />
+  },
+  {
+    type: MODAL_TYPES.ReportSelection,
+    component: <ReportSelectionModal />
   },
 ];
 

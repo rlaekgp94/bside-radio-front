@@ -12,8 +12,12 @@ export default function NavigationBar() {
       <div className="navi-bar__inner">
         <ul>
           {GNB_ITEMS.map((item, index) => {
+            const isActive =
+              item.pathName === '/'
+                ? pathname === item.pathName
+                : pathname.startsWith(item.pathName);
             return <li key={index} 
-            className={`${pathname === item.pathName ? `${item.icon}-on active` : `${item.icon}-off`}`} 
+            className={`${isActive ? `${item.icon}-on active` : `${item.icon}-off`}`} 
             onClick={() => navigate(item.pathName)}>
               <p>{item.name}</p>
             </li>

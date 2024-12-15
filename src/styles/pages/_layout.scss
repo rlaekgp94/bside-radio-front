@@ -47,6 +47,30 @@
   }
 }
 
+.close-title-bar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: var(--white);
+  &__inner {
+    @include flex(space-between, center, row);
+    padding: 10px 15px;
+    &::before {
+      @include same(20px);
+      content: "";
+      display: block;
+    }
+    .icon {
+      @include same(20px);
+      cursor: pointer;
+    }
+    .title {
+      @include string(16px, 24px, -0.48px, 500, center, var(--black));
+    }
+  }
+}
+
 .go-back-title-bar {
   position: sticky;
   top: 0;
@@ -319,11 +343,17 @@
               .card-result-btn {
                 @include flex;
                 margin-top: 32px;
-                @include size(100%, 44px);
-                background-color: var(--purple06);
-                border-radius: 8px;
+                @include size(100%, 44px);  
                 p {
                   @include string(16px, 24px, normal, 700, center, var(--white));
+                }
+                background-color: var(--purple09);
+                border-radius: 4px;
+          
+                &:disabled {
+                  background-color: var(--gray200);
+                  color: var(--gray400);
+                  cursor: default;
                 }
               }
             }
@@ -337,7 +367,14 @@
 .reports-loading {
   @include flex;
   background: url($G-path-content + '/reports/bg-2.png') $G-img-cover;   
+  position: fixed;
+  top: 0;
+  transform: translateX(-50%);
+  left: 50%;
+  max-width: 480px;
+  width: 100%;
   height: 100%;
+  z-index: 15;
   .img-wrapper {
     @include flex;
     @include same(80px);
@@ -374,6 +411,10 @@
           background: url($G-path-icon + 'icon-down.svg') $G-img-contain;
           content: '';
           display: block;
+        }
+        
+        .date-str {
+          min-width: 90px;
         }
       }
     }
@@ -538,6 +579,10 @@
           content: '';
           display: block;
         }
+        
+        .date-str {
+          min-width: 51px;
+        }
       }
     }
     .tab-switcher {
@@ -589,7 +634,7 @@
   }
   &__body {
     margin-top: 24px;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
     &.minHeight {
       margin: 0;
       height: calc(100vh - 168px);
@@ -732,6 +777,184 @@
     }
   }
 }
+.reports-weekly-result {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 44px 1fr;
+  .not-list {
+    @include flex;
+    height: 100%;
+    background-color: var(--white);
+    .rabbit {
+      height: 100%;
+      max-height: 163px;
+      aspect-ratio: 119/163;
+    }
+    &__desc {
+      margin-top: 28px;
+      p {
+        @include string(14px, 22px, -0.7px, 500, center, var(--gray400));
+      }
+    }
+  }
+  .reports-weekly-result-container {
+    padding-bottom: 30px;
+    background: url($G-path-content + '/reports/bg-3.png') repeat center / cover;  
+    .reports-weekly-result-inner {    
+      padding: 24px 20px;
+      margin: 0 20px;
+      border-radius: 8px;
+      background: var(--bg01);
+      height: calc(100% - 48px);
+      .result-core-title {
+        @include flex;
+        padding: 43px 0;
+        .week-name {
+          @include string(20px, 28px, -0.08px, 700, center, var(--gray800)); 
+          margin-bottom: 4px;
+        }
+        .start-end-date {
+          @include string(14px, 22px, -0.7px, 500, center, var(--gray700)); 
+        }
+      }
+      .emotion {
+        @include flex(center, center, row);
+        gap: 6px;
+        flex-wrap: wrap;
+        padding: 20px 0;
+        border-bottom: 1px solid var(--bg03, #DED3FF);
+        margin: 0 6px;
+        .emotion-img {
+          @include same(33px);
+          object-fit: contain;
+        }
+      }
+      .result-desc {
+        margin-top: 48px;
+        &__days {
+          @include string(16px, 24px, -0.96px, 700, center, var(--gray800)); 
+          margin-bottom: 16px;
+        }
+        &__topic {
+          @include string(16px, 32px, -0.96px, 500, left, var(--gray700)); 
+        }
+      }
+      .written-wrapper {
+        margin-top: 36px;
+        padding: 10px 15px;
+        display: grid;
+        grid-template-columns: repeat(3, auto);
+        justify-content: space-between;
+        align-items: center;
+        li {
+          display: grid;
+          grid-template-rows: 48px auto;
+          justify-items: center;
+          .desc {
+            @include flex;
+            p {
+              @include string(11px, 16.5px, -0.22px, 400, center, var(--gray700)); 
+            }
+            span {
+              @include string(14px, normal, normal, 700, center, var(--gray800)); 
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.reports-daily-result {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: 44px 1fr;
+  .not-list {
+    @include flex;
+    height: 100%;
+    background-color: var(--white);
+    .rabbit {
+      height: 100%;
+      max-height: 163px;
+      aspect-ratio: 119/163;
+    }
+    &__desc {
+      margin-top: 28px;
+      p {
+        @include string(14px, 22px, -0.7px, 500, center, var(--gray400));
+      }
+    }
+  }
+  .reports-daily-result-container {
+    padding-bottom: 30px;
+    background: url($G-path-content + '/reports/bg-3.png') repeat center / cover;  
+    .reports-daily-result-inner {    
+      padding: 28px 20px;
+      margin: 0 20px;
+      border-radius: 8px;
+      background: #FFFCF3;
+      height: calc(100% - 56px);
+      .result-core-title {
+        display: grid;
+        grid-template-rows: 140px auto;
+        gap: 16px;
+        justify-items: center;
+        .core-emotion-img {
+          @include same(140px);
+          object-fit: contain;
+        }
+        .date {
+          @include string(16px, 24px, -0.96px, 700, center, var(--gray800)); 
+        }
+      }
+      .letter-analyses {
+        margin-top: 32px;
+        &__item {
+          &:not(:last-of-type) {
+            border-bottom: 1px solid var(--orange02);
+            box-sizing: border-box;
+          }
+          display: grid;
+          grid-template-columns: 33px auto;
+          gap: 12px;
+          align-items: center;
+          padding: 16px 0;
+          .emotion-img {
+            @include same(33px);
+            object-fit: contain;
+          }
+          .letter-desc {
+            @include flex(flex-start, flex-start);
+            overflow: hidden;
+            .index {
+              @include string(14px, 17px, normal, 700, left, var(--gray800)); 
+            }
+            .topic {
+              @include string(12px, 18px, normal, 600, left, var(--gray700)); 
+              white-space: nowrap;
+              word-break: break-all;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              width: 90%;
+            }
+          }
+        }
+      }
+      .result-desc {
+        margin-top: 60px;
+        &__days {
+          @include string(16px, 24px, -0.96px, 700, center, var(--gray800)); 
+          margin-bottom: 16px;
+        }
+        &__topic {
+          @include string(16px, 32px, -0.96px, 500, left, var(--gray700)); 
+        }
+      }
+    }
+  }
+}
 
 .reports-week {
   height: 100%;
@@ -802,6 +1025,10 @@
           box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.03);
           position: relative; // 배경 이미지 위치 조정용
           cursor: pointer;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
           &.isSelected::after { 
             display: block;       
           }
@@ -810,7 +1037,6 @@
             position: absolute;
             top: 29px;
             right: 0;
-            // border: 1px solid red;
           }
           &::after {
             @include same(100%);
@@ -1170,9 +1396,17 @@
       display: grid;
       grid-auto-rows: auto;
       button {
+        @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
-        background-color: var(--purple06);
-        border-radius: 8px;
+        background-color: var(--purple09);
+        border-radius: 4px;
+        min-height: 56px;
+  
+        &:disabled {
+          background-color: var(--gray200);
+          color: var(--gray400);
+          cursor: default;
+        }
       }
     }
   }
@@ -1534,14 +1768,13 @@
       button {
         @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
-        background-color: #9452D6;
-        border-radius: 8px;
-        // padding: 16px 8px;
+        background-color: var(--purple09);
+        border-radius: 4px;
         min-height: 56px;
   
         &:disabled {
-          background-color: var(--gray300);
-          color: var(--gray600);
+          background-color: var(--gray200);
+          color: var(--gray400);
           cursor: default;
         }
       }
@@ -1759,9 +1992,17 @@
       display: grid;
       grid-auto-rows: auto;
       button {
+        @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
-        background-color: var(--purple06);
+        background-color: var(--purple09);
         border-radius: 4px;
+        min-height: 56px;
+  
+        &:disabled {
+          background-color: var(--gray200);
+          color: var(--gray400);
+          cursor: default;
+        }
       }
     }
   }
@@ -1861,14 +2102,13 @@
       button {
         @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
-        background-color: #9452D6;
+        background-color: var(--purple09);
         border-radius: 4px;
-        // padding: 16px 8px;
         min-height: 56px;
   
         &:disabled {
-          background-color: var(--gray300);
-          color: var(--gray600);
+          background-color: var(--gray200);
+          color: var(--gray400);
           cursor: default;
         }
       }
@@ -1972,13 +2212,13 @@
       button {
         @include flex;
         @include string(16px, 24px, normal, 700, center, var(--white));
-        background-color: #9452D6;
+        background-color: var(--purple09);
         border-radius: 4px;
         min-height: 56px;
   
         &:disabled {
-          background-color: var(--gray300);
-          color: var(--gray600);
+          background-color: var(--gray200);
+          color: var(--gray400);
           cursor: default;
         }
       }

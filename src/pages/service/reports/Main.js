@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { openModal } from 'store/modules/components';
 
@@ -9,20 +9,15 @@ import { Dialog, Slide } from "@mui/material";
 
 import { getReportDailyStatusAPI, getReportWeeklyStatusAPI } from 'api/v1/reports'
 
-import StickerDailyReport from 'assets/Content/reports/sticker-daily-report.png'
-import StickerWeekReport from 'assets/Content/reports/sticker-week-report.png'
+import { EMOTION } from 'constants/emotion'
 import StickerExists from 'assets/Content/reports/exists.svg'
 import StickerWeekly from 'assets/Content/reports/weekly.svg'
-
-import { EMOTION } from 'constants/emotion'
-
-
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const YearMonthPicker = ({open, onClose, currentDate, setCurrentDate}) => {
+const YearMonthPickerModal = ({open, onClose, currentDate, setCurrentDate}) => {
   const [pickerValue, setPickerValue] = useState({
     years: currentDate?.year(),
     months: currentDate?.month() + 1
@@ -32,14 +27,23 @@ const YearMonthPicker = ({open, onClose, currentDate, setCurrentDate}) => {
     years: Array.from({ length: 5 }, (_, i) => 2020 + i), 
     months: Array.from({ length: 12 }, (_, i) => i + 1)
   }
-  
   const handleConfirm = () => {
+    const isSameDate =
+      pickerValue.years === currentDate?.year() &&
+      pickerValue.months === currentDate?.month()+1;
+
+    if (isSameDate) {
+      onClose();
+      return;
+    }
+
     setCurrentDate(dayjs().year(pickerValue?.years).month(pickerValue?.months - 1).date(1));
     onClose();
   };
 
   return (
     <Dialog open={open} onClose={onClose}
+      closeAfterTransition={false}
       TransitionComponent={Transition}
       aria-describedby="year-month-selection-description"
       className="bottom-dialog">        
@@ -98,21 +102,16 @@ const getDateInfo = (dateItem, today, reportsStatus) => {
 function ReportsMain() {
   const userInfo = useSelector(state => { return state?.user.userInfo; });
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
-
-  const openOnBoardingModal = () => {
-    dispatch(openModal({modalType: "OnBoarding"}))
-  }
-  const [currentDate, setCurrentDate] = useState(dayjs(new Date()));
+  const openOnBoardingModal = () => { dispatch(openModal({modalType: "OnBoarding"})) }
+  const searchParams = new URLSearchParams(location.search);
+  const paramY = searchParams.get("y");
+  const paramM = searchParams.get("m");
+  const defaultDate = paramY && paramM ? dayjs(`${paramY}-${paramM}-01`) : dayjs();
+  const [currentDate, setCurrentDate] = useState(defaultDate);
   const [startX, setStartX] = useState(null);
-  const [isDailyReportOpen, setIsDailyReportOpen] = useState(false);
-  const [isReportSelectionOpen, setIsReportSelectionOpen] = useState(false);
   const [isYearMonthPickerOpen, setIsYearMonthPickerOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState({
-    year: null,
-    month: null,
-    day: null,
-  });
   const [reportsStatus, setReportsStatus] = useState({});
 
   // 월간 날짜 계산
@@ -133,14 +132,31 @@ function ReportsMain() {
   }
   const getEmotionInType = (emotion) => EMOTION[emotion] || null;
 
+  // URL 변경 시 `currentDate` 업데이트
   useEffect(() => {
-    getReportStatusData()
-  }, [currentDate])
+    const searchParams = new URLSearchParams(location.search);
+    const y = searchParams.get("y");
+    const m = searchParams.get("m");
 
-  // useEffect(() => {
-  //   console.table(reportsStatus.dailyStatus)
-  //   console.table(reportsStatus.weeklyStatus)
-  // }, [reportsStatus])
+    // URL의 값과 currentDate를 비교하여 업데이트
+    if (y && m && (year !== Number(y) || month + 1 !== Number(m))) {
+      setCurrentDate(dayjs(`${y}-${m}-01`));
+    }
+  }, [location.search]);
+
+  // `currentDate` 변경 시 URL 업데이트
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const y = searchParams.get("y");
+    const m = searchParams.get("m");
+
+    // URL 값과 `currentDate`가 다를 때만 URL 업데이트
+    if (y !== `${year}` || m !== `${month + 1}`) {
+      navigate(`/reports?y=${year}&m=${month + 1}`, { replace: true });
+    }
+
+    getReportStatusData();
+  }, [currentDate]);
   
   const getReportStatusData = async () => {
     if (!userInfo?.userId) return;
@@ -149,253 +165,31 @@ function ReportsMain() {
       getReportWeeklyStatusAPI(userInfo?.userId, yearMonth)
     ]).then((res) => {
       const [dailyStatus, weeklyStatus] = res;
-      setReportsStatus({dailyStatus: [
-        {
-            "date": "2024-09-30",
-            "coreEmotion": null,
-            "available": false
-        },
-        {
-            "date": "2024-10-01",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-02",
-            "coreEmotion": "혐오",
-            "available": false
-        },
-        {
-            "date": "2024-10-03",
-            "coreEmotion": "분노",
-            "available": false
-        },
-        {
-            "date": "2024-10-04",
-            "coreEmotion": "수용",
-            "available": false
-        },
-        {
-            "date": "2024-10-05",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-06",
-            "coreEmotion": "놀라움",
-            "available": false
-        },
-        {
-            "date": "2024-10-07",
-            "coreEmotion": null,
-            "available": false
-        },
-        {
-            "date": "2024-10-08",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-09",
-            "coreEmotion": "중립",
-            "available": false
-        },
-        {
-            "date": "2024-10-10",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-11",
-            "coreEmotion": "혐오",
-            "available": false
-        },
-        {
-            "date": "2024-10-12",
-            "coreEmotion": "분노",
-            "available": false
-        },
-        {
-            "date": "2024-10-13",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-14",
-            "coreEmotion": "슬픔",
-            "available": false
-        },
-        {
-            "date": "2024-10-15",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-16",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-17",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-18",
-            "coreEmotion": "중립",
-            "available": false
-        },
-        {
-            "date": "2024-10-19",
-            "coreEmotion": "놀라움",
-            "available": false
-        },
-        {
-            "date": "2024-10-20",
-            "coreEmotion": "두려움",
-            "available": false
-        },
-        {
-            "date": "2024-10-21",
-            "coreEmotion": "슬픔",
-            "available": false
-        },
-        {
-            "date": "2024-10-22",
-            "coreEmotion": "슬픔",
-            "available": false
-        },
-        {
-            "date": "2024-10-23",
-            "coreEmotion": null,
-            "available": true
-        },
-        {
-            "date": "2024-10-24",
-            "coreEmotion": "열망",
-            "available": false
-        },
-        {
-            "date": "2024-10-25",
-            "coreEmotion": "수용",
-            "available": false
-        },
-        {
-            "date": "2024-10-26",
-            "coreEmotion": "열망",
-            "available": false
-        },
-        {
-            "date": "2024-10-27",
-            "coreEmotion": "슬픔",
-            "available": false
-        },
-        {
-            "date": "2024-10-28",
-            "coreEmotion": null,
-            "available": false
-        },
-        {
-            "date": "2024-10-29",
-            "coreEmotion": "중립",
-            "available": false
-        },
-        {
-            "date": "2024-10-30",
-            "coreEmotion": "기쁨",
-            "available": false
-        },
-        {
-            "date": "2024-10-31",
-            "coreEmotion": null,
-            "available": false
-        }
-    ], weeklyStatus: [
-        {
-            "weekOfYear": 40,
-            "weekName": "2024년 10월 1주차",
-            "startDate": "2024-09-30",
-            "endDate": "2024-10-06",
-            "totalCount": 30,
-            "available": true,
-            "analyzed": false
-        },
-        {
-            "weekOfYear": 41,
-            "weekName": "2024년 10월 2주차",
-            "startDate": "2024-10-07",
-            "endDate": "2024-10-13",
-            "totalCount": 35,
-            "available": true,
-            "analyzed": true
-        },
-        {
-            "weekOfYear": 42,
-            "weekName": "2024년 10월 3주차",
-            "startDate": "2024-10-14",
-            "endDate": "2024-10-20",
-            "totalCount": 35,
-            "available": true,
-            "analyzed": true
-        },
-        {
-            "weekOfYear": 43,
-            "weekName": "2024년 10월 4주차",
-            "startDate": "2024-10-21",
-            "endDate": "2024-10-27",
-            "totalCount": 35,
-            "available": true,
-            "analyzed": false
-        },
-        {
-            "weekOfYear": 44,
-            "weekName": "2024년 10월 5주차",
-            "startDate": "2024-10-28",
-            "endDate": "2024-11-03",
-            "totalCount": 15,
-            "available": true,
-            "analyzed": false
-        }
-    ]})
+      setReportsStatus({ dailyStatus, weeklyStatus })
     })
   }
 
-const handleReportNavigation = (dateItem, isAvailableDailyReport, isCreatedDailyReport, isCreatedWeeklyReport, dailyReportDate, weeklyReportDate) => {
-  if (!isAvailableDailyReport && !isCreatedDailyReport && !isCreatedWeeklyReport) return;
-  if (isAvailableDailyReport) { // 데일리 리포트 작성 가능 상태
-    handleIsDailyReportOpen(dateItem, dailyReportDate)
-  } else if (isCreatedDailyReport && isCreatedWeeklyReport) { // 데일리/주간 리포트 둘다 작성한 경우
-    handleIsAllReportNavOpen(dailyReportDate, weeklyReportDate)
-  } else if (isCreatedDailyReport) { // 데일리 리포트만 작성한 경우
-    alert("데일리 리포트 분석 결과 화면")
-  } else if (isCreatedWeeklyReport) { // 위클리 리포트만 작성한 경우
-    alert("위클리 리포트 분석 결과 화면")
+  const handleReportNavigation = (dateItem, isAvailableDailyReport, isCreatedDailyReport, isCreatedWeeklyReport, dailyReportDate, weeklyReportDate) => {
+    if (!isAvailableDailyReport && !isCreatedDailyReport && !isCreatedWeeklyReport) return;
+    if (isAvailableDailyReport) { // 데일리 리포트 작성 가능 상태      
+      dispatch(openModal({modalType: "DailyReport", data: { selectedDate: {
+        year: dateItem.year(),
+        month: dateItem.month() + 1,
+        day: dateItem.date(),
+      } }}))
+    } else if (isCreatedDailyReport && isCreatedWeeklyReport) { // 데일리/주간 리포트 둘다 작성한 경우
+      dispatch(openModal({modalType: "ReportSelection", data: { dailyReportDate, weeklyReportDate }}))
+    } else if (isCreatedDailyReport) { // 데일리 리포트만 작성한 경우
+      navigate("/reports/daily-result", { state: {
+        year: dateItem.year(),
+        month: dateItem.month() + 1,
+        day: dateItem.date(),
+        type: "get"
+      }})
+    } else if (isCreatedWeeklyReport) { // 위클리 리포트만 작성한 경우
+      alert("위클리 리포트 분석 결과 화면")
+    }
   }
-}
-
-  const handleIsAllReportNavOpen = (dailyReportDate, weeklyReportDate) => {
-    setIsReportSelectionOpen(true);
-    console.log("dailyReportDate, weeklyReportDate", dailyReportDate, weeklyReportDate)
-  };
-
-  const handleIsDailyReportOpen = (dateItem, dailyReportDate) => {
-    console.log(dailyReportDate)
-    setIsDailyReportOpen(true);
-    setSelectedDate({
-      year: dateItem.year(),
-      month: dateItem.month() + 1,
-      day: dateItem.date(),
-    });
-  };
-
-  const handleIsDailyReportClose = () => {
-    setIsDailyReportOpen(false);
-    setSelectedDate({
-      year: null,
-      month: null,
-      day: null,
-    })
-  };
 
   // 드래그 이벤트 핸들러
   const handleTouchStart = (e) => {
@@ -429,7 +223,7 @@ const handleReportNavigation = (dateItem, isAvailableDailyReport, isCreatedDaily
         onTouchEnd={handleTouchEnd}
       >
         <div className="date-switcher">
-          <button onClick={() => setIsYearMonthPickerOpen(true)} className="date-change-btn">{currentDate.format("YYYY. MM")}</button>
+          <button onClick={() => setIsYearMonthPickerOpen(true)} className="date-change-btn"><p className="date-str">{currentDate.format("YYYY. MM")}</p></button>
         </div>
         <div className="calendar-body">
           <div className="weekdays">
@@ -492,61 +286,10 @@ const handleReportNavigation = (dateItem, isAvailableDailyReport, isCreatedDaily
         </div>
         <div className="info">
           <button onClick={openOnBoardingModal} className="onboarding-btn"></button>
-          <button onClick={() =>  navigate("/reports/week", { state: { year: currentDate.year(), month: currentDate.month() + 1 } })} className="week-reports-request"><p>주간 리포트 분석</p></button>
+          <button onClick={() =>  navigate("/reports/analyzable-weekly-list", { state: { year: currentDate.year(), month: currentDate.month() + 1 } })} className="week-reports-request"><p>주간 리포트 분석</p></button>
         </div>
       </div>
-      <Dialog
-        open={isDailyReportOpen}
-        TransitionComponent={Transition}
-        onClose={handleIsDailyReportClose}
-        aria-describedby="daily-report-analysis-description"
-        className="bottom-dialog"
-      >
-        <div className="daily-report-analysis">
-          <div className="daily-report-analysis__title">
-            <p>{selectedDate?.month ? selectedDate?.month : "-"}월 {selectedDate?.day ? selectedDate?.day: "-"}일</p>
-            <span>데일리 리포트 분석을 시작할까요?</span>
-          </div>
-          <button className="active-btn">분석 시작</button>
-        </div>
-      </Dialog>
-      <Dialog
-        open={isReportSelectionOpen}
-        TransitionComponent={Transition}
-        onClose={() => setIsReportSelectionOpen(false)}
-        aria-describedby="report-selection-description"
-        className="bottom-dialog"
-      >
-        <div className="report-selection">
-          <div className="report-selection__title">
-            <p>리포트 선택</p>
-            <span>열람할 리포트를 선택해 주세요</span>
-          </div>
-          <div className="report-selection__choice">
-            <div className="btn-container daily">
-              <img src={StickerDailyReport} alt="데일리 리포트 이미지" />
-              <div className="btn-container__title">
-                <p>데일리 리포트</p>
-                <ul>
-                  <li>오늘 작성한</li>
-                  <li>리포트를 열람해요</li>
-                </ul>
-              </div>
-            </div>
-            <div className="btn-container week">
-              <img src={StickerWeekReport} alt="주간 리포트 이미지" />
-              <div className="btn-container__title">
-                <p>주간 리포트</p>
-                <ul>
-                  <li>이번주에 작성한</li>
-                  <li>리포트를 열람해요</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Dialog>
-      <YearMonthPicker open={isYearMonthPickerOpen} onClose={() => setIsYearMonthPickerOpen(false)} currentDate={currentDate} setCurrentDate={setCurrentDate} />
+      <YearMonthPickerModal open={isYearMonthPickerOpen} onClose={() => setIsYearMonthPickerOpen(false)} currentDate={currentDate} setCurrentDate={setCurrentDate} />
     </div>
   );
 };

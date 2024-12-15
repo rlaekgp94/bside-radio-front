@@ -55,6 +55,7 @@ const YearPicker = ({open, onClose, currentDate, setCurrentDate}) => {
 
   return (
     <Dialog open={open} onClose={onClose}
+      closeAfterTransition={false}
       TransitionComponent={Transition}
       aria-describedby="year-month-selection-description"
       className="bottom-dialog">        
@@ -376,7 +377,7 @@ function MemoryBox() {
     <div className="memorybox">
       <div className="memorybox__head">
         <div className="date-switcher">
-          <button className="date-change-btn" onClick={() => setIsYearPickerOpen(true)}>{currentDate}</button>  
+          <button className="date-change-btn" onClick={() => setIsYearPickerOpen(true)}><p className="date-str">{currentDate}</p></button>  
         </div>
         <ul className="tab-switcher">{tabItems.map((item, index) => {
           return <li key={index} onClick={() => setTab(item)} 

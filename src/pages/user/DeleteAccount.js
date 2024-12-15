@@ -81,7 +81,7 @@ export default function DeleteAccount() {
     <>    
     {complete ?
       <div className="deleteComplete">
-        <div class="deleteComplete__inner">
+        <div className="deleteComplete__inner">
           <div className="body">
             <div className="body__desc">
               <p>탈퇴가 완료되었습니다.</p>
