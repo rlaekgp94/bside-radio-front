@@ -91,10 +91,9 @@ function SignupTerms(props) {
 
 function PatchField(props) {
   const { agreements } = props;
-  console.log(agreements)
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { setUserDataCookie } = useAuth();
+  const { setUserDataLocalStorage } = useAuth();
   const userInfo = useSelector(state => { return state?.user.userInfo; });  
   
   const [nickname, setNickname] = useState("");
@@ -123,7 +122,7 @@ function PatchField(props) {
     const { emailAdsConsented, agreeToTerms, agreeToPrivacyPolicy } = agreements;
     try {
       const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageEnabled, emailAdsConsented, agreeToTerms, agreeToPrivacyPolicy);
-      setUserDataCookie(JSON.stringify(res))
+      setUserDataLocalStorage(JSON.stringify(res))
       dispatch(setUserInfo(res));
       navigate("/")
       setLoading(false)

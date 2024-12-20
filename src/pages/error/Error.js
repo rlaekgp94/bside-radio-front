@@ -21,13 +21,15 @@ const errorMessages = {
 export default function NotFound() {
   const nav = useNavigate();
   const { code } = useParams();
-  const userData = getCookie('--user-data');
+  const userData = localStorage.getItem('--user-data');
+  const jwtAccess = getCookie('jwt-access');  
+  
   // const location = useLocation();
   // const { errorCode, errorMessages } = location.state || {};
   // console.log(errorCode, code, errorMessages)
 
   const movePage = () => {
-    if (userData) {
+    if (userData && jwtAccess) {
       nav("/")
     } else {
       nav("/login")

@@ -657,6 +657,10 @@
     .box-group {
       padding-left: 23px;
       padding-right: 17px;
+      .loading-skeleton {
+        @include flex(center, flex-start);
+        min-height: 61px;
+      }
       &.line {
         margin-top: 52px;
       }
@@ -800,7 +804,7 @@
   }
   .reports-weekly-result-container {
     padding-bottom: 30px;
-    background: url($G-path-content + '/reports/bg-3.png') repeat center / cover;  
+    background: url($G-path-content + '/reports/bg-4.png') repeat top / contain;  
     .reports-weekly-result-inner {    
       padding: 24px 20px;
       margin: 0 20px;
@@ -889,7 +893,7 @@
   }
   .reports-daily-result-container {
     padding-bottom: 30px;
-    background: url($G-path-content + '/reports/bg-3.png') repeat center / cover;  
+    background: url($G-path-content + '/reports/bg-4.png') repeat top / contain;  
     .reports-daily-result-inner {    
       padding: 28px 20px;
       margin: 0 20px;

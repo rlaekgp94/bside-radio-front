@@ -34,7 +34,6 @@ function WeeklyReportResult() {
     setCreateLoading(true);
     try {     
       const res = await createReportWeeklyAPI(userInfo.userId, startDate);    
-      console.log("createReportWeekly res: ", res)
       setResultData(res);
     } catch(e) {
       console.log("createReportWeeklyAPI e: ", e)
@@ -48,7 +47,6 @@ function WeeklyReportResult() {
     setResultLoading(true);
     try {     
       const res = await getReportWeeklyResultAPI(userInfo.userId, startDate, endDate);    
-      console.log("getReportWeeklyResult res: ", res)
       setResultData(res);
       setResultData(test);
     } catch(e) {

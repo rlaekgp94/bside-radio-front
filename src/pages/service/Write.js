@@ -33,11 +33,14 @@ function currentDateFormat() {
 
 function WriteLayout({preference, setPreference, textareaVal, setTextareVal, published, setPublished, letterResponse}) {
   const userInfo = useSelector(state => { return state?.user.userInfo; });
+  const policiesLimit = process.env.REACT_APP_ENV === 'production' ? useSelector(state => { return state?.user.policiesLimit; })?.limit : 10
   const [seconds, setSeconds] = useState(null);
   const [letterLimitObj, setLetterLimitObj] = useState({});
   const [snackState, setSnackState] = useState(false);
   const timerRef = useRef(null); // 타이머 ID 저장
-  
+
+  console.log(userInfo)
+
   const handleModeChange = () => {
     setPublished(!published);
     showSnackbar()
@@ -59,10 +62,9 @@ function WriteLayout({preference, setPreference, textareaVal, setTextareVal, pub
   };
 
   const getUserLetterLimit = async () => {
-    if (!userInfo?.userId && process.env.REACT_APP_ENV === 'production') return;
-
+    if (!userInfo?.userId) return;
     try {      
-      const res = await getUserLetterLimitAPI(userInfo.userId);    
+      const res = await getUserLetterLimitAPI(userInfo.userId);  
       setLetterLimitObj(res)
       setSeconds(res?.ttl)
     } catch(e) {
@@ -105,7 +107,7 @@ function WriteLayout({preference, setPreference, textareaVal, setTextareVal, pub
     fuc: () => {
       letterResponse()
     },
-    disabled: textareaVal.length < 10 || Number(letterLimitObj.usage) === 10
+    disabled: textareaVal.length < 10 || Number(letterLimitObj.usage) > policiesLimit
   }
 
   return (    
@@ -137,8 +139,8 @@ function WriteLayout({preference, setPreference, textareaVal, setTextareVal, pub
         </div>
         <div className="write-status layout-p">
           <div className="letter-usage">
-            <p className="length">{letterLimitObj?.usage ? 10-letterLimitObj.usage : "10"}</p>
-            <p className="limit">/10</p>
+            <p className="length">{letterLimitObj?.usage ? policiesLimit-letterLimitObj.usage : policiesLimit}</p>
+            <p className="limit">/{policiesLimit ? policiesLimit : "-"}</p>
           </div>
           <div className="reflash-timer">
             <p className="reflash-timer__desc">전체 횟수 초기화까지</p>

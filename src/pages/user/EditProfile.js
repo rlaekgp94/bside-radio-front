@@ -13,8 +13,11 @@ import { CircularProgress } from '@mui/material';
 export default function Mypage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { setUserDataCookie } = useAuth();
+  const { setUserDataLocalStorage } = useAuth();
   const userInfo = useSelector(state => { return state?.user.userInfo; });  
+
+  if (!userInfo) return null;
+
   const { 
     nickname: currentNickname, 
     preference: currentPreference, 
@@ -65,11 +68,9 @@ export default function Mypage() {
   const patchUserInfo = async () => {
     if (!userInfo?.userId || !Object.keys(updatedData).length) return;
     setLoading(true)
-    console.log(userInfo.userId, nickname, type, profileImageEnabled, emailAdsConsented)
     try {
       const res = await patchUserInfoAPI(userInfo.userId, nickname, type, profileImageEnabled, emailAdsConsented);
-      console.log("res", res)
-      setUserDataCookie(JSON.stringify(res))
+      setUserDataLocalStorage(JSON.stringify(res))
       dispatch(setUserInfo(res));
       navigate("/myPage")
       setLoading(false)

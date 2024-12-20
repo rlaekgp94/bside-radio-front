@@ -336,15 +336,15 @@
           }
 
           button {
-            @include string(16px, 24px, normal, 700, center, var(--white));
-            background-color: #9452D6;
+            @include string(16px, 24px, -0.96px, 700, center, var(--white)); 
+            background: var(--purple09);
             border-radius: 4px;
             padding: 10px 8px;
             width: 100%;
       
             &:disabled {
-              background-color: var(--gray300);
-              color: var(--gray600);
+              background-color: var(--gray200);
+              color: var(--gray400);
               cursor: default;
             }
           }
@@ -388,15 +388,15 @@
             }
           }
           button {
-            @include string(16px, 24px, normal, 700, center, var(--white));
-            background-color: #9452D6;
+            @include string(16px, 24px, -0.96px, 700, center, var(--white)); 
+            background: var(--purple09);
             border-radius: 4px;
             padding: 16px 8px;
             width: 100%;
       
             &:disabled {
-              background-color: var(--gray300);
-              color: var(--gray600);
+              background-color: var(--gray200);
+              color: var(--gray400);
               cursor: default;
             }
           }

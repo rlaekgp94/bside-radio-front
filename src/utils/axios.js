@@ -50,39 +50,3 @@ axiosInstance.interceptors.response.use(
 );
 
 export default axiosInstance;
-
-// export const axiosInstance = async (config, cancelToken) => {
-
-//   const accessToken = getCookie('jwt-access');
-//   const refreshToken = getCookie('jwt-refresh');
-
-//   config.headers = {
-//     'Authorization': `Bearer ${accessToken}`,
-//     'X-Refresh-Token': `Bearer ${refreshToken}`,
-//     'Content-Type': 'application/json',
-//   };
-
-//   if (cancelToken) {
-//     config.cancelToken = cancelToken;
-//   }
-  
-//   try {
-//     const response = await apiClient(config);
-
-//     const response_accessToken = response?.headers['Authorization'] ? response?.headers['Authorization'].replace('Bearer ', '')  : null;
-//     const response_refreshToken = response?.headers['X-Refresh-Token'] ? response?.headers['X-Refresh-Token'].replace('Bearer ', '')  : null;
-
-//     if (response_accessToken && response_refreshToken) {
-//       jwtDecodingCookie("jwt-access", response_accessToken)
-//       jwtDecodingCookie("jwt-refresh", response_refreshToken)
-//     }
-
-//     return response.data;
-//   } catch (error) {
-//     if (axios.isCancel(error)) {
-//       console.log('Request:', error.message);
-//     } else {
-//       throw error;
-//     }
-//   }
-// };

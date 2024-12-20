@@ -32,7 +32,6 @@ function WeekListLayout({ year, month }) {
     try {     
       const res = await getReportWeeklyStatusAPI(userInfo.userId, date);  
       const availableList = res.filter(item => item.available);
-      console.log("availableList", availableList)
       setList(availableList);
     } catch(e) {
       console.log("letterResponseAPI e: ", e)

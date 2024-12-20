@@ -31,7 +31,6 @@ function DailyReportResult() {
     setCreateLoading(true);
     try {     
       const res = await createReportDailyAPI(userInfo.userId, date);    
-      console.log("createReportDaily res: ", res)
       setResultData(res);
     } catch(e) {
       console.log("createReportDailyAPI e: ", e)
@@ -45,7 +44,6 @@ function DailyReportResult() {
     setResultLoading(true);
     try {     
       const res = await getReportDailyResultAPI(userInfo.userId, date);    
-      console.log("getReportDailyResult res: ", res)
       setResultData(res);
     } catch(e) {
       console.log("getReportDailyResultAPI e: ", e)

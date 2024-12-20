@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import mixpanel from 'mixpanel-browser';
+import { DATA } from 'constants'
 
-import { setUserInfo, setSessionLoading } from 'store/modules/user';
+import { setUserInfo, setSessionLoading, setPoliciesLimit, clearUserInfo } from 'store/modules/user';
 import useAuth from 'hooks/useAuth';
-import { getCookie, deleteCookie } from 'utils/cookie';
 import PageTracking from './utils/PageTracking';
 import AutoRouter from 'router/AutoRouter';
 
@@ -17,25 +17,27 @@ function App() {
   const [userId, setUserId] = useState(null);
 
   useEffect(() => {
-    mixpanel.init("e6769d0990d9d69011e4902258f94ad6", {
+    mixpanel.init(DATA.MIXPANEL_CLIENT_ID, {
       debug: process.env.REACT_APP_ENV === 'development',
       track_pageview: true,
     });
 
-    const accessToken = getJwtDecoding();
-    const jwtRefresh = getCookie('jwt-refresh');  
-    const userData = getCookie('--user-data');
-    
-    if (accessToken || jwtRefresh) {
+    const accessToken = getJwtDecoding();   
+    const userData = localStorage.getItem('--user-data');
+    const policiesLimit = localStorage.getItem('--policies-limit');
+
+    if (accessToken) {
       const userId = accessToken?.sub;
       mixpanel.identify(userId);
       setUserId(userId);
 
       if (userData) {
         const parsedUserData = JSON.parse(userData);
+        const parsedPoliciesLimit = JSON.parse(policiesLimit);
 
-        // Redux로 유저 정보 설정
+        // Redux로 유저 정보/편지 제한 횟수 설정
         dispatch(setUserInfo(parsedUserData));
+        dispatch(setPoliciesLimit(parsedPoliciesLimit));
         // Mixpanel에 유저 정보 설정
         mixpanel.people.set({
           "$email": parsedUserData?.email,
@@ -48,12 +50,11 @@ function App() {
           dispatch(setSessionLoading(false))
         });
       }
-
-    } else {
+    } else {      
       mixpanel.reset();
       setUserId(null);
-      deleteCookie('--user-data');
       dispatch(setSessionLoading(false))
+      dispatch(clearUserInfo())
     }
   }, []);
 

@@ -86,7 +86,7 @@ const getDateInfo = (dateItem, today, reportsStatus) => {
 
   const isAvailableDailyReport = dailyReportDate?.available;
   const isCreatedDailyReport = dailyReportDate?.coreEmotion;
-  const isCreatedWeeklyReport = !!weeklyReportDate?.analyzed;
+  const isCreatedWeeklyReport = weeklyReportDate?.analyzed;
 
   return {
     formattedDate,
@@ -169,7 +169,7 @@ function ReportsMain() {
     })
   }
 
-  const handleReportNavigation = (dateItem, isAvailableDailyReport, isCreatedDailyReport, isCreatedWeeklyReport, dailyReportDate, weeklyReportDate) => {
+  const handleReportNavigation = (dateItem, isAvailableDailyReport, isCreatedDailyReport, isCreatedWeeklyReport, weeklyReportDate) => {
     if (!isAvailableDailyReport && !isCreatedDailyReport && !isCreatedWeeklyReport) return;
     if (isAvailableDailyReport) { // 데일리 리포트 작성 가능 상태      
       dispatch(openModal({modalType: "DailyReport", data: { selectedDate: {
@@ -178,7 +178,10 @@ function ReportsMain() {
         day: dateItem.date(),
       } }}))
     } else if (isCreatedDailyReport && isCreatedWeeklyReport) { // 데일리/주간 리포트 둘다 작성한 경우
-      dispatch(openModal({modalType: "ReportSelection", data: { dailyReportDate, weeklyReportDate }}))
+      dispatch(openModal({ modalType: "ReportSelection", data: { dateItem: { 
+        year: dateItem.year(),
+        month: dateItem.month() + 1,
+        day: dateItem.date() }, weeklyReportDate }}))
     } else if (isCreatedDailyReport) { // 데일리 리포트만 작성한 경우
       navigate("/reports/daily-result", { state: {
         year: dateItem.year(),
@@ -187,7 +190,11 @@ function ReportsMain() {
         type: "get"
       }})
     } else if (isCreatedWeeklyReport) { // 위클리 리포트만 작성한 경우
-      alert("위클리 리포트 분석 결과 화면")
+      navigate("/reports/weekly-result", { state: {
+        startDate: weeklyReportDate?.startDate,
+        endDate: weeklyReportDate?.endDate,
+        type: "get"
+      }})
     }
   }
 
@@ -255,7 +262,7 @@ function ReportsMain() {
               return (
                 <div
                   key={index}
-                  onClick={() => handleReportNavigation(dateItem, isAvailableDailyReport, isCreatedDailyReport, isCreatedWeeklyReport, dailyReportDate, weeklyReportDate)}
+                  onClick={() => handleReportNavigation(dateItem, isAvailableDailyReport, isCreatedDailyReport, isCreatedWeeklyReport, weeklyReportDate)}
                   className={classNames}
                 >
                   {(isAvailableDailyReport || isCreatedDailyReport) && 

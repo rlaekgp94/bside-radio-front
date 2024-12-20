@@ -65,14 +65,14 @@ export const getReportDailyResultAPI = async (userId, targetDate) => {
  * 데일리 리포트 생성 API
  *
  * @param {string} userId 유저 고유 아이디
- * @param {string} date yyyy-mm-dd
+ * @param {string} targetDate yyyy-mm-dd
  */
-export const createReportDailyAPI  = async (userId, date) => {
+export const createReportDailyAPI  = async (userId, targetDate) => {
   try {
     const result = await axiosInstance({
       method: 'post',
       url: `/${version}/reports/daily`,
-      data: { userId, date }
+      data: { userId, targetDate }
     });
     return result;
   } catch (e) {

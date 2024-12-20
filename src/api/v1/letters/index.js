@@ -33,8 +33,7 @@ export const getUserMemoryListAPI = async (userId, year, page) => {
   try {
     const result = await axiosInstance({
       method: 'get',
-      url: `/${version}/replies/users/${userId}?page=${page}&size=10`,
-      // url: `/${version}/replies/users/${userId}?year=${year}&page=${page}&size=10`,
+      url: `/${version}/replies/users/${userId}?year=${year}&page=${page}&size=10`,
     });
     return result;
   } catch (e) {

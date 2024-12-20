@@ -96,7 +96,7 @@ function LatestLetterList() {
               <Skeleton sx={{ bgcolor: '#ececf0' }} animation="wave" width={276} height={280} variant="rectangular" />
             </SwiperSlide>
           }) :
-          latestList.length && latestList.map((item, index) => {
+          latestList.length ? latestList.map((item, index) => {
             return <SwiperSlide key={item?.replyId}>
               <div className="slide-card">
                 <div className="slide-card__inner">  
@@ -121,7 +121,7 @@ function LatestLetterList() {
                 </div>
               </div>
             </SwiperSlide> 
-          })
+          }) : null
         }
       </Swiper>
     </div>

@@ -7,6 +7,8 @@ export default function AxiosNavigation() {
   const navigate = useRef(useNavigate());
 
   useEffect(() => {
+    if (process.env.REACT_APP_ENV === 'development') return;
+    
     const intercetpor = axiosInstance.interceptors.response.use(
       (response) => response,
       (error) => {

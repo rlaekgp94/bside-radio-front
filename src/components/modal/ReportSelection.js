@@ -16,10 +16,27 @@ export default function ReportSelection() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { modalType, isOpen, data } = useSelector(selectModal);
-  const { dailyReportDate, weeklyReportDate } = data;
-  console.log("dailyReportDate, weeklyReportDate", dailyReportDate, weeklyReportDate)
+  const { dateItem, weeklyReportDate } = data;
 
   const handleClose = () => { dispatch(closeModal()); };
+
+  const dailyResult = () => {
+    handleClose()
+    navigate("/reports/daily-result", { state: {
+      year: dateItem.year,
+      month: dateItem.month,
+      day: dateItem.day,
+      type: "get"
+    }})
+  }
+  const weeklyResult = () => {
+    handleClose()
+    navigate("/reports/weekly-result", { state: {
+      startDate: weeklyReportDate?.startDate,
+      endDate: weeklyReportDate?.endDate,
+      type: "get"
+    }})
+  }
 
   return (
     <Dialog open={modalType === "ReportSelection" && isOpen} onClose={handleClose}
@@ -34,7 +51,7 @@ export default function ReportSelection() {
           <span>열람할 리포트를 선택해 주세요</span>
         </div>
         <div className="report-selection__choice">
-          <div className="btn-container daily">
+          <div onClick={dailyResult} className="btn-container daily">
             <img src={StickerDailyReport} alt="데일리 리포트 이미지" />
             <div className="btn-container__title">
               <p>데일리 리포트</p>
@@ -44,7 +61,7 @@ export default function ReportSelection() {
               </ul>
             </div>
           </div>
-          <div className="btn-container week">
+          <div onClick={weeklyResult} className="btn-container week">
             <img src={StickerWeekReport} alt="주간 리포트 이미지" />
             <div className="btn-container__title">
               <p>주간 리포트</p>
