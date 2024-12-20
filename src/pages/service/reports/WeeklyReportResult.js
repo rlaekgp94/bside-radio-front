@@ -23,15 +23,14 @@ function WeeklyReportResult() {
   const location = useLocation();
   const navigate = useNavigate();
   const { type, startDate, endDate } = location.state || {};
-  const [resultLoading, setResultLoading] = useState(false);
-  const [createLoading, setCreateLoading] = useState(false);
+  const [resultLoading, setResultLoading] = useState(true);
+  const [createLoading, setCreateLoading] = useState(true);
   const [resultData, setResultData] = useState(null);
 
   const getEmotionInType = (emotion) => EMOTION[emotion] || null;
   
   const createReportWeekly = async () => {
     if (!userInfo?.userId) return;
-    setCreateLoading(true);
     try {     
       const res = await createReportWeeklyAPI(userInfo.userId, startDate);    
       setResultData(res);
@@ -44,11 +43,9 @@ function WeeklyReportResult() {
   
   const getReportWeeklyResult = async () => {
     if (!userInfo?.userId) return;
-    setResultLoading(true);
     try {     
       const res = await getReportWeeklyResultAPI(userInfo.userId, startDate, endDate);    
       setResultData(res);
-      setResultData(test);
     } catch(e) {
       console.log("getReportWeeklyResultAPI e: ", e)
     } finally {
@@ -89,53 +86,59 @@ function WeeklyReportResult() {
   return (
     <div className="reports-weekly-result">
       <CloseTitleBar title="위클리 리포트" />
-        {resultLoading ? <div className="loading-container"><CircularProgress size={70} /></div> : 
-        createLoading ? <LoadingLayout type="create" /> :
-        resultData ?        
-        <div className="reports-weekly-result-container">
-          <div className="reports-weekly-result-inner">
-            <div className="result-core-title">
-              <p className="week-name">{resultData.weekName}</p>
-              <p className="start-end-date">{`${resultData.startDate} ~ ${resultData.endDate}`}</p>
-            </div>
-            <ul className="emotion">
-              {resultData.coreEmotions?.length ? resultData.coreEmotions.map((item, index) => (
-                <img className="emotion-img" key={index} src={getEmotionInType(item).stickerBg} alt={`${item} 감정 스티커 이미지`} />)
-              ) : <img className="emotion-img" src={getEmotionInType("없음").stickerBg} alt={`감정 없음 스티커 이미지`} />}
-            </ul>
-            <div className="result-desc">
-              <p className="result-desc__days">이번주도 정말 힘냈어요!</p>
-              <p className="result-desc__topic">{resultData.cheerUp}</p>
-            </div>
-            <ul className="written-wrapper">
-              <li>
-                <img src={ImgWrittenLetter} alt="편지 작성 이미지" />
-                <div className="desc">
-                  <p>편지작성</p>
-                  <span>{resultData.published ? resultData.published : "0"}회</span>
+        {type === "get" && resultLoading ? <div className="loading-container"><CircularProgress size={70} /></div> : 
+        type === "create" && createLoading ? <LoadingLayout type="create" /> :
+        (          
+          <>
+          {resultData ?
+            <div className="reports-weekly-result-container">
+              <div className="reports-weekly-result-inner">
+                <div className="result-core-title">
+                  <p className="week-name">{resultData.weekName}</p>
+                  <p className="start-end-date">{`${resultData.startDate} ~ ${resultData.endDate}`}</p>
                 </div>
-              </li>
-              <li>
-                <img src={ImgWrittenDiary} alt="일기 작성 이미지" />
-                <div className="desc">
-                  <p>일기작성</p>
-                  <span>{resultData.unPublished ? resultData.unPublished : "0"}회</span>
+                <ul className="emotion">
+                  {resultData.coreEmotions?.length ? resultData.coreEmotions.map((item, index) => (
+                    <img className="emotion-img" key={index} src={getEmotionInType(item).stickerBg} alt={`${item} 감정 스티커 이미지`} />)
+                  ) : <img className="emotion-img" src={getEmotionInType("없음").stickerBg} alt={`감정 없음 스티커 이미지`} />}
+                </ul>
+                <div className="result-desc">
+                  <p className="result-desc__days">이번주도 정말 힘냈어요!</p>
+                  <p className="result-desc__topic">{resultData.cheerUp}</p>
                 </div>
-              </li>
-              <li>
-                <img src={ImgWrittenAll} alt="전체 작성 이미지" />
-                <div className="desc">
-                  <p>전체</p>
-                  <span>{(resultData.published && resultData.published) ? resultData.published+resultData.unPublished : "-"}회</span>
-                </div>
-                </li>
-            </ul>
-          </div></div> : <div className="not-list">
-            <img className="rabbit" src={ImgNotList} alt="not list 리스트 없음 이미지" />
-            <div className="not-list__desc">
-              <p>리포트를 불러올 수 없어요.</p>
-            </div>
-          </div>}
+                <ul className="written-wrapper">
+                  <li>
+                    <img src={ImgWrittenLetter} alt="편지 작성 이미지" />
+                    <div className="desc">
+                      <p>편지작성</p>
+                      <span>{resultData.published ? resultData.published : "0"}회</span>
+                    </div>
+                  </li>
+                  <li>
+                    <img src={ImgWrittenDiary} alt="일기 작성 이미지" />
+                    <div className="desc">
+                      <p>일기작성</p>
+                      <span>{resultData.unPublished ? resultData.unPublished : "0"}회</span>
+                    </div>
+                  </li>
+                  <li>
+                    <img src={ImgWrittenAll} alt="전체 작성 이미지" />
+                    <div className="desc">
+                      <p>전체</p>
+                      <span>{(resultData.published && resultData.published) ? resultData.published+resultData.unPublished : "-"}회</span>
+                    </div>
+                    </li>
+                </ul>
+              </div>
+            </div> : 
+            <div className="not-list">
+              <img className="rabbit" src={ImgNotList} alt="not list 리스트 없음 이미지" />
+              <div className="not-list__desc">
+                <p>리포트를 불러올 수 없어요.</p>
+              </div>
+            </div>}
+          </>      
+        )}          
     </div>
   )
 }
