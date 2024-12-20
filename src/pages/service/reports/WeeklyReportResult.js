@@ -112,14 +112,14 @@ function WeeklyReportResult() {
                 <img src={ImgWrittenLetter} alt="편지 작성 이미지" />
                 <div className="desc">
                   <p>편지작성</p>
-                  <span>{resultData.published ? resultData.published : "-"}회</span>
+                  <span>{resultData.published ? resultData.published : "0"}회</span>
                 </div>
               </li>
               <li>
                 <img src={ImgWrittenDiary} alt="일기 작성 이미지" />
                 <div className="desc">
                   <p>일기작성</p>
-                  <span>{resultData.unPublished ? resultData.unPublished : "-"}회</span>
+                  <span>{resultData.unPublished ? resultData.unPublished : "0"}회</span>
                 </div>
               </li>
               <li>
