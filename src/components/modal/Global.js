@@ -1,5 +1,7 @@
-import { useSelector } from 'react-redux';
-import { selectModal } from 'store/modules/components';
+import { useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { selectModal, closeModal } from 'store/modules/components';
 
 import ReadModal from 'components/modal/Read';
 import LoginPromptModal from 'components/modal/LoginPrompt';
@@ -45,7 +47,23 @@ const MODAL_COMPONENTS = [
 ];
 
 export default function GlobalModal() {
-  const { modalType, isOpen, twoFactorModal } = useSelector(selectModal);
+  const { modalType, isOpen } = useSelector(selectModal);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const previousPath = useRef(location.pathname); // 이전 경로를 저장
+
+  useEffect(() => {
+    if (isOpen) {
+      previousPath.current = location.pathname;
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen && previousPath.current !== location.pathname) {
+      dispatch(closeModal());
+    }
+  }, [location.pathname]);
+
   if (!isOpen) return;
 
   const findModal = MODAL_COMPONENTS.find((modal) => {

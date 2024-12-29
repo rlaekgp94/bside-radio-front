@@ -38,9 +38,7 @@ function WriteLayout({preference, setPreference, textareaVal, setTextareVal, pub
   const [letterLimitObj, setLetterLimitObj] = useState({});
   const [snackState, setSnackState] = useState(false);
   const timerRef = useRef(null); // 타이머 ID 저장
-
-  console.log(userInfo)
-
+  
   const handleModeChange = () => {
     setPublished(!published);
     showSnackbar()
