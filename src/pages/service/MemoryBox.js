@@ -31,14 +31,17 @@ const tabItems = [
   {
     title: "전체",
     id: "all",
+    published: null
   },
   {
     title: "편지",
     id: "letter",
+    published: true
   },
   {
     title: "일기",
     id: "diary",
+    published: false
   },
 ]
 
@@ -120,12 +123,8 @@ function MemoryBox() {
     const newList = content
       .filter((item) => {
         const year = new Date(item.createdAt).getFullYear();
-        const published = JSON.parse(item.published);
 
-        return (
-          year === currentDate &&
-          (tab.id === "all" || (tab.id === "letter" && published) || (tab.id === "diary" && !published))
-        );
+        return year === currentDate;
       })
       .reduce((acc, item) => {
         const month = new Date(item.createdAt).toISOString().slice(0, 7);
@@ -138,21 +137,26 @@ function MemoryBox() {
   useEffect(() => {
     filterAndGroupByMonth(list)
   }, [list.length])
+  
+  useEffect(() => {
+    if (page > 0) {
+      pushLetterList(page)
+    }
+  }, [page]);
 
   useEffect(() => {
     getLetterList()
-  }, [currentDate])
-
-  useEffect(() => {
-    filterAndGroupByMonth(list)
     document.getElementById('scrollbar').scrollTo(0, 0);
-  }, [tab])
+    setPage(0)
+    setCount(null)
+  }, [currentDate, tab])
 
   const getLetterList = async () => {
     if (!userInfo?.userId) return;
     setLoading(true)
+    const published = tab.published !== null ? JSON.stringify(tab.published) : null
     try {
-      const res = await getUserMemoryListAPI(userInfo.userId, currentDate.toString(), 0);
+      const res = await getUserMemoryListAPI(userInfo.userId, currentDate.toString(), 0, published);
       setList(res?.content)
       setFilterList(res?.content)
       setCount(res?.totalPages)
@@ -165,20 +169,15 @@ function MemoryBox() {
   }
 
   const pushLetterList = async (page) => {
+    const published = tab.published !== null ? JSON.stringify(tab.published) : null
     try {
-      const res = await getUserMemoryListAPI(userInfo.userId, currentDate.toString(), page)
+      const res = await getUserMemoryListAPI(userInfo.userId, currentDate.toString(), page, published)
       setList(prevState => [...prevState, ...res?.content]);
     } catch (e) {
       console.log("e: ", e);
     } finally {
     }
   }
-  
-  useEffect(() => {
-    if (page > 0) {
-      pushLetterList(page)
-    }
-  }, [page]);
 
   const handleObserver = (entries) => {
     const target = entries[0];
