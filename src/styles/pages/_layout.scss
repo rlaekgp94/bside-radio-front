@@ -489,7 +489,8 @@
             @include string(14px, 14px, -0.7px, 500, center, var(--gray200));
           }
           &.outside {
-            display: none;
+            opacity: 0;
+            cursor: default;
           }
           &.today {
             .day {            

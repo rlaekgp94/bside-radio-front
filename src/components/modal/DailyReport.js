@@ -38,7 +38,7 @@ export default function DailyReport() {
       <div className="daily-report-analysis">
         <div className="daily-report-analysis__title">
           <p>{selectedDate?.month ? selectedDate?.month : "-"}월 {selectedDate?.day ? selectedDate?.day: "-"}일</p>
-          <span>데일리 리포트 분석을 시작할까요?</span>
+          <span>데일리 리포트를 생성할까요?</span>
         </div>
         <button onClick={nav} className="active-btn">분석 시작</button>
       </div>

@@ -24,9 +24,10 @@ const YearMonthPickerModal = ({open, onClose, currentDate, setCurrentDate}) => {
   })
   
   const selections = {
-    years: Array.from({ length: 5 }, (_, i) => 2020 + i), 
+    years: Array.from({ length: 5 }, (_, i) => 2021 + i), 
     months: Array.from({ length: 12 }, (_, i) => i + 1)
   }
+  
   const handleConfirm = () => {
     const isSameDate =
       pickerValue.years === currentDate?.year() &&
@@ -108,7 +109,7 @@ function ReportsMain() {
   const searchParams = new URLSearchParams(location.search);
   const paramY = searchParams.get("y");
   const paramM = searchParams.get("m");
-  const defaultDate = paramY && paramM ? dayjs(`${paramY}-${paramM}-01`) : dayjs();
+  const defaultDate = (paramY && paramM) ? dayjs(`${paramY}-${paramM}-01`) : dayjs();
   const [currentDate, setCurrentDate] = useState(defaultDate);
   const [startX, setStartX] = useState(null);
   const [isYearMonthPickerOpen, setIsYearMonthPickerOpen] = useState(false);
@@ -130,6 +131,7 @@ function ReportsMain() {
     dates.push(date);
     date = date.add(1, "day");
   }
+  
   const getEmotionInType = (emotion) => EMOTION[emotion] || null;
 
   // URL 변경 시 `currentDate` 업데이트
@@ -170,7 +172,7 @@ function ReportsMain() {
   }
 
   const handleReportNavigation = (dateItem, isAvailableDailyReport, isCreatedDailyReport, isCreatedWeeklyReport, weeklyReportDate) => {
-    if (!isAvailableDailyReport && !isCreatedDailyReport && !isCreatedWeeklyReport) return;
+    if (!dateItem.isSame(currentDate, "month") && !isAvailableDailyReport && !isCreatedDailyReport && !isCreatedWeeklyReport) return;
     if (isAvailableDailyReport) { // 데일리 리포트 작성 가능 상태      
       dispatch(openModal({modalType: "DailyReport", data: { selectedDate: {
         year: dateItem.year(),
