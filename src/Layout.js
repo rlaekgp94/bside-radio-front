@@ -32,16 +32,19 @@ const Layout = ({children}) => {
   })
 
   return (
-    <div className="root-container">
-      <div className={`main-content ${paths.includes(pathname) && !sessionLoading ? "main-navi-content" : ""}`} id="scrollbar">
-        <ScrollToTop>
-          {children}
-        </ScrollToTop>
-        <FixedActionButton /> 
+    <>
+      <div id="root-background"></div>
+      <div className="root-container">
+        <div className={`main-content ${paths.includes(pathname) && !sessionLoading ? "main-navi-content" : ""}`} id="scrollbar">
+          <ScrollToTop>
+            {children}
+          </ScrollToTop>
+          <FixedActionButton /> 
+        </div>
+        {paths.includes(pathname) && !sessionLoading && <NavigationBar />}
+        <GlobalModal />
       </div>
-      {paths.includes(pathname) && !sessionLoading && <NavigationBar />}
-      <GlobalModal />
-    </div>
+    </>
   );
 }
 

@@ -84,8 +84,55 @@ html,
 body,
 #root {
   width: 100%;
-  background-color: #000;
   color: var(--gray-800);
+}
+
+#root-background {
+  @include same(100%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: var(--purple10);
+  &::after {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 804px;
+    width: 100%;
+    z-index: -1;
+    background: url($G-path-content + 'bg-start.png') $G-img-contain;
+    content: '';
+    display: block;
+    @media only screen and (max-width: 1700px) {
+      background-size: cover;
+    }
+  }
+  &::before {
+    aspect-ratio: 380/315;
+    height: 315px;
+    object-fit: contain;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transition: all 0.25s ease;
+    background: url($G-path-content + 'bg-logo.png') $G-img-contain;
+    content: '';
+    display: block;
+    @media only screen and (max-width: 1350px) {
+      height: 250px;
+    }
+    @media only screen and (max-width: 1230px) {
+      height: 200px;
+    }
+    @media only screen and (max-width: 1050px) {
+      height: 150px;
+    }
+    @media only screen and (max-width: 900px) {
+      opacity: 0;
+    }
+  }
 }
 
 span,
