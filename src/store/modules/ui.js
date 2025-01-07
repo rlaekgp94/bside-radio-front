@@ -13,8 +13,6 @@ const initialState = {
     },
     tuchDevice: false
   },
-  isExpanded: localStorage.getItem('is_expanded') === 'true',
-  sidebarView: localStorage.getItem('sidebar_view') ?? 'hidden'
 };
 
 const uiSlice = createSlice({
@@ -33,17 +31,9 @@ const uiSlice = createSlice({
         state.screen.tuchDevice = state.screen.viewType.tablet || state.screen.viewType.mobile;
       }
     },
-    setIsExpanded: (state, action) => {
-      state.isExpanded = action.payload;
-      localStorage.setItem('is_expanded', state.isExpanded);
-    },
-    setSidebarView: (state, action) => {
-      state.sidebarView = action.payload;
-      localStorage.setItem('sidebar_view', state.sidebarView);
-    }
   },
 });
 
 export default uiSlice.reducer;
 export const getUiStore = (state) => state.ui;
-export const { setScreen, setIsExpanded, setSidebarView } = uiSlice.actions;
+export const { setScreen } = uiSlice.actions;

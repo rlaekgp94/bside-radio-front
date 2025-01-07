@@ -478,7 +478,7 @@
               }
             }
             .day {
-              @include string(12px, 12px, normal, 600, center, var(--gray700));
+              @include string(12px, 12px, normal, 600, center, var(--gray500));
             }
             &.today .day {         
               font-size: 12px;
@@ -486,10 +486,12 @@
             }
           }
           .day {
-            @include string(14px, 14px, -0.7px, 500, center, var(--gray200));
+            @include string(14px, 14px, -0.7px, 500, center, var(--gray500));
           }
           &.outside {
-            display: none;
+            .day {
+              color: var(--gray200);
+            }
           }
           &.today {
             .day {            
@@ -546,9 +548,8 @@
         }
       }
       .onboarding-btn {
-        padding: 3px;
         &::after {
-          @include same(18px);
+          @include same(24px);
           background: url($G-path-icon + 'icon-info.svg') $G-img-contain;
           content: '';
           display: block;

@@ -58,7 +58,7 @@ const formattedDates = (isoDate) => {
 
 const YearPicker = ({open, onClose, currentDate, setCurrentDate}) => {
   const [pickerValue, setPickerValue] = useState({ years: currentDate })  
-  const selections = { years: Array.from({ length: 5 }, (_, i) => 2020 + i) }
+  const selections = { years: Array.from({ length: 5 }, (_, i) => 2021 + i) }
   const handleConfirm = () => {
     setCurrentDate(pickerValue?.years);
     onClose();

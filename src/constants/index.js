@@ -2,7 +2,7 @@ import PROFILE_IMG from "assets/Content/default-profile.svg"
 
 
 export const DATA = {
-  BASE_URL: process.env.REACT_APP_ENV === "production" ? "https://upup-radio.site" : "https://dev.upup-radio.site",
+  BASE_URL: process.env.REACT_APP_ENV === "production" ? "https://upup-radio.site" : "https://dev2.upup-radio.site",
   // BASE_URL: process.env.REACT_APP_ENV === "production" ? "https://upup-radio.site" : "http://localhost:8080",
   MIXPANEL_CLIENT_ID: "e6769d0990d9d69011e4902258f94ad6",
   defaultProfile: PROFILE_IMG,
