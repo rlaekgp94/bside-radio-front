@@ -28,7 +28,7 @@ function WeekListLayout({ year, month }) {
     if (!userInfo?.userId || !year || !month) return;
 
     const date = dayjs(new Date(`${year}-${month}`)).format("YYYY-MM");
-    const MIN_LOADING_TIME = 2000; // 최소 로딩 시간 (ms)
+    const MIN_LOADING_TIME = 800; // 최소 로딩 시간 (ms)
     const startTime = Date.now(); // 시작 시간 기록
 
     try {     
