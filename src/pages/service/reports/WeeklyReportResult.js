@@ -85,7 +85,7 @@ function WeeklyReportResult() {
 
   return (
     <div className="reports-weekly-result">
-      <CloseTitleBar title="위클리 리포트" />
+      <CloseTitleBar title="위클리 리포트" move="/reports" />
         {type === "get" && resultLoading ? <div className="loading-container"><CircularProgress size={70} /></div> : 
         type === "create" && createLoading ? <LoadingLayout type="create" /> :
         (          

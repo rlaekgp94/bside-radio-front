@@ -1,10 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import IconBack from 'assets/Icon/icon-close.svg'
 
-function CloseTitleBar({title}) {
+function CloseTitleBar({title, move}) {
   const navigate = useNavigate();
   
   const handleBack = () => {
+    if (move) {
+      navigate(move);
+      return;
+    }
     if (window.history.state && window.history.state.idx > 0) {
       navigate(-1);
     } else {
