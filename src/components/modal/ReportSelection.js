@@ -32,6 +32,8 @@ export default function ReportSelection() {
   const weeklyResult = () => {
     handleClose()
     navigate("/reports/weekly-result", { state: {
+      year: dateItem.year,
+      month: dateItem.month,
       startDate: weeklyReportDate?.startDate,
       endDate: weeklyReportDate?.endDate,
       type: "get"
