@@ -193,6 +193,8 @@ function ReportsMain() {
       }})
     } else if (isCreatedWeeklyReport) { // 위클리 리포트만 작성한 경우
       navigate("/reports/weekly-result", { state: {
+        year: dateItem.year(),
+        month: dateItem.month() + 1,
         startDate: weeklyReportDate?.startDate,
         endDate: weeklyReportDate?.endDate,
         type: "get"

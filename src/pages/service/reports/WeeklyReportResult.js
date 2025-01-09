@@ -22,17 +22,20 @@ function WeeklyReportResult() {
   const userInfo = useSelector(state => { return state?.user.userInfo; });
   const location = useLocation();
   const navigate = useNavigate();
-  const { type, startDate, endDate } = location.state || {};
+  const { type, startDate, endDate, year, month } = location.state || {};
   const [resultLoading, setResultLoading] = useState(true);
   const [createLoading, setCreateLoading] = useState(true);
   const [resultData, setResultData] = useState(null);
+
+  const formatStartDate = dayjs(startDate, "YYYY-MM-DD").format("YYYY-MM-DD");
+  const formatEndDate = dayjs(endDate, "YYYY-MM-DD").format("YYYY-MM-DD");
 
   const getEmotionInType = (emotion) => EMOTION[emotion] || null;
   
   const createReportWeekly = async () => {
     if (!userInfo?.userId) return;
     try {     
-      const res = await createReportWeeklyAPI(userInfo.userId, startDate);    
+      const res = await createReportWeeklyAPI(userInfo.userId, formatStartDate);    
       setResultData(res);
     } catch(e) {
       console.log("createReportWeeklyAPI e: ", e)
@@ -44,7 +47,7 @@ function WeeklyReportResult() {
   const getReportWeeklyResult = async () => {
     if (!userInfo?.userId) return;
     try {     
-      const res = await getReportWeeklyResultAPI(userInfo.userId, startDate, endDate);    
+      const res = await getReportWeeklyResultAPI(userInfo.userId, formatStartDate, formatEndDate);    
       setResultData(res);
     } catch(e) {
       console.log("getReportWeeklyResultAPI e: ", e)
@@ -85,7 +88,7 @@ function WeeklyReportResult() {
 
   return (
     <div className="reports-weekly-result">
-      <CloseTitleBar title="위클리 리포트" move="/reports" />
+      <CloseTitleBar title="위클리 리포트" move={`/reports?y=${year}&m=${month}`} />
         {type === "get" && resultLoading ? <div className="loading-container"><CircularProgress size={70} /></div> : 
         type === "create" && createLoading ? <LoadingLayout type="create" /> :
         (          
@@ -125,7 +128,7 @@ function WeeklyReportResult() {
                     <img src={ImgWrittenAll} alt="전체 작성 이미지" />
                     <div className="desc">
                       <p>전체</p>
-                      <span>{(resultData.published && resultData.published) ? resultData.published+resultData.unPublished : "-"}회</span>
+                      <span>{(resultData.published && resultData.unPublished) ? resultData.published+resultData.unPublished : "0"}회</span>
                     </div>
                     </li>
                 </ul>
