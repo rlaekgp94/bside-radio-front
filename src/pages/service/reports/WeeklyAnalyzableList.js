@@ -27,7 +27,9 @@ function WeekListLayout({ year, month }) {
   const getReportWeeklyStatus = async () => {
     if (!userInfo?.userId || !year || !month) return;
 
-    const date = dayjs(new Date(`${year}-${month}`)).format("YYYY-MM");
+    const dateString = `${year}-${month}`;
+    const date = dayjs(dateString, "YYYY-MM").format("YYYY-MM");
+
     const MIN_LOADING_TIME = 800; // 최소 로딩 시간 (ms)
     const startTime = Date.now(); // 시작 시간 기록
 
