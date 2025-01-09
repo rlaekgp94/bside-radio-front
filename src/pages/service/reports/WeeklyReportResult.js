@@ -128,7 +128,7 @@ function WeeklyReportResult() {
                     <img src={ImgWrittenAll} alt="전체 작성 이미지" />
                     <div className="desc">
                       <p>전체</p>
-                      <span>{(resultData.published && resultData.unPublished) ? resultData.published+resultData.unPublished : "0"}회</span>
+                      <span>{(resultData.published ?? 0) + (resultData.unPublished ?? 0)}회</span>
                     </div>
                     </li>
                 </ul>

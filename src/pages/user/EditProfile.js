@@ -25,7 +25,7 @@ export default function Mypage() {
     emailAdsConsented: currentEmailAdsConsented,
   } = userInfo;
   
-  const [nickname, setNickname] = useState(currentNickname ? currentNickname : "");
+  const [nickname, setNickname] = useState("");
   const [type, setType] = useState(currentPreference ? currentPreference : "");
   const [profileImageEnabled, setProfileImageDisable] = useState(currentProfileImageDisable !== undefined ? currentProfileImageDisable: false);
   const [emailAdsConsented, setEmailAdsConsented] = useState(currentEmailAdsConsented !== undefined ? currentEmailAdsConsented : false);
@@ -51,19 +51,21 @@ export default function Mypage() {
 
 
   const changeHandler = (e) => {
-    const { value } = e.target;
-    const regex = /^[ㄱ-ㅎ|가-힣|a-z|A-Z|0-9|]+$/;
-    if (value === "") {
-      setNickname(""); 
-      return;
-    }
-    
-    const isValidInput = regex.test(value) && value.length <= 12;
-
-    if (isValidInput) {
-      setNickname(value); 
-    }  
+    setNickname(e.target.value);
   }
+
+  const handleBlur = () => {
+    const regex = /^[ㄱ-ㅎ가-힣a-zA-Z0-9]*$/;
+
+    const filteredNickname = nickname
+    .split("")
+    .filter((char) => regex.test(char)) 
+    .join("");
+
+    const trimmedNickname = filteredNickname.slice(0, 12);
+
+    setNickname(trimmedNickname);
+  };
 
   const patchUserInfo = async () => {
     if (!userInfo?.userId || !Object.keys(updatedData).length) return;
@@ -97,6 +99,8 @@ export default function Mypage() {
                 name="user-nickname"
                 placeholder="한글, 영문 포함 12글자 이내로 작성해 주세요."
                 value={nickname}
+                maxLength={12}
+                onBlur={handleBlur}
                 onChange={changeHandler} />
             </div>
             <div className="data-box">
