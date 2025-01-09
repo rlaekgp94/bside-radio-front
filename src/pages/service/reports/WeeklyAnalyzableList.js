@@ -59,6 +59,8 @@ function WeekListLayout({ year, month }) {
   const handleRequest = () => {
     if (!selectedWeekItem) return;
     navigate("/reports/weekly-result", { state: {
+      year,
+      month,
       startDate: selectedWeekItem.startDate,
       type: "create"
     }})

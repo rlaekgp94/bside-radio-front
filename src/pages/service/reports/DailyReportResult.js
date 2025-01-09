@@ -23,7 +23,6 @@ function DailyReportResult() {
   const [createLoading, setCreateLoading] = useState(true);
   const [resultData, setResultData] = useState(null);
   
-  // const date = dayjs(new Date(`${year}-${month}-${day}`)).format("YYYY-MM-DD");
   const dateString = `${year}-${month}-${day}`;
   const date = dayjs(dateString, "YYYY-MM-DD").format("YYYY-MM-DD");
 
