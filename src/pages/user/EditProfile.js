@@ -25,7 +25,7 @@ export default function Mypage() {
     emailAdsConsented: currentEmailAdsConsented,
   } = userInfo;
   
-  const [nickname, setNickname] = useState("");
+  const [nickname, setNickname] = useState(currentNickname ? currentNickname : "");
   const [type, setType] = useState(currentPreference ? currentPreference : "");
   const [profileImageEnabled, setProfileImageDisable] = useState(currentProfileImageDisable !== undefined ? currentProfileImageDisable: false);
   const [emailAdsConsented, setEmailAdsConsented] = useState(currentEmailAdsConsented !== undefined ? currentEmailAdsConsented : false);
