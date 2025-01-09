@@ -24,7 +24,7 @@ const YearMonthPickerModal = ({open, onClose, currentDate, setCurrentDate}) => {
   })
   
   const selections = {
-    years: Array.from({ length: 5 }, (_, i) => 2021 + i), 
+    years: [2024, 2025],
     months: Array.from({ length: 12 }, (_, i) => i + 1)
   }
   
